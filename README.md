@@ -203,9 +203,91 @@
     "status": 201
 }
 </code></pre>
+<h2 id="obtener-todas-las-companias">Obtener todas las companias:</h2>
+<p>Para obtener todas las companias, debera enviar una peticion de tipo <strong>GET</strong> a la siguiente ruta: <strong>/api/companies</strong></p>
+<h3 id="datos-requeridos-4">Datos requeridos:</h3>
+
+<table>
+<thead>
+<tr>
+<th>Clave</th>
+<th>Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Authorization</strong></td>
+<td>Corresponde al API Key de AGC (<em>String</em>)</td>
+</tr>
+</tbody>
+</table><h3 id="respuesta-del-recurso-3">Respuesta del recurso:</h3>
+<pre><code>[
+    {
+        "id": 1,
+        "Name": "ITCO",
+        "CeUser": "prueba",
+        "CePassword": "123",
+        "CePin": "1234",
+        "Environmet": "stag",
+        "CrlCertificateCode": "7e4f44938a966bbb669aecc0331694bd",
+        "FilePath": "./certs/cert1529615544862.p12",
+        "createdAt": "2018-06-21T21:12:25.300Z",
+        "updatedAt": "2018-06-21T21:12:25.300Z"
+    },
+    {
+        "id": 2,
+        "Name": "TS",
+        "CeUser": "prueba",
+        "CePassword": "123",
+        "CePin": "1234",
+        "Environmet": "stag",
+        "CrlCertificateCode": "70348e40ed539e03caf0f0c00a3732ab",
+        "FilePath": "./certs/cert1529615561259.p12",
+        "createdAt": "2018-06-21T21:12:41.696Z",
+        "updatedAt": "2018-06-21T21:12:41.696Z"
+    }
+]
+</code></pre>
+<h2 id="obtener-una-compania">Obtener Una Compania</h2>
+<p>Para obtener todas las companias, debera enviar una peticion de tipo <strong>GET</strong> a la siguiente ruta: <strong>/api/company/:id</strong></p>
+<h3 id="datos-requeridos-5">Datos requeridos:</h3>
+
+<table>
+<thead>
+<tr>
+<th>Clave</th>
+<th>Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Authorization</strong></td>
+<td>Corresponde al API Key de AGC (<em>String</em>)</td>
+</tr>
+<tr>
+<td><strong>id</strong></td>
+<td>Id de la compania que se quiere obtener (<em>Int</em>)</td>
+</tr>
+</tbody>
+</table><h3 id="url-de-ejemplo">URL de ejemplo:</h3>
+<p>/api/company/1</p>
+<h3 id="respuesta-del-recurso-4">Respuesta del recurso:</h3>
+<pre><code>{
+    "id": 1,
+    "Name": "ITCO",
+    "CeUser": "prueba",
+    "CePassword": "123",
+    "CePin": "1234",
+    "Environmet": "stag",
+    "CrlCertificateCode": "7e4f44938a966bbb669aecc0331694bd",
+    "FilePath": "./certs/cert1529615544862.p12",
+    "createdAt": "2018-06-21T21:12:25.300Z",
+    "updatedAt": "2018-06-21T21:12:25.300Z"
+}
+</code></pre>
 <h1 id="token-hacienda">Token Hacienda</h1>
 <p>Para generar un token de acceso para hacienda es necesario enviar una solicitud de tipo <strong>POST</strong> a la siguiente ruta: <strong>/api/create/access-token</strong></p>
-<h3 id="datos-requeridos-4">Datos Requeridos:</h3>
+<h3 id="datos-requeridos-6">Datos Requeridos:</h3>
 
 <table>
 <thead>
@@ -247,7 +329,7 @@
   };
 </code></pre>
 <p><a href="#generar-api-key">Generar autorizacion (API KEY)</a></p>
-<h3 id="respuesta-del-recurso-3">Respuesta del recurso:</h3>
+<h3 id="respuesta-del-recurso-5">Respuesta del recurso:</h3>
 <pre><code>{
     "code": 201,
     "accessToken": "eyJhbGciOiJSUzI1NiJ9.eyJqdGkiOiIzNjY0NzAyMS1lYTRkLTQxYjItOTRkNi1hMTMyYzZjMzA0NGIiLCJleHAiOjE1Mjk2MTA3NDUsIm5iZiI6MCwiaWF0IjoxNTI5NjEwNDQ1LCJpc3MiOiJodHRwczovL2lkcC5jb21wcm9iYW50ZXNlbGVjdHJvbmljb3MuZ28uY3IvYXV0aC9yZWFsbXMvcnV0LXN0YWciLCJhdWQiOiJhcGktc3RhZyIsInN1YiI6IjA4YWY1MzI0LTdkYWYtNDhhMC05NTQwLTFjOGRmNzVjNGU4NCIsInR5cCI6IkJlYXJlciIsImF6cCI6ImFwaS1zdGFnIiwic2Vzc2lvbl9zdGF0ZSI6ImI3ZmIwOWJhLTNmZWMtNGQxNC05MDYwLWE2M2NkOWFhOWNkMCIsImNsaWVudF9zZXNzaW9uIjoiNDY1ZDZmNzktNTNhOC00YjY0LTllMTktZjhiZTJiNzZiODUzIiwiYWxsb3dlZC1vcmlnaW5zIjpbXSwicmVzb3VyY2VfYWNjZXNzIjp7ImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJ2aWV3LXByb2ZpbGUiXX19LCJuYW1lIjoiQUxGQVJPICYgSEVSTkFOREVaIElUIENPUlBPUkFUSU9OIElUQ08gU09DSUVEQUQgQU5PTklNQSAiLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJjcGotMy0xMDEtNjYwOTE5QHN0YWcuY29tcHJvYmFudGVzZWxlY3Ryb25pY29zLmdvLmNyIiwiZ2l2ZW5fbmFtZSI6IkFMRkFSTyAmIEhFUk5BTkRFWiBJVCBDT1JQT1JBVElPTiBJVENPIFNPQ0lFREFEIEFOT05JTUEiLCJwb2xpY3ktaWQiOiI1OGE2MjAzMzc2ZWFlMTQwOGNlNWU3ZGQiLCJlbWFpbCI6ImNwai0zLTEwMS02NjA5MTlAc3RhZy5jb21wcm9iYW50ZXNlbGVjdHJvbmljb3MuZ28uY3IifQ.eyGqDfqb4aHw_cA8x2dQCGdaH0Z-qOBFEwHJ15pS2MWqcCti2aw3gC_2riZS9Ss-gI1Q4eTNWpbelo_sRf6-DEvx4P6Q-deDWwgFEzZuQj2srUi6tN36sT25XXtsz-Y2baCmn13cWnfWkrFqKx6Gs4nTw9fXcco21QLpkj4YW8j7l3eFuFHzRj20JR9wqb8ZpNmH2Y9KjYPr9eL2pPPWVMDqt4NeVSARMkbH0I9hD8-s7GIZyUnjpXBQh8kkQ679kNwDpPvbC9h7SRRgKqA6Mn7ZQ0Lvu8XLveyNR4ptOSfYnWn4sgCFwO5oPH1rN6nqT_FkSq7InvoKE0mLZEdTfA",
