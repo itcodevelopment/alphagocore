@@ -203,4 +203,33 @@
     "status": 201
 }
 </code></pre>
+<h1 id="token-hacienda">Token Hacienda</h1>
+<p>Para generar un token de acceso para hacienda es necesario enviar una solicitud de tipo <strong>POST</strong> a la siguiente ruta: <strong>/api/create/access-token</strong></p>
+<h3 id="datos-requeridos-4">Datos Requeridos:</h3>
 
+<table>
+<thead>
+<tr>
+<th>Clave</th>
+<th>Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>authorization</strong></td>
+<td>Esto se envia en el header de la peticion y correspode al APIKEY del usuario Alpha Go Core (<em>String</em>)</td>
+</tr>
+<tr>
+<td><strong>Environment</strong></td>
+<td><strong>api-stag</strong> - <strong>api-prod</strong> (<em>String</em>)</td>
+</tr>
+<tr>
+<td><strong>CeUser</strong></td>
+<td>Usuario de comprobantes electronicos</td>
+</tr>
+<tr>
+<td><strong>CePassword</strong></td>
+<td>Contrasena de comprobantes electronicos</td>
+</tr>
+</tbody>
+</table>
