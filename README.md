@@ -41,15 +41,15 @@
 </tr>
 </tbody>
 </table><h3 id="estructura-del-json">Estructura del JSON:</h3>
-<pre><code>{
-	"Name" : "Pedro",
-	"Lastname": "Castillo",
-	"Email": "pedro@itcoint.com",
-	"Phone": "89586444",
-	"Username": "pedro",
-	"Password": "Intlog6151$%",
-	"Company_name": "ITCO"
-}
+<pre class=" language-json"><code class="prism  language-json"><span class="token punctuation">{</span>
+	<span class="token string">"Name"</span> <span class="token punctuation">:</span> <span class="token string">"Pedro"</span><span class="token punctuation">,</span>
+	<span class="token string">"Lastname"</span><span class="token punctuation">:</span> <span class="token string">"Castillo"</span><span class="token punctuation">,</span>
+	<span class="token string">"Email"</span><span class="token punctuation">:</span> <span class="token string">"pedro@itcoint.com"</span><span class="token punctuation">,</span>
+	<span class="token string">"Phone"</span><span class="token punctuation">:</span> <span class="token string">"89586444"</span><span class="token punctuation">,</span>
+	<span class="token string">"Username"</span><span class="token punctuation">:</span> <span class="token string">"pedro"</span><span class="token punctuation">,</span>
+	<span class="token string">"Password"</span><span class="token punctuation">:</span> <span class="token string">"Intlog6151$%"</span><span class="token punctuation">,</span>
+	<span class="token string">"Company_name"</span><span class="token punctuation">:</span> <span class="token string">"ITCO"</span>
+<span class="token punctuation">}</span>
 </code></pre>
 <h1 id="login-usuario">Login Usuario</h1>
 <p>Se debera enviar una peticio de tipo <strong>POST</strong> a la siguiente ruta:  <strong>/api/users/login</strong></p>
@@ -73,17 +73,17 @@
 </tr>
 </tbody>
 </table><h3 id="estructura-del-json-1">Estructura del JSON</h3>
-<pre><code>{
-	"username": "pedro",
-	"password": "Intlog6151$%"
-}
+<pre class=" language-json"><code class="prism  language-json"><span class="token punctuation">{</span>
+	<span class="token string">"username"</span><span class="token punctuation">:</span> <span class="token string">"pedro"</span><span class="token punctuation">,</span>
+	<span class="token string">"password"</span><span class="token punctuation">:</span> <span class="token string">"Intlog6151$%"</span>
+<span class="token punctuation">}</span>
 </code></pre>
 <h3 id="respuesta-del-recurso">Respuesta del recurso:</h3>
 <p>Esto respondera un SessionKey que sera requerido para algunas peticiones ( Esto se debera guardar en el Local Storage para persistirlo )</p>
 <p>El session key tiene una validez de <strong>1 hora</strong> por lo cual despues de este periodo debera solicitarse otro.</p>
-<pre><code>{
-    "sessionKey": "d1dnMG5RdnQ0YXFwMjczQ3pvdXM4UT09OjoSsfF4d0+BkExpS5YCO32C"
-}
+<pre class=" language-json"><code class="prism  language-json"><span class="token punctuation">{</span>
+    <span class="token string">"sessionKey"</span><span class="token punctuation">:</span> <span class="token string">"d1dnMG5RdnQ0YXFwMjczQ3pvdXM4UT09OjoSsfF4d0+BkExpS5YCO32C"</span>
+<span class="token punctuation">}</span>
 </code></pre>
 <h1 id="generar-api-key">Generar API Key</h1>
 <p>Este API Key que es generado por motivos de seguridad para el uso del API de <strong>Alpha Go Core</strong> y es totalmente diferente al <strong>SessionKey</strong> generado por <strong>CRL</strong></p>
@@ -108,15 +108,15 @@
 </tr>
 </tbody>
 </table><h3 id="estructura-del-json-2">Estructura del JSON:</h3>
-<pre><code>{
-	"Email": "pedro@itcoint.com",
-	"Password": "Intlog6151$%"
-}
+<pre class=" language-json"><code class="prism  language-json"><span class="token punctuation">{</span>
+	<span class="token string">"Email"</span><span class="token punctuation">:</span> <span class="token string">"pedro@itcoint.com"</span><span class="token punctuation">,</span>
+	<span class="token string">"Password"</span><span class="token punctuation">:</span> <span class="token string">"Intlog6151$%"</span>
+<span class="token punctuation">}</span>
 </code></pre>
 <h3 id="respuesta-del-recurso-1">Respuesta del recurso:</h3>
-<pre><code>{
-    "apiKey": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyT2JqIjp7InVzZXIiOiJwZWRybyIsInNlY3JldCI6IkludGxvZzYxNTEkJSJ9LCJpYXQiOjE1Mjk1OTEyMzd9.Pz6pdumUn6_0jthhB0EW0aLt2DPXS1Zi2d6otsx6P6U"
-}
+<pre class=" language-json"><code class="prism  language-json"><span class="token punctuation">{</span>
+    <span class="token string">"apiKey"</span><span class="token punctuation">:</span> <span class="token string">"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyT2JqIjp7InVzZXIiOiJwZWRybyIsInNlY3JldCI6IkludGxvZzYxNTEkJSJ9LCJpYXQiOjE1Mjk1OTEyMzd9.Pz6pdumUn6_0jthhB0EW0aLt2DPXS1Zi2d6otsx6P6U"</span>
+<span class="token punctuation">}</span>
 </code></pre>
 <h1 id="crear-una-compania">Crear una compania</h1>
 <p>Se debera enviar una peticion de tipo <strong>POST</strong> a la siguiente ruta: <strong>/api/company</strong></p>
@@ -175,33 +175,33 @@
 <a href="#login-usuario">Obtener Session Key</a></p>
 <h3 id="estructura-del-json-3">Estructura del Json:</h3>
 <p>Todos los campos son requeridos sin excepcion.</p>
-<pre><code>{
-	"Name" : "ITCO",
-	"CeUser" : "prueba",
-	"CePassword" : "123",
-	"CePin" : "1234",
-	"UserName": "pedro",
-	"SessionKey" : "eTIzb3FiZVUrd3g1N0M2TGo0UlFOQT09OjpjNb1uk2xAobi27LntChi8",
-	"Environmet": "stag",
-	"CrlCertificateCode": "",
-	"FilePath": "",
-	"Cert": "(CERTIFICADO EN BASE64)"
-}
+<pre class=" language-json"><code class="prism  language-json"><span class="token punctuation">{</span>
+	<span class="token string">"Name"</span> <span class="token punctuation">:</span> <span class="token string">"ITCO"</span><span class="token punctuation">,</span>
+	<span class="token string">"CeUser"</span> <span class="token punctuation">:</span> <span class="token string">"prueba"</span><span class="token punctuation">,</span>
+	<span class="token string">"CePassword"</span> <span class="token punctuation">:</span> <span class="token string">"123"</span><span class="token punctuation">,</span>
+	<span class="token string">"CePin"</span> <span class="token punctuation">:</span> <span class="token string">"1234"</span><span class="token punctuation">,</span>
+	<span class="token string">"UserName"</span><span class="token punctuation">:</span> <span class="token string">"pedro"</span><span class="token punctuation">,</span>
+	<span class="token string">"SessionKey"</span> <span class="token punctuation">:</span> <span class="token string">"eTIzb3FiZVUrd3g1N0M2TGo0UlFOQT09OjpjNb1uk2xAobi27LntChi8"</span><span class="token punctuation">,</span>
+	<span class="token string">"Environmet"</span><span class="token punctuation">:</span> <span class="token string">"stag"</span><span class="token punctuation">,</span>
+	<span class="token string">"CrlCertificateCode"</span><span class="token punctuation">:</span> <span class="token string">""</span><span class="token punctuation">,</span>
+	<span class="token string">"FilePath"</span><span class="token punctuation">:</span> <span class="token string">""</span><span class="token punctuation">,</span>
+	<span class="token string">"Cert"</span><span class="token punctuation">:</span> <span class="token string">"(CERTIFICADO EN BASE64)"</span>
+<span class="token punctuation">}</span>
 </code></pre>
 <h3 id="respuesta-del-recurso-2">Respuesta del recurso:</h3>
-<pre><code>{
-    "data": {
-        "id": 4,
-        "Name": "ITCO",
-        "CeUser": "prueba",
-        "CePassword": "123",
-        "CePin": "1234",
-        "CrlCertificateCode": "c73b93a548371afcdd5b054aa98ec0ba",
-        "updatedAt": "2018-06-21T17:17:10.557Z",
-        "createdAt": "2018-06-21T17:17:10.557Z"
-    },
-    "status": 201
-}
+<pre class=" language-json"><code class="prism  language-json"><span class="token punctuation">{</span>
+    <span class="token string">"data"</span><span class="token punctuation">:</span> <span class="token punctuation">{</span>
+        <span class="token string">"id"</span><span class="token punctuation">:</span> <span class="token number">4</span><span class="token punctuation">,</span>
+        <span class="token string">"Name"</span><span class="token punctuation">:</span> <span class="token string">"ITCO"</span><span class="token punctuation">,</span>
+        <span class="token string">"CeUser"</span><span class="token punctuation">:</span> <span class="token string">"prueba"</span><span class="token punctuation">,</span>
+        <span class="token string">"CePassword"</span><span class="token punctuation">:</span> <span class="token string">"123"</span><span class="token punctuation">,</span>
+        <span class="token string">"CePin"</span><span class="token punctuation">:</span> <span class="token string">"1234"</span><span class="token punctuation">,</span>
+        <span class="token string">"CrlCertificateCode"</span><span class="token punctuation">:</span> <span class="token string">"c73b93a548371afcdd5b054aa98ec0ba"</span><span class="token punctuation">,</span>
+        <span class="token string">"updatedAt"</span><span class="token punctuation">:</span> <span class="token string">"2018-06-21T17:17:10.557Z"</span><span class="token punctuation">,</span>
+        <span class="token string">"createdAt"</span><span class="token punctuation">:</span> <span class="token string">"2018-06-21T17:17:10.557Z"</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token string">"status"</span><span class="token punctuation">:</span> <span class="token number">201</span>
+<span class="token punctuation">}</span>
 </code></pre>
 <h2 id="obtener-todas-las-companias">Obtener todas las companias:</h2>
 <p>Para obtener todas las companias, debera enviar una peticion de tipo <strong>GET</strong> a la siguiente ruta: <strong>/api/companies</strong></p>
@@ -221,32 +221,32 @@
 </tr>
 </tbody>
 </table><h3 id="respuesta-del-recurso-3">Respuesta del recurso:</h3>
-<pre><code>[
-    {
-        "id": 1,
-        "Name": "ITCO",
-        "CeUser": "prueba",
-        "CePassword": "123",
-        "CePin": "1234",
-        "Environmet": "stag",
-        "CrlCertificateCode": "7e4f44938a966bbb669aecc0331694bd",
-        "FilePath": "./certs/cert1529615544862.p12",
-        "createdAt": "2018-06-21T21:12:25.300Z",
-        "updatedAt": "2018-06-21T21:12:25.300Z"
-    },
-    {
-        "id": 2,
-        "Name": "TS",
-        "CeUser": "prueba",
-        "CePassword": "123",
-        "CePin": "1234",
-        "Environmet": "stag",
-        "CrlCertificateCode": "70348e40ed539e03caf0f0c00a3732ab",
-        "FilePath": "./certs/cert1529615561259.p12",
-        "createdAt": "2018-06-21T21:12:41.696Z",
-        "updatedAt": "2018-06-21T21:12:41.696Z"
-    }
-]
+<pre class=" language-json"><code class="prism  language-json"><span class="token punctuation">[</span>
+    <span class="token punctuation">{</span>
+        <span class="token string">"id"</span><span class="token punctuation">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
+        <span class="token string">"Name"</span><span class="token punctuation">:</span> <span class="token string">"ITCO"</span><span class="token punctuation">,</span>
+        <span class="token string">"CeUser"</span><span class="token punctuation">:</span> <span class="token string">"prueba"</span><span class="token punctuation">,</span>
+        <span class="token string">"CePassword"</span><span class="token punctuation">:</span> <span class="token string">"123"</span><span class="token punctuation">,</span>
+        <span class="token string">"CePin"</span><span class="token punctuation">:</span> <span class="token string">"1234"</span><span class="token punctuation">,</span>
+        <span class="token string">"Environmet"</span><span class="token punctuation">:</span> <span class="token string">"stag"</span><span class="token punctuation">,</span>
+        <span class="token string">"CrlCertificateCode"</span><span class="token punctuation">:</span> <span class="token string">"7e4f44938a966bbb669aecc0331694bd"</span><span class="token punctuation">,</span>
+        <span class="token string">"FilePath"</span><span class="token punctuation">:</span> <span class="token string">"./certs/cert1529615544862.p12"</span><span class="token punctuation">,</span>
+        <span class="token string">"createdAt"</span><span class="token punctuation">:</span> <span class="token string">"2018-06-21T21:12:25.300Z"</span><span class="token punctuation">,</span>
+        <span class="token string">"updatedAt"</span><span class="token punctuation">:</span> <span class="token string">"2018-06-21T21:12:25.300Z"</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">{</span>
+        <span class="token string">"id"</span><span class="token punctuation">:</span> <span class="token number">2</span><span class="token punctuation">,</span>
+        <span class="token string">"Name"</span><span class="token punctuation">:</span> <span class="token string">"TS"</span><span class="token punctuation">,</span>
+        <span class="token string">"CeUser"</span><span class="token punctuation">:</span> <span class="token string">"prueba"</span><span class="token punctuation">,</span>
+        <span class="token string">"CePassword"</span><span class="token punctuation">:</span> <span class="token string">"123"</span><span class="token punctuation">,</span>
+        <span class="token string">"CePin"</span><span class="token punctuation">:</span> <span class="token string">"1234"</span><span class="token punctuation">,</span>
+        <span class="token string">"Environmet"</span><span class="token punctuation">:</span> <span class="token string">"stag"</span><span class="token punctuation">,</span>
+        <span class="token string">"CrlCertificateCode"</span><span class="token punctuation">:</span> <span class="token string">"70348e40ed539e03caf0f0c00a3732ab"</span><span class="token punctuation">,</span>
+        <span class="token string">"FilePath"</span><span class="token punctuation">:</span> <span class="token string">"./certs/cert1529615561259.p12"</span><span class="token punctuation">,</span>
+        <span class="token string">"createdAt"</span><span class="token punctuation">:</span> <span class="token string">"2018-06-21T21:12:41.696Z"</span><span class="token punctuation">,</span>
+        <span class="token string">"updatedAt"</span><span class="token punctuation">:</span> <span class="token string">"2018-06-21T21:12:41.696Z"</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">]</span>
 </code></pre>
 <h2 id="obtener-una-compania">Obtener Una Compania</h2>
 <p>Para obtener todas las companias, debera enviar una peticion de tipo <strong>GET</strong> a la siguiente ruta: <strong>/api/company/:id</strong></p>
@@ -272,18 +272,18 @@
 </table><h3 id="url-de-ejemplo">URL de ejemplo:</h3>
 <p>/api/company/1</p>
 <h3 id="respuesta-del-recurso-4">Respuesta del recurso:</h3>
-<pre><code>{
-    "id": 1,
-    "Name": "ITCO",
-    "CeUser": "prueba",
-    "CePassword": "123",
-    "CePin": "1234",
-    "Environmet": "stag",
-    "CrlCertificateCode": "7e4f44938a966bbb669aecc0331694bd",
-    "FilePath": "./certs/cert1529615544862.p12",
-    "createdAt": "2018-06-21T21:12:25.300Z",
-    "updatedAt": "2018-06-21T21:12:25.300Z"
-}
+<pre class=" language-json"><code class="prism  language-json"><span class="token punctuation">{</span>
+    <span class="token string">"id"</span><span class="token punctuation">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
+    <span class="token string">"Name"</span><span class="token punctuation">:</span> <span class="token string">"ITCO"</span><span class="token punctuation">,</span>
+    <span class="token string">"CeUser"</span><span class="token punctuation">:</span> <span class="token string">"prueba"</span><span class="token punctuation">,</span>
+    <span class="token string">"CePassword"</span><span class="token punctuation">:</span> <span class="token string">"123"</span><span class="token punctuation">,</span>
+    <span class="token string">"CePin"</span><span class="token punctuation">:</span> <span class="token string">"1234"</span><span class="token punctuation">,</span>
+    <span class="token string">"Environmet"</span><span class="token punctuation">:</span> <span class="token string">"stag"</span><span class="token punctuation">,</span>
+    <span class="token string">"CrlCertificateCode"</span><span class="token punctuation">:</span> <span class="token string">"7e4f44938a966bbb669aecc0331694bd"</span><span class="token punctuation">,</span>
+    <span class="token string">"FilePath"</span><span class="token punctuation">:</span> <span class="token string">"./certs/cert1529615544862.p12"</span><span class="token punctuation">,</span>
+    <span class="token string">"createdAt"</span><span class="token punctuation">:</span> <span class="token string">"2018-06-21T21:12:25.300Z"</span><span class="token punctuation">,</span>
+    <span class="token string">"updatedAt"</span><span class="token punctuation">:</span> <span class="token string">"2018-06-21T21:12:25.300Z"</span>
+<span class="token punctuation">}</span>
 </code></pre>
 <h1 id="token-hacienda">Token Hacienda</h1>
 <p>Para generar un token de acceso para hacienda es necesario enviar una solicitud de tipo <strong>POST</strong> a la siguiente ruta: <strong>/api/create/access-token</strong></p>
@@ -316,25 +316,25 @@
 </tbody>
 </table><h3 id="estructura-del-json-4">Estructura del JSON</h3>
 <p>Ejemplo enviado desde NodeJS con Request:</p>
-<pre><code>headers: 
-   {
-     'Content-Type': 'application/json',
-      Authorization: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyT2JqIjp7InVzZXIiOiJwZWRybyIsInNlY3JldCI6IkludGxvZzYxNTEkJSJ9LCJpYXQiOjE1Mjk2MDk2NjB9.9aq0zRpxlKf9NPF7rpZpQ0nKMQ1Zu0mqGDd9_VKpB9I' 
-     },
-  body: 
-   { 
-     Environment: 'api-stag',
-     CeUser: 'cpj-3-101-660919@stag.comprobanteselectronicos.go.cr',
-     CePassword: 'E{ToB(ebW&amp;F?%%!}r!G]' }
-  };
+<pre class=" language-js"><code class="prism  language-js">headers<span class="token punctuation">:</span> 
+   <span class="token punctuation">{</span>
+      Content<span class="token operator">-</span>Type<span class="token punctuation">:</span> <span class="token string">'application/json'</span><span class="token punctuation">,</span>
+      Authorization<span class="token punctuation">:</span> <span class="token string">'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyT2JqIjp7InVzZXIiOiJwZWRybyIsInNlY3JldCI6IkludGxvZzYxNTEkJSJ9LCJpYXQiOjE1Mjk2MDk2NjB9.9aq0zRpxlKf9NPF7rpZpQ0nKMQ1Zu0mqGDd9_VKpB9I'</span> 
+     <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  body<span class="token punctuation">:</span> 
+   <span class="token punctuation">{</span> 
+     Environment<span class="token punctuation">:</span> <span class="token string">'api-stag'</span><span class="token punctuation">,</span>
+     CeUser<span class="token punctuation">:</span> <span class="token string">'cpj-3-101-660919@stag.comprobanteselectronicos.go.cr'</span><span class="token punctuation">,</span>
+     CePassword<span class="token punctuation">:</span> <span class="token string">'E{ToB(ebW&amp;F?%%!}r!G]'</span> <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span><span class="token punctuation">;</span>
 </code></pre>
 <p><a href="#generar-api-key">Generar autorizacion (API KEY)</a></p>
 <h3 id="respuesta-del-recurso-5">Respuesta del recurso:</h3>
-<pre><code>{
-    "code": 201,
-    "accessToken": "eyJhbGciOiJSUzI1NiJ9.eyJqdGkiOiIzNjY0NzAyMS1lYTRkLTQxYjItOTRkNi1hMTMyYzZjMzA0NGIiLCJleHAiOjE1Mjk2MTA3NDUsIm5iZiI6MCwiaWF0IjoxNTI5NjEwNDQ1LCJpc3MiOiJodHRwczovL2lkcC5jb21wcm9iYW50ZXNlbGVjdHJvbmljb3MuZ28uY3IvYXV0aC9yZWFsbXMvcnV0LXN0YWciLCJhdWQiOiJhcGktc3RhZyIsInN1YiI6IjA4YWY1MzI0LTdkYWYtNDhhMC05NTQwLTFjOGRmNzVjNGU4NCIsInR5cCI6IkJlYXJlciIsImF6cCI6ImFwaS1zdGFnIiwic2Vzc2lvbl9zdGF0ZSI6ImI3ZmIwOWJhLTNmZWMtNGQxNC05MDYwLWE2M2NkOWFhOWNkMCIsImNsaWVudF9zZXNzaW9uIjoiNDY1ZDZmNzktNTNhOC00YjY0LTllMTktZjhiZTJiNzZiODUzIiwiYWxsb3dlZC1vcmlnaW5zIjpbXSwicmVzb3VyY2VfYWNjZXNzIjp7ImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJ2aWV3LXByb2ZpbGUiXX19LCJuYW1lIjoiQUxGQVJPICYgSEVSTkFOREVaIElUIENPUlBPUkFUSU9OIElUQ08gU09DSUVEQUQgQU5PTklNQSAiLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJjcGotMy0xMDEtNjYwOTE5QHN0YWcuY29tcHJvYmFudGVzZWxlY3Ryb25pY29zLmdvLmNyIiwiZ2l2ZW5fbmFtZSI6IkFMRkFSTyAmIEhFUk5BTkRFWiBJVCBDT1JQT1JBVElPTiBJVENPIFNPQ0lFREFEIEFOT05JTUEiLCJwb2xpY3ktaWQiOiI1OGE2MjAzMzc2ZWFlMTQwOGNlNWU3ZGQiLCJlbWFpbCI6ImNwai0zLTEwMS02NjA5MTlAc3RhZy5jb21wcm9iYW50ZXNlbGVjdHJvbmljb3MuZ28uY3IifQ.eyGqDfqb4aHw_cA8x2dQCGdaH0Z-qOBFEwHJ15pS2MWqcCti2aw3gC_2riZS9Ss-gI1Q4eTNWpbelo_sRf6-DEvx4P6Q-deDWwgFEzZuQj2srUi6tN36sT25XXtsz-Y2baCmn13cWnfWkrFqKx6Gs4nTw9fXcco21QLpkj4YW8j7l3eFuFHzRj20JR9wqb8ZpNmH2Y9KjYPr9eL2pPPWVMDqt4NeVSARMkbH0I9hD8-s7GIZyUnjpXBQh8kkQ679kNwDpPvbC9h7SRRgKqA6Mn7ZQ0Lvu8XLveyNR4ptOSfYnWn4sgCFwO5oPH1rN6nqT_FkSq7InvoKE0mLZEdTfA",
-    "expires": 300
-}
+<pre class=" language-json"><code class="prism  language-json"><span class="token punctuation">{</span>
+    <span class="token string">"code"</span><span class="token punctuation">:</span> <span class="token number">201</span><span class="token punctuation">,</span>
+    <span class="token string">"accessToken"</span><span class="token punctuation">:</span> <span class="token string">"eyJhbGciOiJSUzI1NiJ9.eyJqdGkiOiIzNjY0NzAyMS1lYTRkLTQxYjItOTRkNi1hMTMyYzZjMzA0NGIiLCJleHAiOjE1Mjk2MTA3NDUsIm5iZiI6MCwiaWF0IjoxNTI5NjEwNDQ1LCJpc3MiOiJodHRwczovL2lkcC5jb21wcm9iYW50ZXNlbGVjdHJvbmljb3MuZ28uY3IvYXV0aC9yZWFsbXMvcnV0LXN0YWciLCJhdWQiOiJhcGktc3RhZyIsInN1YiI6IjA4YWY1MzI0LTdkYWYtNDhhMC05NTQwLTFjOGRmNzVjNGU4NCIsInR5cCI6IkJlYXJlciIsImF6cCI6ImFwaS1zdGFnIiwic2Vzc2lvbl9zdGF0ZSI6ImI3ZmIwOWJhLTNmZWMtNGQxNC05MDYwLWE2M2NkOWFhOWNkMCIsImNsaWVudF9zZXNzaW9uIjoiNDY1ZDZmNzktNTNhOC00YjY0LTllMTktZjhiZTJiNzZiODUzIiwiYWxsb3dlZC1vcmlnaW5zIjpbXSwicmVzb3VyY2VfYWNjZXNzIjp7ImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJ2aWV3LXByb2ZpbGUiXX19LCJuYW1lIjoiQUxGQVJPICYgSEVSTkFOREVaIElUIENPUlBPUkFUSU9OIElUQ08gU09DSUVEQUQgQU5PTklNQSAiLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJjcGotMy0xMDEtNjYwOTE5QHN0YWcuY29tcHJvYmFudGVzZWxlY3Ryb25pY29zLmdvLmNyIiwiZ2l2ZW5fbmFtZSI6IkFMRkFSTyAmIEhFUk5BTkRFWiBJVCBDT1JQT1JBVElPTiBJVENPIFNPQ0lFREFEIEFOT05JTUEiLCJwb2xpY3ktaWQiOiI1OGE2MjAzMzc2ZWFlMTQwOGNlNWU3ZGQiLCJlbWFpbCI6ImNwai0zLTEwMS02NjA5MTlAc3RhZy5jb21wcm9iYW50ZXNlbGVjdHJvbmljb3MuZ28uY3IifQ.eyGqDfqb4aHw_cA8x2dQCGdaH0Z-qOBFEwHJ15pS2MWqcCti2aw3gC_2riZS9Ss-gI1Q4eTNWpbelo_sRf6-DEvx4P6Q-deDWwgFEzZuQj2srUi6tN36sT25XXtsz-Y2baCmn13cWnfWkrFqKx6Gs4nTw9fXcco21QLpkj4YW8j7l3eFuFHzRj20JR9wqb8ZpNmH2Y9KjYPr9eL2pPPWVMDqt4NeVSARMkbH0I9hD8-s7GIZyUnjpXBQh8kkQ679kNwDpPvbC9h7SRRgKqA6Mn7ZQ0Lvu8XLveyNR4ptOSfYnWn4sgCFwO5oPH1rN6nqT_FkSq7InvoKE0mLZEdTfA"</span><span class="token punctuation">,</span>
+    <span class="token string">"expires"</span><span class="token punctuation">:</span> <span class="token number">300</span>
+<span class="token punctuation">}</span>
 </code></pre>
 <p>La sección del <em>accessToken</em> es lo importante, ya que eso es lo que enviaremos a hacienda con el resto de infomacion para el envio de los comprobantes y consultas.</p>
 <p>El token expira en 300s</p>
@@ -393,56 +393,56 @@
 </tbody>
 </table><p>Nota: <strong>Terminal</strong> y <strong>Sucursal</strong>  son campos opcionales y pueden no ser enviados.</p>
 <h3 id="estrucuctura-del-json">Estrucuctura del JSON:</h3>
-<pre><code>{
-	"TipoCedula": "fisico",
-	"Cedula": "118470589",
-	"Situacion": "normal",
-	"CodigoPais": "506",
-	"Consecutivo": "01",
-	"CodigoSeguridad": "01010101",
-	"TipoDocumento": "FE",
-	"SessionKey": "SHhnbGtVSEJlV3BCUlhFcFI4RE4xdz09OjpquPlO+d01kO61acnZrtBE",
-	"User": "pedro"
-}
+<pre class=" language-json"><code class="prism  language-json"><span class="token punctuation">{</span>
+	<span class="token string">"TipoCedula"</span><span class="token punctuation">:</span> <span class="token string">"fisico"</span><span class="token punctuation">,</span>
+	<span class="token string">"Cedula"</span><span class="token punctuation">:</span> <span class="token string">"118470589"</span><span class="token punctuation">,</span>
+	<span class="token string">"Situacion"</span><span class="token punctuation">:</span> <span class="token string">"normal"</span><span class="token punctuation">,</span>
+	<span class="token string">"CodigoPais"</span><span class="token punctuation">:</span> <span class="token string">"506"</span><span class="token punctuation">,</span>
+	<span class="token string">"Consecutivo"</span><span class="token punctuation">:</span> <span class="token string">"01"</span><span class="token punctuation">,</span>
+	<span class="token string">"CodigoSeguridad"</span><span class="token punctuation">:</span> <span class="token string">"01010101"</span><span class="token punctuation">,</span>
+	<span class="token string">"TipoDocumento"</span><span class="token punctuation">:</span> <span class="token string">"FE"</span><span class="token punctuation">,</span>
+	<span class="token string">"SessionKey"</span><span class="token punctuation">:</span> <span class="token string">"SHhnbGtVSEJlV3BCUlhFcFI4RE4xdz09OjpquPlO+d01kO61acnZrtBE"</span><span class="token punctuation">,</span>
+	<span class="token string">"User"</span><span class="token punctuation">:</span> <span class="token string">"pedro"</span>
+<span class="token punctuation">}</span>
 </code></pre>
 <h3 id="respuesta-del-recurso-6">Respuesta del recurso:</h3>
-<pre><code>{
-    "code": 200,
-    "msg": "ok",
-    "data": {
-        "clave": "50625061800011847058900100001010000000001101010101",
-        "consecutivo": "00100001010000000001"
-    }
-}
+<pre class=" language-json"><code class="prism  language-json"><span class="token punctuation">{</span>
+    <span class="token string">"code"</span><span class="token punctuation">:</span> <span class="token number">200</span><span class="token punctuation">,</span>
+    <span class="token string">"msg"</span><span class="token punctuation">:</span> <span class="token string">"ok"</span><span class="token punctuation">,</span>
+    <span class="token string">"data"</span><span class="token punctuation">:</span> <span class="token punctuation">{</span>
+        <span class="token string">"clave"</span><span class="token punctuation">:</span> <span class="token string">"50625061800011847058900100001010000000001101010101"</span><span class="token punctuation">,</span>
+        <span class="token string">"consecutivo"</span><span class="token punctuation">:</span> <span class="token string">"00100001010000000001"</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
 </code></pre>
 <h1 id="crear-clave-por-medio-de-una-funcion">Crear clave por medio de una funcion</h1>
 <p>Si la clave no se desea obtener por medio del endpoint, se puede obtener mediante el codigo de la siguiente manera:</p>
-<pre><code>const generic = require("./controllers/generic-functions");
+<pre class=" language-js"><code class="prism  language-js"><span class="token keyword">const</span> generic <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">"./controllers/generic-functions"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-let datos = {
-    "TipoCedula": "fisico",
-    "Cedula": "118470589",
-    "Situacion": "normal",
-    "CodigoPais": "506",
-    "Consecutivo": "10203040",
-    "CodigoSeguridad": "01010101",
-    "TipoDocumento": "RCE",
-    "SessionKey": "RlpaekZBZnluV0wrZkpLYkVkQVFxZz09OjqYXJ8pAjr0MSx33bgs2Pcf",
-    "User": "pedro"
-}
+<span class="token keyword">let</span> datos <span class="token operator">=</span> <span class="token punctuation">{</span>
+    <span class="token string">"TipoCedula"</span><span class="token punctuation">:</span> <span class="token string">"fisico"</span><span class="token punctuation">,</span>
+    <span class="token string">"Cedula"</span><span class="token punctuation">:</span> <span class="token string">"118470589"</span><span class="token punctuation">,</span>
+    <span class="token string">"Situacion"</span><span class="token punctuation">:</span> <span class="token string">"normal"</span><span class="token punctuation">,</span>
+    <span class="token string">"CodigoPais"</span><span class="token punctuation">:</span> <span class="token string">"506"</span><span class="token punctuation">,</span>
+    <span class="token string">"Consecutivo"</span><span class="token punctuation">:</span> <span class="token string">"10203040"</span><span class="token punctuation">,</span>
+    <span class="token string">"CodigoSeguridad"</span><span class="token punctuation">:</span> <span class="token string">"01010101"</span><span class="token punctuation">,</span>
+    <span class="token string">"TipoDocumento"</span><span class="token punctuation">:</span> <span class="token string">"RCE"</span><span class="token punctuation">,</span>
+    <span class="token string">"SessionKey"</span><span class="token punctuation">:</span> <span class="token string">"RlpaekZBZnluV0wrZkpLYkVkQVFxZz09OjqYXJ8pAjr0MSx33bgs2Pcf"</span><span class="token punctuation">,</span>
+    <span class="token string">"User"</span><span class="token punctuation">:</span> <span class="token string">"pedro"</span>
+<span class="token punctuation">}</span>
 
-generic.documentKey(datos).then((data) =&gt; {
-    console.log(data);
-})
+generic<span class="token punctuation">.</span><span class="token function">documentKey</span><span class="token punctuation">(</span>datos<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
 </code></pre>
 <h3 id="retorna-el-siguiente-valor-en-data">Retorna el siguiente valor en data:</h3>
-<pre><code>{ code: 200,
-  msg: 'ok',
-  data:
-	 { 
-	     clave: '50625061800011847058900100001070010203040101010101',
-         consecutivo: '00100001070010203040'
-     } 
-}
+<pre class=" language-json"><code class="prism  language-json"><span class="token punctuation">{</span> code<span class="token punctuation">:</span> <span class="token number">200</span><span class="token punctuation">,</span>
+  msg<span class="token punctuation">:</span> <span class="token string">'ok'</span><span class="token punctuation">,</span>
+  data<span class="token punctuation">:</span>
+	 <span class="token punctuation">{</span> 
+	     clave<span class="token punctuation">:</span> <span class="token string">'50625061800011847058900100001070010203040101010101'</span><span class="token punctuation">,</span>
+         consecutivo<span class="token punctuation">:</span> <span class="token string">'00100001070010203040'</span>
+     <span class="token punctuation">}</span> 
+<span class="token punctuation">}</span>
 </code></pre>
 
