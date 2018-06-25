@@ -415,4 +415,34 @@
     }
 }
 </code></pre>
+<h1 id="crear-clave-por-medio-de-una-funcion">Crear clave por medio de una funcion</h1>
+<p>Si la clave no se desea obtener por medio del endpoint, se puede obtener mediante el codigo de la siguiente manera:</p>
+<pre><code>const generic = require("./controllers/generic-functions");
+
+let datos = {
+    "TipoCedula": "fisico",
+    "Cedula": "118470589",
+    "Situacion": "normal",
+    "CodigoPais": "506",
+    "Consecutivo": "10203040",
+    "CodigoSeguridad": "01010101",
+    "TipoDocumento": "RCE",
+    "SessionKey": "RlpaekZBZnluV0wrZkpLYkVkQVFxZz09OjqYXJ8pAjr0MSx33bgs2Pcf",
+    "User": "pedro"
+}
+
+generic.documentKey(datos).then((data) =&gt; {
+    console.log(data);
+})
+</code></pre>
+<h3 id="retorna-el-siguiente-valor-en-data">Retorna el siguiente valor en data:</h3>
+<pre><code>{ code: 200,
+  msg: 'ok',
+  data:
+	 { 
+	     clave: '50625061800011847058900100001070010203040101010101',
+         consecutivo: '00100001070010203040'
+     } 
+}
+</code></pre>
 
