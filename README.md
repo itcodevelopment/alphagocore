@@ -338,4 +338,81 @@
 </code></pre>
 <p>La sección del <em>accessToken</em> es lo importante, ya que eso es lo que enviaremos a hacienda con el resto de infomacion para el envio de los comprobantes y consultas.</p>
 <p>El token expira en 300s</p>
+<h1 id="clave-para-firmar-documentos">Clave para firmar documentos</h1>
+<p>Para generar una clave que previamente puede ser utilizada para firmar los diferentes tipos de documentos xml se debe enviar una peticion de tipo <strong>POST</strong> a la siguiente ruta : <strong>/api/generate/document-key</strong></p>
+<h3 id="datos-requeridos-7">Datos requeridos:</h3>
+
+<table>
+<thead>
+<tr>
+<th>Clave</th>
+<th>Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>TipoDocumento</strong></td>
+<td>FE - ND - NC - TE - CCE - CPCE - RCE (<em>String</em>)</td>
+</tr>
+<tr>
+<td><strong>TipoCedula</strong></td>
+<td>fisico - juridico (<em>String</em>)</td>
+</tr>
+<tr>
+<td><strong>Cedula</strong></td>
+<td>Numero de cedula sin guiones (<em>String</em>)</td>
+</tr>
+<tr>
+<td><strong>Situacion</strong></td>
+<td>normal - contingencia - sininternet (<em>String</em>)</td>
+</tr>
+<tr>
+<td><strong>Consecutivo</strong></td>
+<td>Consecutivo de factura sin letras (Solo digitos) (<em>String</em>)</td>
+</tr>
+<tr>
+<td><strong>Codigo de Seguridad</strong></td>
+<td>codigo de 8 numeros (<em>String</em>)</td>
+</tr>
+<tr>
+<td><strong>Terminal</strong></td>
+<td>Numero de terminal (<em>String</em>)</td>
+</tr>
+<tr>
+<td><strong>Sucursal</strong></td>
+<td>Numero de sucursal (<em>String</em>)</td>
+</tr>
+<tr>
+<td><strong>SessionKey</strong></td>
+<td>SessionKey del usuario logueado (<em>String</em>)</td>
+</tr>
+<tr>
+<td><strong>User</strong></td>
+<td>Nombre de usuario logueado</td>
+</tr>
+</tbody>
+</table><p>Nota: <strong>Terminal</strong> y <strong>Sucursal</strong>  son campos opcionales y pueden no ser enviados.</p>
+<h3 id="estrucuctura-del-json">Estrucuctura del JSON:</h3>
+<pre><code>{
+	"TipoCedula": "fisico",
+	"Cedula": "118470589",
+	"Situacion": "normal",
+	"CodigoPais": "506",
+	"Consecutivo": "01",
+	"CodigoSeguridad": "01010101",
+	"TipoDocumento": "FE",
+	"SessionKey": "SHhnbGtVSEJlV3BCUlhFcFI4RE4xdz09OjpquPlO+d01kO61acnZrtBE",
+	"User": "pedro"
+}
+</code></pre>
+<h3 id="respuesta-del-recurso-6">Respuesta del recurso:</h3>
+<pre><code>{
+    "code": 200,
+    "msg": "ok",
+    "data": {
+        "clave": "50625061800011847058900100001010000000001101010101",
+        "consecutivo": "00100001010000000001"
+    }
+}
+</code></pre>
 
