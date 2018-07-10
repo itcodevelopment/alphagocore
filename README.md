@@ -511,4 +511,798 @@ generic<span class="token punctuation">.</span><span class="token function">docu
      <span class="token punctuation">}</span> 
 <span class="token punctuation">}</span>
 </code></pre>
+<h1 id="crear-factura">Crear Factura</h1>
+<p>Se debe de enviar una petición de tipo <strong>POST</strong> a la siguiente ruta: <strong>/api/invoice</strong></p>
+<h2 id="datos-requeridos-8">Datos requeridos</h2>
+<ul>
+<li>
+<p><strong>CompanyAPI:</strong> Id de la compañía creada</p>
+</li>
+<li>
+<p><strong>Environment:</strong> Ambiente en el que se envía la factura</p>
+</li>
+<li>
+<p><strong>Key</strong></p>
+<ul>
+<li>
+<p><strong>Branch:</strong> Numero de la sucursal donde se crea el documento</p>
+<blockquote>
+<p>Máximo 3 dígitos.<br>
+<strong>Requerido</strong></p>
+</blockquote>
+</li>
+<li>
+<p><strong>Terminal:</strong> Numero de la terminal donde se crea el documento</p>
+<blockquote>
+<p>Máximo 5 dígitos.<br>
+<strong>Requerido</strong></p>
+</blockquote>
+</li>
+<li>
+<p><strong>Type:</strong> Tipo de documento</p>
+<blockquote>
+<p>Ver Anexo de Tablas. Tabla #01.<br>
+<strong>Requerido</strong></p>
+</blockquote>
+</li>
+<li>
+<p><strong>Voucher:</strong> Numero consecutivo del comprobante</p>
+<blockquote>
+<p>Máximo 10 dígitos.<br>
+<strong>Requerido</strong></p>
+</blockquote>
+</li>
+<li>
+<p><strong>Country:</strong> Código de país</p>
+<blockquote>
+<p>3 dígitos.<br>
+<strong>Requerido</strong></p>
+</blockquote>
+</li>
+<li>
+<p><strong>Day:</strong> Día del mes de emisión del documento</p>
+<blockquote>
+<p>Máximo 2 dígitos.<br>
+<strong>Requerido</strong></p>
+</blockquote>
+</li>
+<li>
+<p><strong>Month:</strong> Mes del año de emisión del documento</p>
+<blockquote>
+<p>Máximo 2 dígitos.<br>
+<strong>Requerido</strong></p>
+</blockquote>
+</li>
+<li>
+<p><strong>Year:</strong> Año de emisión del documento</p>
+<blockquote>
+<p>Máximo 2 dígitos.<br>
+<strong>Requerido</strong></p>
+</blockquote>
+</li>
+<li>
+<p><strong>Situation:</strong> Situación de presentación del documento</p>
+<blockquote>
+<p>Ver Anexo de Tablas. Tabla #01.<br>
+<strong>Requerido</strong></p>
+</blockquote>
+</li>
+<li>
+<p><strong>SecuryCode:</strong> Código numérico (aleatorios) generado por el sistema</p>
+<blockquote>
+<p>Máximo 8 dígitos.<br>
+<strong>Requerido</strong></p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>Header</strong></p>
+<ul>
+<li>
+<p><strong>Date:</strong> Fecha de creación del documento</p>
+<blockquote>
+<p>YYYY-MM-DDThh:mi:ss[Z|(+|-)hh:mm]. Ejemplo: 2016-09-26T13:00:00+06:00.<br>
+<strong>Requerido</strong></p>
+</blockquote>
+</li>
+<li>
+<p><strong>TermOfSale:</strong> Condición de venta</p>
+<blockquote>
+<p>Ver Anexo de Tablas. Tabla #02.<br>
+<strong>Requerido</strong></p>
+</blockquote>
+</li>
+<li>
+<p><strong>CreditTerm:</strong> Plazo del crédito.</p>
+<blockquote>
+<p>En caso de contado “0”.<br>
+<strong>Requerido</strong></p>
+</blockquote>
+</li>
+<li>
+<p><strong>PaymentMethod:</strong> Medio de pago de la factura</p>
+<blockquote>
+<p><strong>Requerido para Factura Electrónica y Tiquete Electrónico.</strong></p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>Issuer</strong></p>
+<ul>
+<li>
+<p><strong>Name:</strong> Nombre o razón social del emisor</p>
+<blockquote>
+<p>Máximo 80 caracteres.<br>
+<strong>Requerido</strong></p>
+</blockquote>
+</li>
+<li>
+<p><strong>Identification</strong></p>
+<ul>
+<li>
+<p><strong>Type :</strong> Tipo de identificación del emisor</p>
+<blockquote>
+<p>Ver Anexo de Tablas. Tabla #03.<br>
+Máximo 2 dígitos.<br>
+<strong>Requerido</strong></p>
+</blockquote>
+</li>
+<li>
+<p><strong>Number:</strong> Número de cédula física/jurídica/NITE/DIMEX del emisor</p>
+<blockquote>
+<p>Ver Anexo de Tablas. Tabla #03.<br>
+Máximo 12 dígitos.<br>
+<strong>Requerido</strong></p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>TradeName:</strong> Nombre comercial del emisor</p>
+</li>
+<li>
+<p><strong>Location</strong></p>
+<ul>
+<li>
+<p><strong>Province:</strong> Provincia del emisor</p>
+<blockquote>
+<p>Máximo 1 digito.<br>
+<strong>Requerido</strong></p>
+</blockquote>
+</li>
+<li>
+<p><strong>Canton:</strong> Cantón del emisor</p>
+<blockquote>
+<p>Máximo 2 dígitos.<br>
+<strong>Requerido</strong></p>
+</blockquote>
+</li>
+<li>
+<p><strong>District:</strong> Distrito del emisor</p>
+<blockquote>
+<p>Máximo 2 dígitos.<br>
+<strong>Requerido</strong></p>
+</blockquote>
+</li>
+<li>
+<p><strong>Neighborhood:</strong> Barrio del emisor</p>
+<blockquote>
+<p>Máximo 2 dígitos.<br>
+<strong>Requerido</strong></p>
+</blockquote>
+</li>
+<li>
+<p><strong>Address:</strong> Otras señas de la dirección del emisor</p>
+<blockquote>
+<p>Máximo 160 caracteres.<br>
+<strong>Requerido</strong></p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>Phone</strong></p>
+<ul>
+<li>
+<p><strong>CountryCode:</strong> Código de país</p>
+<blockquote>
+<p>3 dígitos.<br>
+<strong>Requerido</strong></p>
+</blockquote>
+</li>
+<li>
+<p><strong>Number:</strong> Número de teléfono</p>
+<blockquote>
+<p>Máximo 20 dígitos.<br>
+<strong>Requerido</strong></p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>Email:</strong> Correo electrónico del emisor</p>
+<blockquote>
+<p>\s*\w+([-+.’]\w+)<em>@\w+([-.]\w+)</em>.\w+([-.]\w+)<em>\s</em>.<br>
+<strong>Requerido</strong></p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>Receiver</strong></p>
+<ul>
+<li>
+<p><strong>Name:</strong> Nombre o razón social del receptor</p>
+<blockquote>
+<p>Máximo 80 caracteres.<br>
+<strong>Requerido</strong></p>
+</blockquote>
+</li>
+<li>
+<p><strong>Identification</strong></p>
+<ul>
+<li>
+<p><strong>Type:</strong> Tipo de identificación del receptor</p>
+<blockquote>
+<p>Ver Anexo de Tablas. Tabla #03.<br>
+Máximo 2 dígitos.<br>
+<strong>Requerido</strong></p>
+</blockquote>
+</li>
+<li>
+<p><strong>Number:</strong> Número de cédula física/jurídica/NITE/DIMEX del receptor</p>
+<blockquote>
+<p>Ver Anexo de Tablas. Tabla #03.<br>
+Máximo 12 dígitos.<br>
+<strong>Requerido</strong></p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>Email:</strong> Correo electrónico del receptor</p>
+<blockquote>
+<p>\s*\w+([-+.’]\w+)<em>@\w+([-.]\w+)</em>.\w+([-.]\w+)<em>\s</em>.<br>
+<strong>Requerido</strong></p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>Detail</strong></p>
+<ul>
+<li>
+<p><strong>0</strong></p>
+<blockquote>
+<p>Máximo 1000 líneas por documento.</p>
+</blockquote>
+<ul>
+<li>
+<p><strong>Number:</strong> Numero de línea</p>
+<blockquote>
+<p><strong>Requerido</strong></p>
+</blockquote>
+</li>
+<li>
+<p><strong>Code</strong></p>
+<ul>
+<li>
+<p><strong>Type:</strong> Tipo de Código de producto/servicio</p>
+<blockquote>
+<p>Número decimal compuesto por 13 enteros y 3 decimales<br>
+Máximo 2 digitos<br>
+Ver Anexo de Tablas. Tabla #04<br>
+<strong>Requerido</strong></p>
+</blockquote>
+</li>
+<li>
+<p><strong>Code:</strong> Código</p>
+<blockquote>
+<p>Máximo 20 caracteres<br>
+<strong>Requerido</strong></p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>Quantity:</strong> Cantidad</p>
+<blockquote>
+<p>Número decimal compuesto por 13 enteros y 3 decimales<br>
+<strong>Requerido</strong></p>
+</blockquote>
+</li>
+<li>
+<p><strong>UnitOfMeasure:</strong> Código de la unidad de medida</p>
+<blockquote>
+<p><strong>Requerido</strong></p>
+</blockquote>
+</li>
+<li>
+<p><strong>CommercialUnitOfMeasure:</strong> Nombre comercial de la unidad de medida</p>
+<blockquote>
+<p>Máximo 20 caracteres</p>
+</blockquote>
+</li>
+<li>
+<p><strong>Detail:</strong> Detalle de la mercancía transferida o servicio prestado</p>
+<blockquote>
+<p>Máximo 160 caracteres<br>
+<strong>Requerido</strong></p>
+</blockquote>
+</li>
+<li>
+<p><strong>UnitPrice:</strong> Precio Unitario</p>
+<blockquote>
+<p>Número decimal compuesto por 13 enteros y 3 decimales<br>
+<strong>Requerido</strong></p>
+</blockquote>
+</li>
+<li>
+<p><strong>TotalAmount:</strong> Monto total de la multiplicación de la cantidad por el precio unitario</p>
+<blockquote>
+<p>Número decimal compuesto por 13 enteros y 3 decimales<br>
+<strong>Requerido</strong></p>
+</blockquote>
+</li>
+<li>
+<p><strong>Discount:</strong> Monto de descuentos concedidos</p>
+<blockquote>
+<p>Número decimal compuesto por 13 enteros y 3 decimales</p>
+</blockquote>
+</li>
+<li>
+<p><strong>NatureOfDiscount:</strong> Descripción del descuento concedido</p>
+<blockquote>
+<p>Máximo 80 caracteres<br>
+<strong>Requerido si aplica descuento</strong></p>
+</blockquote>
+</li>
+<li>
+<p><strong>SubTotal:</strong> Se obtiene de la resta del campo “monto total” menos “monto de descuento concedido"</p>
+<blockquote>
+<p>Número decimal compuesto por 13 enteros y 3 decimales<br>
+<strong>Requerido</strong></p>
+</blockquote>
+</li>
+<li>
+<p><strong>Tax</strong></p>
+<ul>
+<li><strong>0</strong>
+<ul>
+<li>
+<p><strong>Code:</strong> Código del impuesto</p>
+<blockquote>
+<p>Ver Anexo de Tablas. Tabla #05<br>
+2 dígitos<br>
+<strong>Requerido</strong></p>
+</blockquote>
+</li>
+<li>
+<p><strong>Rate:</strong> Porcentaje del impuesto</p>
+<blockquote>
+<p>Número decimal compuesto por 4 enteros y 2 decimales<br>
+<strong>Requerido</strong></p>
+</blockquote>
+</li>
+<li>
+<p><strong>Amount:</strong> Monto del impuesto. Se obtiene de la multiplicación del campo subtotal por la tarifa</p>
+<blockquote>
+<p>Número decimal compuesto por 13 enteros y 5 decimales<br>
+<strong>Requerido</strong></p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>TotalLineAmount:</strong> Total por línea de detalle. Se obtiene de la suma de los campos “subtotal” mas “monto del impuesto”</p>
+<blockquote>
+<p>Número decimal compuesto por 13 enteros y 3 decimales<br>
+<strong>Requerido</strong></p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>Summary</strong></p>
+<ul>
+<li>
+<p><strong>Currency:</strong> Código de la moneda</p>
+<blockquote>
+<p>3 caracteres<br>
+<strong>Requerido</strong></p>
+</blockquote>
+</li>
+<li>
+<p><strong>ExchangeRate:</strong> Tipo de cambio</p>
+<blockquote>
+<p>Número decimal compuesto por 13 enteros y 3 decimales<br>
+<strong>Requerido</strong></p>
+</blockquote>
+</li>
+<li>
+<p><strong>TotalTaxedService:</strong> Total servicios gravados con IV</p>
+<blockquote>
+<p>Número decimal compuesto por 13 enteros y 3 decimales<br>
+<strong>Requerido</strong></p>
+</blockquote>
+</li>
+<li>
+<p><strong>TotalExemptService:</strong> Total servicios exentos de IV</p>
+<blockquote>
+<p>Número decimal compuesto por 13 enteros y 3 decimales<br>
+<strong>Requerido</strong></p>
+</blockquote>
+</li>
+<li>
+<p><strong>TotalTaxedGoods:</strong> Total mercadería gravada con IV</p>
+<blockquote>
+<p>Número decimal compuesto por 13 enteros y 3 decimales<br>
+<strong>Requerido</strong></p>
+</blockquote>
+</li>
+<li>
+<p><strong>TotalExemptGoods:</strong> Total mercadería exenta de IV</p>
+<blockquote>
+<p>Número decimal compuesto por 13 enteros y 3 decimales<br>
+<strong>Requerido</strong></p>
+</blockquote>
+</li>
+<li>
+<p><strong>TotalTaxed:</strong> Total gravado</p>
+<blockquote>
+<p>Número decimal compuesto por 13 enteros y 3 decimales<br>
+<strong>Requerido</strong></p>
+</blockquote>
+</li>
+<li>
+<p><strong>TotalExempt:</strong> Total exento</p>
+<blockquote>
+<p>Número decimal compuesto por 13 enteros y 3 decimales<br>
+<strong>Requerido</strong></p>
+</blockquote>
+</li>
+<li>
+<p><strong>TotalSale:</strong> Total de venta</p>
+<blockquote>
+<p>Número decimal compuesto por 13 enteros y 3 decimales<br>
+<strong>Requerido</strong></p>
+</blockquote>
+</li>
+<li>
+<p><strong>TotalDiscounts:</strong> Total descuentos</p>
+<blockquote>
+<p>Número decimal compuesto por 13 enteros y 3 decimales<br>
+<strong>Requerido</strong></p>
+</blockquote>
+</li>
+<li>
+<p><strong>TotalNetSale:</strong> Total de venta neta</p>
+<blockquote>
+<p>Número decimal compuesto por 13 enteros y 3 decimales<br>
+<strong>Requerido</strong></p>
+</blockquote>
+</li>
+<li>
+<p><strong>TotalTaxes:</strong> Total de impuestos</p>
+<blockquote>
+<p>Número decimal compuesto por 13 enteros y 3 decimales<br>
+<strong>Requerido</strong></p>
+</blockquote>
+</li>
+<li>
+<p><strong>TotalVoucher:</strong> Total de comprobante</p>
+<blockquote>
+<p>Número decimal compuesto por 13 enteros y 3 decimales<br>
+<strong>Requerido</strong></p>
+</blockquote>
+</li>
+</ul>
+<h2 id="ejemplo-del-json">Ejemplo del JSON</h2>
+</li>
+</ul>
+<pre class=" language-json"><code class="prism  language-json"><span class="token punctuation">{</span>
+	<span class="token string">"CompanyAPI"</span><span class="token punctuation">:</span> <span class="token string">"78dd8617-c4f0-453b-bd5e-1912f124e731"</span><span class="token punctuation">,</span>
+	<span class="token string">"Environment"</span><span class="token punctuation">:</span> <span class="token string">"stag"</span><span class="token punctuation">,</span>
+	<span class="token string">"Key"</span><span class="token punctuation">:</span> <span class="token punctuation">{</span>
+		<span class="token string">"Branch"</span><span class="token punctuation">:</span> <span class="token string">"01"</span><span class="token punctuation">,</span>
+		<span class="token string">"Terminal"</span><span class="token punctuation">:</span> <span class="token string">"1"</span><span class="token punctuation">,</span>
+		<span class="token string">"Type"</span><span class="token punctuation">:</span> <span class="token string">"01"</span><span class="token punctuation">,</span>
+		<span class="token string">"Voucher"</span><span class="token punctuation">:</span> <span class="token string">"505"</span><span class="token punctuation">,</span>
+		<span class="token string">"Country"</span><span class="token punctuation">:</span> <span class="token string">"506"</span><span class="token punctuation">,</span>
+		<span class="token string">"Day"</span><span class="token punctuation">:</span> <span class="token string">"20"</span><span class="token punctuation">,</span>
+		<span class="token string">"Month"</span><span class="token punctuation">:</span> <span class="token string">"6"</span><span class="token punctuation">,</span>
+		<span class="token string">"Year"</span><span class="token punctuation">:</span> <span class="token string">"18"</span><span class="token punctuation">,</span>
+		<span class="token string">"Situation"</span><span class="token punctuation">:</span> <span class="token string">"1"</span><span class="token punctuation">,</span>
+		<span class="token string">"SecuryCode"</span><span class="token punctuation">:</span> <span class="token string">"71993642"</span>
+	<span class="token punctuation">}</span><span class="token punctuation">,</span>
+	<span class="token string">"Header"</span><span class="token punctuation">:</span> <span class="token punctuation">{</span>
+		<span class="token string">"Date"</span><span class="token punctuation">:</span> <span class="token string">"2018-06-20T16:15:21-06:00"</span><span class="token punctuation">,</span>
+		<span class="token string">"TermOfSale"</span><span class="token punctuation">:</span> <span class="token string">"02"</span><span class="token punctuation">,</span>
+		<span class="token string">"CreditTerm"</span><span class="token punctuation">:</span> <span class="token string">"15"</span><span class="token punctuation">,</span>
+		<span class="token string">"PaymentMethod"</span><span class="token punctuation">:</span> <span class="token string">"03"</span>
+	<span class="token punctuation">}</span><span class="token punctuation">,</span>
+	<span class="token string">"Issuer"</span><span class="token punctuation">:</span> <span class="token punctuation">{</span>
+		<span class="token string">"Name"</span><span class="token punctuation">:</span> <span class="token string">"ITCO S.A"</span><span class="token punctuation">,</span>
+		<span class="token string">"Identification"</span><span class="token punctuation">:</span> <span class="token punctuation">{</span>
+			<span class="token string">"Type"</span><span class="token punctuation">:</span> <span class="token string">"02"</span><span class="token punctuation">,</span>
+			<span class="token string">"Number"</span><span class="token punctuation">:</span> <span class="token string">"3101660919"</span>
+		<span class="token punctuation">}</span><span class="token punctuation">,</span>
+		<span class="token string">"TradeName"</span><span class="token punctuation">:</span> <span class="token string">"ITCO S.A."</span><span class="token punctuation">,</span>
+		<span class="token string">"Location"</span><span class="token punctuation">:</span> <span class="token punctuation">{</span>
+			<span class="token string">"Province"</span><span class="token punctuation">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
+			<span class="token string">"Canton"</span><span class="token punctuation">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
+			<span class="token string">"District"</span><span class="token punctuation">:</span> <span class="token number">5</span><span class="token punctuation">,</span>
+			<span class="token string">"Neighborhood"</span><span class="token punctuation">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
+			<span class="token string">"Address"</span><span class="token punctuation">:</span> <span class="token string">"DEL COLEGIO DE ABOGADOS, 100M SUR Y 250M OESTE. EDIFICIO CAGIOCA."</span>
+		<span class="token punctuation">}</span><span class="token punctuation">,</span>
+		<span class="token string">"Phone"</span><span class="token punctuation">:</span> <span class="token punctuation">{</span>
+			<span class="token string">"CountryCode"</span><span class="token punctuation">:</span> <span class="token number">506</span><span class="token punctuation">,</span>
+			<span class="token string">"Number"</span><span class="token punctuation">:</span> <span class="token string">"22516262"</span>
+		<span class="token punctuation">}</span><span class="token punctuation">,</span>
+		<span class="token string">"Email"</span><span class="token punctuation">:</span> <span class="token string">"info@itcoint.com"</span>
+	<span class="token punctuation">}</span><span class="token punctuation">,</span>
+	<span class="token string">"Receiver"</span><span class="token punctuation">:</span> <span class="token punctuation">{</span>
+		<span class="token string">"Name"</span><span class="token punctuation">:</span> <span class="token string">"Los patitos S.A"</span><span class="token punctuation">,</span>
+		<span class="token string">"Identification"</span><span class="token punctuation">:</span> <span class="token punctuation">{</span>
+			<span class="token string">"Type"</span><span class="token punctuation">:</span> <span class="token string">"02"</span><span class="token punctuation">,</span>
+			<span class="token string">"Number"</span><span class="token punctuation">:</span> <span class="token string">"3101234567"</span>
+		<span class="token punctuation">}</span><span class="token punctuation">,</span>
+		<span class="token string">"Email"</span><span class="token punctuation">:</span> <span class="token string">"info@lospatitos.com"</span>
+	<span class="token punctuation">}</span><span class="token punctuation">,</span>
+	<span class="token string">"Detail"</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token punctuation">{</span>
+		<span class="token string">"Number"</span><span class="token punctuation">:</span> <span class="token string">"1"</span><span class="token punctuation">,</span>
+		<span class="token string">"Code"</span><span class="token punctuation">:</span> <span class="token punctuation">{</span>
+			<span class="token string">"Type"</span><span class="token punctuation">:</span> <span class="token string">"04"</span><span class="token punctuation">,</span>
+			<span class="token string">"Code"</span><span class="token punctuation">:</span> <span class="token string">"CONTRL."</span>
+		<span class="token punctuation">}</span><span class="token punctuation">,</span>
+		<span class="token string">"Quantity"</span><span class="token punctuation">:</span> <span class="token number">1.0</span><span class="token punctuation">,</span>
+		<span class="token string">"UnitOfMeasure"</span><span class="token punctuation">:</span> <span class="token string">"Sp"</span><span class="token punctuation">,</span>
+		<span class="token string">"CommercialUnitOfMeasure"</span><span class="token punctuation">:</span> <span class="token keyword">null</span><span class="token punctuation">,</span>
+		<span class="token string">"Detail"</span><span class="token punctuation">:</span> <span class="token string">"Control de acceso Hikvision Voltaje DC 00V/1a"</span><span class="token punctuation">,</span>
+		<span class="token string">"UnitPrice"</span><span class="token punctuation">:</span> <span class="token number">213.0</span><span class="token punctuation">,</span>
+		<span class="token string">"TotalAmount"</span><span class="token punctuation">:</span> <span class="token number">213.0</span><span class="token punctuation">,</span>
+		<span class="token string">"Discount"</span><span class="token punctuation">:</span> <span class="token keyword">null</span><span class="token punctuation">,</span>
+		<span class="token string">"NatureOfDiscount"</span><span class="token punctuation">:</span> <span class="token string">""</span><span class="token punctuation">,</span>
+		<span class="token string">"SubTotal"</span><span class="token punctuation">:</span> <span class="token number">213.0</span><span class="token punctuation">,</span>
+		<span class="token string">"Tax"</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token punctuation">{</span>
+			<span class="token string">"Code"</span><span class="token punctuation">:</span> <span class="token string">"01"</span><span class="token punctuation">,</span>
+			<span class="token string">"Rate"</span><span class="token punctuation">:</span> <span class="token number">13.00</span><span class="token punctuation">,</span>
+			<span class="token string">"Amount"</span><span class="token punctuation">:</span> <span class="token number">27.69</span><span class="token punctuation">,</span>
+			<span class="token string">"Exoneration"</span><span class="token punctuation">:</span> <span class="token keyword">null</span>
+		<span class="token punctuation">}</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+		<span class="token string">"TotalLineAmount"</span><span class="token punctuation">:</span> <span class="token number">240.69</span>
+	<span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+		<span class="token string">"Number"</span><span class="token punctuation">:</span> <span class="token string">"2"</span><span class="token punctuation">,</span>
+		<span class="token string">"Code"</span><span class="token punctuation">:</span> <span class="token punctuation">{</span>
+			<span class="token string">"Type"</span><span class="token punctuation">:</span> <span class="token string">"04"</span><span class="token punctuation">,</span>
+			<span class="token string">"Code"</span><span class="token punctuation">:</span> <span class="token string">"ENRVPN."</span>
+		<span class="token punctuation">}</span><span class="token punctuation">,</span>
+		<span class="token string">"Quantity"</span><span class="token punctuation">:</span> <span class="token number">1.0</span><span class="token punctuation">,</span>
+		<span class="token string">"UnitOfMeasure"</span><span class="token punctuation">:</span> <span class="token string">"Sp"</span><span class="token punctuation">,</span>
+		<span class="token string">"CommercialUnitOfMeasure"</span><span class="token punctuation">:</span> <span class="token keyword">null</span><span class="token punctuation">,</span>
+		<span class="token string">"Detail"</span><span class="token punctuation">:</span> <span class="token string">"Enrutador Vpn Conmutador de 4 puertos Gige Doble banda Linksys"</span><span class="token punctuation">,</span>
+		<span class="token string">"UnitPrice"</span><span class="token punctuation">:</span> <span class="token number">265.0</span><span class="token punctuation">,</span>
+		<span class="token string">"TotalAmount"</span><span class="token punctuation">:</span> <span class="token number">265.0</span><span class="token punctuation">,</span>
+		<span class="token string">"Discount"</span><span class="token punctuation">:</span> <span class="token keyword">null</span><span class="token punctuation">,</span>
+		<span class="token string">"NatureOfDiscount"</span><span class="token punctuation">:</span> <span class="token string">""</span><span class="token punctuation">,</span>
+		<span class="token string">"SubTotal"</span><span class="token punctuation">:</span> <span class="token number">265.0</span><span class="token punctuation">,</span>
+		<span class="token string">"Tax"</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token punctuation">{</span>
+			<span class="token string">"Code"</span><span class="token punctuation">:</span> <span class="token string">"01"</span><span class="token punctuation">,</span>
+			<span class="token string">"Rate"</span><span class="token punctuation">:</span> <span class="token number">13.00</span><span class="token punctuation">,</span>
+			<span class="token string">"Amount"</span><span class="token punctuation">:</span> <span class="token number">34.45</span><span class="token punctuation">,</span>
+			<span class="token string">"Exoneration"</span><span class="token punctuation">:</span> <span class="token keyword">null</span>
+		<span class="token punctuation">}</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+		<span class="token string">"TotalLineAmount"</span><span class="token punctuation">:</span> <span class="token number">299.45</span>
+	<span class="token punctuation">}</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+	<span class="token string">"Summary"</span><span class="token punctuation">:</span> <span class="token punctuation">{</span>
+		<span class="token string">"Currency"</span><span class="token punctuation">:</span> <span class="token string">"USD"</span><span class="token punctuation">,</span>
+		<span class="token string">"ExchangeRate"</span><span class="token punctuation">:</span> <span class="token number">570.31</span><span class="token punctuation">,</span>
+		<span class="token string">"TotalTaxedService"</span><span class="token punctuation">:</span> <span class="token number">478.0</span><span class="token punctuation">,</span>
+		<span class="token string">"TotalExemptService"</span><span class="token punctuation">:</span> <span class="token number">0.0</span><span class="token punctuation">,</span>
+		<span class="token string">"TotalTaxedGoods"</span><span class="token punctuation">:</span> <span class="token number">0.0</span><span class="token punctuation">,</span>
+		<span class="token string">"TotalExemptGoods"</span><span class="token punctuation">:</span> <span class="token number">0.0</span><span class="token punctuation">,</span>
+		<span class="token string">"TotalTaxed"</span><span class="token punctuation">:</span> <span class="token number">478.0</span><span class="token punctuation">,</span>
+		<span class="token string">"TotalExempt"</span><span class="token punctuation">:</span> <span class="token number">0.0</span><span class="token punctuation">,</span>
+		<span class="token string">"TotalSale"</span><span class="token punctuation">:</span> <span class="token number">478.0</span><span class="token punctuation">,</span>
+		<span class="token string">"TotalDiscounts"</span><span class="token punctuation">:</span> <span class="token number">0.0</span><span class="token punctuation">,</span>
+		<span class="token string">"TotalNetSale"</span><span class="token punctuation">:</span> <span class="token number">478.0</span><span class="token punctuation">,</span>
+		<span class="token string">"TotalTaxes"</span><span class="token punctuation">:</span> <span class="token number">62.14</span><span class="token punctuation">,</span>
+		<span class="token string">"TotalVoucher"</span><span class="token punctuation">:</span> <span class="token number">540.14</span>
+	<span class="token punctuation">}</span><span class="token punctuation">,</span>
+	<span class="token string">"Reference"</span><span class="token punctuation">:</span> <span class="token keyword">null</span><span class="token punctuation">,</span>
+	<span class="token string">"Other"</span><span class="token punctuation">:</span> <span class="token keyword">null</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<h2 id="anexo-de-tablas">Anexo de tablas</h2>
+<p>Tablas requeridas para el envio de la Factura Electrónica</p>
+<h3 id="tabla-1">Tabla #1</h3>
 
+<table>
+<thead>
+<tr>
+<th>Tipo de comprobante o documento asociado</th>
+<th align="center">Código</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Factura electrónica</td>
+<td align="center">01</td>
+</tr>
+<tr>
+<td>Nota de débito electrónica</td>
+<td align="center">02</td>
+</tr>
+<tr>
+<td>Nota de crédito electrónica</td>
+<td align="center">03</td>
+</tr>
+<tr>
+<td>Tiquete Electrónico</td>
+<td align="center">04</td>
+</tr>
+<tr>
+<td>Confirmación de aceptación del comprobante electrónico</td>
+<td align="center">05</td>
+</tr>
+<tr>
+<td>Confirmación de aceptación parcial del comprobante electrónico</td>
+<td align="center">06</td>
+</tr>
+<tr>
+<td>Confirmación de rechazo del comprobante electrónico</td>
+<td align="center">07</td>
+</tr>
+</tbody>
+</table><h3 id="tabla-2">Tabla #2</h3>
+
+<table>
+<thead>
+<tr>
+<th>Condición de la venta</th>
+<th align="center">Código</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Contado</td>
+<td align="center">01</td>
+</tr>
+<tr>
+<td>Crédito</td>
+<td align="center">02</td>
+</tr>
+<tr>
+<td>Consignación</td>
+<td align="center">03</td>
+</tr>
+<tr>
+<td>Apartado</td>
+<td align="center">04</td>
+</tr>
+<tr>
+<td>Arrendamiento con opción de compra</td>
+<td align="center">05</td>
+</tr>
+<tr>
+<td>Arrendamiento en función financiera</td>
+<td align="center">06</td>
+</tr>
+<tr>
+<td>Otros (se debe indicar la condición de la venta)</td>
+<td align="center">99</td>
+</tr>
+</tbody>
+</table><h3 id="tabla-3">Tabla #3</h3>
+
+<table>
+<thead>
+<tr>
+<th align="center">Código</th>
+<th align="center">Tipo de identificación</th>
+<th>Longitud</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">01</td>
+<td align="center">Cedula Física</td>
+<td>Debe de contener 9 dígitos, sin cero al inicio y sin guiones.</td>
+</tr>
+<tr>
+<td align="center">02</td>
+<td align="center">Cedula Jurídica</td>
+<td>Debe contener 10 dígitos, sin cero al inicio y sin guiones.</td>
+</tr>
+<tr>
+<td align="center">03</td>
+<td align="center">DIMEX</td>
+<td>Debe contener 11 o 12 dígitos, sin ceros al inicio y sin guiones</td>
+</tr>
+<tr>
+<td align="center">04</td>
+<td align="center">NITE</td>
+<td>Debe contener 10 dígitos, sin ceros al inicio y sin guiones</td>
+</tr>
+</tbody>
+</table><h3 id="tabla-4">Tabla #4</h3>
+
+<table>
+<thead>
+<tr>
+<th>Tipo de código de producto/servicio</th>
+<th align="center">Código</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Código del producto del vendedor</td>
+<td align="center">01</td>
+</tr>
+<tr>
+<td>Código del producto del comprador</td>
+<td align="center">02</td>
+</tr>
+<tr>
+<td>Código del producto asignado por la industria</td>
+<td align="center">03</td>
+</tr>
+<tr>
+<td>Código uso interno</td>
+<td align="center">04</td>
+</tr>
+<tr>
+<td>Otros</td>
+<td align="center">99</td>
+</tr>
+</tbody>
+</table><h3 id="tabla-5">Tabla #5</h3>
+
+<table>
+<thead>
+<tr>
+<th>Impuesto</th>
+<th align="center">Código</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Impuesto General sobre las Ventas</td>
+<td align="center">01</td>
+</tr>
+<tr>
+<td>Impuesto Selectivo de Consumo</td>
+<td align="center">02</td>
+</tr>
+<tr>
+<td>Impuesto Único a los combustibles</td>
+<td align="center">03</td>
+</tr>
+<tr>
+<td>Impuesto específico de Bebidas Alcohólicas</td>
+<td align="center">04</td>
+</tr>
+<tr>
+<td>Impuesto Específico sobre las bebidas envasadas sin contenido alcohólico y jabones de tocador</td>
+<td align="center">05</td>
+</tr>
+<tr>
+<td>Impuesto a los Productos de Tabaco</td>
+<td align="center">06</td>
+</tr>
+<tr>
+<td>Servicio</td>
+<td align="center">07</td>
+</tr>
+<tr>
+<td>Otros</td>
+<td align="center">98</td>
+</tr>
+</tbody>
+</table>
