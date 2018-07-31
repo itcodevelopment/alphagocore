@@ -1,9 +1,15 @@
----
+<!DOCTYPE html>
+<html>
 
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alpha Go Core</title>
+  <link rel="stylesheet" href="https://stackedit.io/style.css" />
+</head>
 
----
-
-<h1 id="crear-un-usuario">Crear un Usuario</h1>
+<body class="stackedit">
+  <div class="stackedit__html"><h1 id="crear-un-usuario">Crear un Usuario</h1>
 <p>Se debera enviar una peticion de tipo <strong>POST</strong> a la siguiente ruta: <strong>/api/users/</strong></p>
 <h3 id="datos-requeridos">Datos Requeridos:</h3>
 
@@ -1056,11 +1062,7 @@ Ver Anexo de Tablas. Tabla #04<br>
 		<span class="token string">"Type"</span><span class="token punctuation">:</span> <span class="token string">"01"</span><span class="token punctuation">,</span>
 		<span class="token string">"Voucher"</span><span class="token punctuation">:</span> <span class="token string">"505"</span><span class="token punctuation">,</span>
 		<span class="token string">"Country"</span><span class="token punctuation">:</span> <span class="token string">"506"</span><span class="token punctuation">,</span>
-		<span class="token string">"Day"</span><span class="token punctuation">:</span> <span class="token string">"20"</span><span class="token punctuation">,</span>
-		<span class="token string">"Month"</span><span class="token punctuation">:</span> <span class="token string">"6"</span><span class="token punctuation">,</span>
-		<span class="token string">"Year"</span><span class="token punctuation">:</span> <span class="token string">"18"</span><span class="token punctuation">,</span>
 		<span class="token string">"Situation"</span><span class="token punctuation">:</span> <span class="token string">"1"</span><span class="token punctuation">,</span>
-		<span class="token string">"SecuryCode"</span><span class="token punctuation">:</span> <span class="token string">"71993642"</span>
 	<span class="token punctuation">}</span><span class="token punctuation">,</span>
 	<span class="token string">"Header"</span><span class="token punctuation">:</span> <span class="token punctuation">{</span>
 		<span class="token string">"Date"</span><span class="token punctuation">:</span> <span class="token string">"2018-06-20T16:15:21-06:00"</span><span class="token punctuation">,</span>
@@ -1384,4 +1386,7 @@ Ver Anexo de Tablas. Tabla #04<br>
 <td align="center">99</td>
 </tr>
 </tbody>
-</table>
+</table></div>
+</body>
+
+</html>
