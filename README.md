@@ -893,6 +893,47 @@ Ver Anexo de Tablas. Tabla #04<br>
 <strong>Requerido</strong></p>
 </blockquote>
 </li>
+<li>
+<p><strong>Exoneration</strong></p>
+<ul>
+<li><strong>DocumentType:</strong> Tipo de documento de exoneración o de autorización
+<blockquote>
+<p>Ver Anexo de Tablas. Tabla #06<br>
+<strong>Requerido</strong></p>
+</blockquote>
+</li>
+<li><strong>DocumentNumber:</strong> Número de documento de exoneración o de autorización
+<blockquote>
+<p>Máximo 17 caracteres<br>
+<strong>Requerido</strong></p>
+</blockquote>
+</li>
+<li><strong>InstitutionName:</strong> Nombre de la institución a la que estamos exonerando
+<blockquote>
+<p>Máximo 80 caracteres<br>
+<strong>Requerido</strong></p>
+</blockquote>
+</li>
+<li><strong>IssueDate:</strong> Fecha de emisión del documento de exoneración o de autorización
+<blockquote>
+<p>YYYY-MM-DDThh:mi:ss[Z|(+|-)hh:mm]. Ejemplo: 2016-09-26T13:00:00+06:00.<br>
+<strong>Requerido</strong></p>
+</blockquote>
+</li>
+<li><strong>TaxAmount:</strong> Monto del impuesto Exonerado o autorizado sin impuesto
+<blockquote>
+<p>Número decimal compuesto por 13 enteros y 5 decimales.<br>
+<strong>Requerido</strong></p>
+</blockquote>
+</li>
+<li><strong>PurchasePercentage:</strong> Porcentaje de la compra autorizada o exoneración
+<blockquote>
+<p>Máximo 3 dígitos<br>
+<strong>Requerido</strong></p>
+</blockquote>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -1096,7 +1137,14 @@ Ver Anexo de Tablas. Tabla #04<br>
 			<span class="token string">"Code"</span><span class="token punctuation">:</span> <span class="token string">"01"</span><span class="token punctuation">,</span>
 			<span class="token string">"Rate"</span><span class="token punctuation">:</span> <span class="token number">13.00</span><span class="token punctuation">,</span>
 			<span class="token string">"Amount"</span><span class="token punctuation">:</span> <span class="token number">34.45</span><span class="token punctuation">,</span>
-			<span class="token string">"Exoneration"</span><span class="token punctuation">:</span> <span class="token keyword">null</span>
+			<span class="token string">"Exoneration"</span><span class="token punctuation">:</span> <span class="token punctuation">{</span>
+				<span class="token string">"DocumentType"</span><span class="token punctuation">:</span> <span class="token string">"01"</span><span class="token punctuation">,</span>
+				<span class="token string">"DocumentNumber"</span><span class="token punctuation">:</span> <span class="token string">"100"</span><span class="token punctuation">,</span>
+				<span class="token string">"InstitutionName"</span><span class="token punctuation">:</span> <span class="token string">"Ministerio de Hacienda"</span><span class="token punctuation">,</span>
+				<span class="token string">"IssueDate"</span><span class="token punctuation">:</span> <span class="token string">"2016-09-26T13:00:00+06:00"</span><span class="token punctuation">,</span>
+				<span class="token string">"TaxAmount"</span><span class="token punctuation">:</span> <span class="token number">130</span><span class="token punctuation">,</span>
+				<span class="token string">"PurchasePercentage"</span><span class="token punctuation">:</span> <span class="token number">10</span>
+			<span class="token punctuation">}</span>
 		<span class="token punctuation">}</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
 		<span class="token string">"TotalLineAmount"</span><span class="token punctuation">:</span> <span class="token number">299.45</span>
 	<span class="token punctuation">}</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
@@ -1303,6 +1351,37 @@ Ver Anexo de Tablas. Tabla #04<br>
 <tr>
 <td>Otros</td>
 <td align="center">98</td>
+</tr>
+</tbody>
+</table><h3 id="tabla-6">Tabla #6</h3>
+
+<table>
+<thead>
+<tr>
+<th>Excepción</th>
+<th align="center">Código</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Impuesto General sobre las Ventas Diplomáticos</td>
+<td align="center">08</td>
+</tr>
+<tr>
+<td>Impuesto General sobre las Ventas Compras Autorizadas</td>
+<td align="center">09</td>
+</tr>
+<tr>
+<td>Impuesto General sobre las ventas Instituciones Públicas y otros Organismos</td>
+<td align="center">10</td>
+</tr>
+<tr>
+<td>Impuesto Selectivo de Consumo Compras Autorizadas</td>
+<td align="center">11</td>
+</tr>
+<tr>
+<td>Otros</td>
+<td align="center">99</td>
 </tr>
 </tbody>
 </table>
