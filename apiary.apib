@@ -1,0 +1,2656 @@
+FORMAT: 1A
+HOST: http://polls.apiblueprint.org/
+
+
+FORMAT: 1A
+HOST: http://polls.apiblueprint.org/
+
+# ITCOSA ALPHA GO CORE 
+
+
+
+### Documentos [/api/invoice]
+
+#### Factura con impuesto [POST]
+
+Toma de la base de datos información de la factura con los datos sobre impuestos
+
+
++ Attributes (object)
+
+    + CompanyAPI (string) - Identificador único generado al momento de crear la compañía **requerido** en el portal web de la aplicación
+    + Environment (enum) - Entorno en el que los documentos serán enviados **requerido**
+        + stag (string) - documentos en entorno de pruebas
+        + prod (string) - documentos en entorno real 
+    + key (object)
+        + branch: "01" (string) - Número de sucursal
+        + terminal: "01" (string) = Número de caja
+        + type (enum) - tipo de documento a emitir **requerido**
+            + 01 (string) - Factura electrónica
+            + 02 (string) - Nota de débito electrónica
+            + 03 (string) - Nota de crédito electrónica
+            + 04 (string) - Tiquete electrónico
+            + 05 (string) - Confirmación de aceptación del comprobante electrónico
+            + 06 (string) - Confirmación de aceptación parcial del comprobante electrónico
+            + 07 (string) - Confirmación de rechazo del comprobante electrónico
+        + voucher (string) - Número consecutivo del comprobante máximo 10 dígitos **requerido**
+        + country: 506 (string) - código de país
+        + situation: 1  (enum) - situación en la que se presenta el documento
+            + 1 (string) - normal
+            + 2 (string) - contingencia
+            + 3 (string) - sin internet
+    + Header (object)
+        + date (string) - Fecha de emisión del documento en formato ISO
+        + termOfSale (enum) - Término de la venta
+            + 01 (string) - contado
+            + 02 (string) - credito
+            + 03 (string) - consignación
+            + 04 (string) - Apartado
+            + 05 (string) - Arrendamiento con opción de compra
+            + 06 (string) - Arrendamiento en función financiera
+            + 99 (string) - Otros | se debe indicar la condición de la venta |
+        + creditTerm (string) - Plazo del crédito en caso de ser venta a contado se debe enviar como **"0"** 
+        + paymentMethod (enum) - Medio de pago de la factura
+            + 01 (string) - Efectivo
+            + 02 (string) -  Tarjeta
+            + 03 (string) - Cheque
+            + 04 (string) - Deposito - Transferencia Bancaria
+            + 99 (string) - Otros | Debe Especificar |
+
+    + Receiver (object) - Puede ser omitido en caso de que sea un Tiquete Electrónico
+        + Name (string) - Nombre o razón social del receptor - Máximo 80 caracteres. **Requerido**
+        + Identificación (enum) -
+            + Type (enum) - Tipo de identificación del receptor **Requerido**
+                + 01 (string) - Cédula Física
+                + 02 (string) - Cédula Jurídica
+                + 03 (string) - DIMEX
+                + 04 (string) - NITE
+            + Number (enum) - Número de cédula física/jurídica/NITE/DIMEX del receptor **Requerido**
+                + 01 (string) - Cédula Física
+                + 02 (string) - Cédula Jurídica
+                + 03 (string) - DIMEX
+                + 04 (string) - NITE
+        + Email (string) - Correo electrónico del receptor **Requerido**
+        \s*\w+([-+.']\w+)@\w+([-.]\w+).\w+([-.]\w+)\s. 
+   
+    + Detail (object)
+
+        + Number (string) - Número de línea **requerido** 
+    
+        + Code (enum) - Número decimal compuesto por 13 enteros y 3 decimales Máximo 2 digitos  **Requerido**
+    
+            + Type (enum) - Tipo de Código de producto/servicio
+            
+                + 01 (string) - Código del producto del vendedor
+        
+                + 02 (string) - Código del producto del comprador
+                
+                + 03 (string) - Código del producto asignado por la industria
+                
+                + 04 (string) - Código uso interno
+                
+                + 05 (string) - Otros
+                
+            + Code (string )- Código - Máximo 20 caracteres **Requerido**
+            
+        + Quantity (string) - Cantidad - Número decimal compuesto por 13 enteros y 3 decimales **Requerido**
+    
+        + UnitOfMeasure (string) - Codigo de la unidad de medida **Requerido**
+    
+        + CommercialUnitOfMeasure (string) - Nombre comercial unidad de medida - *Maximo 20 caracteres*
+        
+        + Detail(string) - Detalle de la mercancía transferida o servicio prestado - Máximo 160 caracteres **Requerido**
+        
+        + UnitPrice (string) - Precio Unitario - Número decimal compuesto por 13 enteros y 3 decimales **Requerido**
+        
+        + TotalAmount (string) - Monto total de la multiplicación de la cantidad por el precio unitario - Número decimal compuesto por 13 enteros y 3 decimales **Requerido**
+        
+        + Discount (string) - Monto de descuentos concedidos - Número decimal compuesto por 13 enteros y 3 decimales
+        
+        + NatureOfDiscount (string) - Descripción del descuento concedido - Máximo 80 caracteres **Requerido si aplica descuento**
+        
+        + SubTotal (string) - Se obtiene de la resta del campo “monto total” menos “monto de descuento concedido" - Número decimal compuesto por 13 enteros y 3 decimales **Requerido**
+         
+        + Tax (object) - Impuestos
+            + Code (enum) - **Código del impuesto**
+                + 01 (string) - Impuesto General sobre las Ventas
+                + 02 (string) - Impuesto Selectivo de Consumo
+                + 03 (string) - Impuesto Único a los combustibles
+                + 04 (string) - Impuesto específico de Bebidas Alcohólicas
+                + 05 (string) - Impuesto Específico sobre las bebidas envasadas sin contenido alcohólico y jabones de tocador
+                + 06 (string) - Impuesto a los Productos de Tabaco
+                + 07 (string) - Servicio
+                + 08 (string) - Otros
+            + Rate (string) - Porcentaje del impuesto - Número decimal compuesto por 4 enteros y 2 decimales **Requerido**
+            + Amount (string) - Monto del impuesto. Se obtiene de la multiplicación del campo subtotal por la tarifa - Número decimal compuesto por 13 enteros y 5 decimales **Requerido**
+            + Exoneration (enum) - **Documentos de exoneracion**
+                + DocumentType (enum) - Tipo de documento de exoneración o de autorización
+                    + 08 (string) - Impuesto General sobre las Ventas Diplomáticos
+                    + 09 (string) - Impuesto General sobre las Ventas Compras Autorizadas
+                    + 10 (string) - Impuesto General sobre las ventas Instituciones Públicas y otros Organismos
+                    + 11 (string) - Impuesto Selectivo de Consumo Compras Autorizadas
+                    + 99 (string) - Otros
+                + DocumentNumber (string) - Número de documento de exoneración o de autorización - Máximo 17 caracteres **Requerido**
+                + InstitutionName (string) - Fecha de emisión del documento de exoneración o de autorización / -MM-DDThh:mi:ss[Z|(+|-)hh:mm]. Ejemplo: 2016-09-26T13:00:00+06:00. **Requerido**
+                + TaxAmount (string) - Monto del impuesto Exonerado o autorizado sin impuesto - Número decimal compuesto por 13 enteros y 5 decimales. **Requerido**
+                + PurchasePercentage (string) - Porcentaje de la compra autorizada o exoneración - Máximo 3 dígitos **Requerido**
+            + TotalLineAmount (string) - Total por línea de detalle. Se obtiene de la suma de los campos “subtotal” mas “monto del impuesto” - Número decimal compuesto por 13 enteros y 3 decimales **Requerido**
+    + Summary (enum) - Resumen en detalle de factura o tiquete
+        + Currency (string) - "USD"
+        + ExchangeRate (string) - 570.31
+        + TotalTaxedService (string) - 478.0
+        + TotalExemptService (string) - 0.0
+        + TotalTaxedGoods (string) - 0.0
+        + TotalExemptGoods (string) - 0.0
+        + TotalTaxed (string) - 478.0
+        + TotalExempt (string) - 0.0
+        + TotalSale (string) - 478.0
+        + TotalDiscounts (string) - 0.0
+        + TotalNetSale (string) - 478.0
+        + TotalTaxes (string) - 62.14
+        + TotalVoucher (string) - 540.14
+    
+    
+    + Reference (enum) - 
+        + DocumentType (string) - 01
+        + DocumentNumber (string) - 50631071800310166091900100001010000000108152884101
+        + DateOfIssue (string) - 2018-06-13T16:02:28-06:00
+        + Code (string) - 01
+        + Reason (string) - Error en la informacion del cliente
+        + Other (string) - null
+  
++ Request (application/json)
+
+        {
+            "CompanyAPI": "78dd8617-c4f0-453b-bd5e-1912f124e731",
+            "Environment": "stag",
+            "key": {
+                "Branch": "01",
+                "Terminal": "1",
+                "Type": "01",
+                "Voucher": "505",
+                "Country": "506",
+                "Situation": "1"
+            },
+            "Header": {   
+                "Date": "2018-06-20T16:15:21-06:00",  
+                "TermOfSale": "02",   
+                "CreditTerm": "15",   
+                "PaymentMethod": "03"  
+            },
+            "Receiver": {   
+                "Name": "Los patitos S.A", 
+                "Identification": {    
+                    "Type": "02",    
+                    "Number": "3101234567"   
+                },  
+                "Email": "info@lospatitos.com"  
+            },
+            "Detail": [{   
+                "Number": "1", 
+                "Code": {    
+                    "Type": "04", 
+                    "Code": "CONTRL."   
+                },  
+                "Quantity": 1.0,   
+                "UnitOfMeasure": "Sp",   
+                "CommercialUnitOfMeasure": null,  
+                "Detail": "Control de acceso Hikvision Voltaje DC 00V/1a",   
+                "UnitPrice": 213.0,  
+                "TotalAmount": 213.0,   
+                "Discount": null,  
+                "NatureOfDiscount": "",  
+                "SubTotal": 213.0,   
+                "Tax": 
+                    [{    
+                        "Code": "01",    
+                        "Rate": 13.00,   
+                        "Amount": 27.69,    
+                        "Exoneration": null   
+                    }],
+                "TotalLineAmount": 240.69  
+            },
+            {   
+                "Number": "2",   
+                "Code": {    
+                    "Type": "04",    
+                    "Code": "ENRVPN."   
+                },
+                "Quantity": 1.0,   
+                "UnitOfMeasure": "Sp",   
+                "CommercialUnitOfMeasure": null,   
+                "Detail": "Enrutador Vpn Conmutador de 4 puertos Gige Doble banda Linksys",
+                "UnitPrice": 265.0,   
+                "TotalAmount": 265.0,   
+                "Discount": null,  
+                "NatureOfDiscount": "",  
+                "SubTotal": 265.0, 
+                "Tax": [{ 
+                    "Code": "01",  
+                    "Rate": 13.00, 
+                    "Amount": 34.45, 
+                    "Exoneration": { 
+                        "DocumentType": "01",   
+                        "DocumentNumber": "100", 
+                        "InstitutionName": "Ministerio de Hacienda",  
+                        "IssueDate": "2016-09-26T13:00:00+06:00", 
+                        "TaxAmount": 130,    
+                        "PurchasePercentage": 10    
+                    }   
+                }],
+                "TotalLineAmount": 299.45  
+            }],
+            "Summary": {   
+                "Currency": "USD",   
+                "ExchangeRate": 570.31,  
+                "TotalTaxedService": 478.0, 
+                "TotalExemptService": 0.0,  
+                "TotalTaxedGoods": 0.0, 
+                "TotalExemptGoods": 0.0, 
+                "TotalTaxed": 478.0,  
+                "TotalExempt": 0.0,   
+                "TotalSale": 478.0, 
+                "TotalDiscounts": 0.0,  
+                "TotalNetSale": 478.0,  
+                "TotalTaxes": 62.14,  
+                "TotalVoucher": 540.14  
+            },
+            "Reference": [{   
+                "DocumentType": "01", 
+                "DocumentNumber": "50631071800310166091900100001010000000108152884101",   
+                "DateOfIssue": "2018-06-13T16:02:28-06:00",  
+                "Code": "01",     
+                "Reason": "Error en la informacion del cliente"  
+            }],  
+            "Other": null 
+        }
+    
++ Response 201 (application/json)
+
+    + Body
+
+            {
+               "HacKey": 50621534562436547576545342324356
+               "Consecutivo": 1002435612452
+            }
+            
+
+
+#### Factura sin impuestos [POST]
+
+JSON de la factura sin impuestos
+
++ Attributes (object)
+
+    + CompanyAPI (string) - Identificador único generado al momento de crear la compañía **requerido** en el portal web de la aplicación
+    + Environment (enum) - Entorno en el que los documentos serán enviados **requerido**
+        + stag (string) - documentos en entorno de pruebas
+        + prod (string) - documentos en entorno real 
+    + key (object)
+        + branch: "01" (string) - Número de sucursal
+        + terminal: "01" (string) = Número de caja
+        + type (enum) - tipo de documento a emitir **requerido**
+            + 01 (string) - Factura electrónica
+            + 02 (string) - Nota de débito electrónica
+            + 03 (string) - Nota de crédito electrónica
+            + 04 (string) - Tiquete electrónico
+            + 05 (string) - Confirmación de aceptación del comprobante electrónico
+            + 06 (string) - Confirmación de aceptación parcial del comprobante electrónico
+            + 07 (string) - Confirmación de rechazo del comprobante electrónico
+        + voucher (string) - Número consecutivo del comprobante máximo 10 dígitos **requerido**
+        + country: 506 (string) - código de país
+        + situation: 1  (enum) - situación en la que se presenta el documento
+            + 1 (string) - normal
+            + 2 (string) - contingencia
+            + 3 (string) - sin internet
+    + Header (object)
+        + date (string) - Fecha de emisión del documento en formato ISO
+        + termOfSale (enum) - Término de la venta
+            + 01 (string) - contado
+            + 02 (string) - credito
+            + 03 (string) - consignación
+            + 04 (string) - Apartado
+            + 05 (string) - Arrendamiento con opción de compra
+            + 06 (string) - Arrendamiento en función financiera
+            + 99 (string) - Otros | se debe indicar la condición de la venta |
+        + creditTerm (string) - Plazo del crédito en caso de ser venta a contado se debe enviar como **"0"** 
+        + paymentMethod (enum) - Medio de pago de la factura
+            + 01 (string) - Efectivo
+            + 02 (string) -  Tarjeta
+            + 03 (string) - Cheque
+            + 04 (string) - Deposito - Transferencia Bancaria
+            + 99 (string) - Otros | Debe Especificar |
+
+    + Receiver (object) - Puede ser omitido en caso de que sea un Tiquete Electrónico
+        + Name (string) - Nombre o razón social del receptor - Máximo 80 caracteres. **Requerido**
+        + Identificación (enum) -
+            + Type (enum) - Tipo de identificación del receptor **Requerido**
+                + 01 (string) - Cédula Física
+                + 02 (string) - Cédula Jurídica
+                + 03 (string) - DIMEX
+                + 04 (string) - NITE
+            + Number (enum) - Número de cédula física/jurídica/NITE/DIMEX del receptor **Requerido**
+                + 01 (string) - Cédula Física
+                + 02 (string) - Cédula Jurídica
+                + 03 (string) - DIMEX
+                + 04 (string) - NITE
+        + Email (string) - Correo electrónico del receptor **Requerido**
+        \s*\w+([-+.']\w+)@\w+([-.]\w+).\w+([-.]\w+)\s. 
+   
+    + Detail (object)
+
+        + Number (string) - Número de línea **requerido** 
+    
+        + Code (enum) - Número decimal compuesto por 13 enteros y 3 decimales Máximo 2 digitos  **Requerido**
+    
+            + Type (enum) - Tipo de Código de producto/servicio
+            
+                + 01 (string) - Código del producto del vendedor
+        
+                + 02 (string) - Código del producto del comprador
+                
+                + 03 (string) - Código del producto asignado por la industria
+                
+                + 04 (string) - Código uso interno
+                
+                + 05 (string) - Otros
+                
+            + Code (string )- Código - Máximo 20 caracteres **Requerido**
+            
+        + Quantity (string) - Cantidad - Número decimal compuesto por 13 enteros y 3 decimales **Requerido**
+    
+        + UnitOfMeasure (string) - Codigo de la unidad de medida **Requerido**
+    
+        + CommercialUnitOfMeasure (string) - Nombre comercial unidad de medida - *Maximo 20 caracteres*
+        
+        + Detail(string) - Detalle de la mercancía transferida o servicio prestado - Máximo 160 caracteres **Requerido**
+        
+        + UnitPrice (string) - Precio Unitario - Número decimal compuesto por 13 enteros y 3 decimales **Requerido**
+        
+        + TotalAmount (string) - Monto total de la multiplicación de la cantidad por el precio unitario - Número decimal compuesto por 13 enteros y 3 decimales **Requerido**
+        
+        + Discount (string) - Monto de descuentos concedidos - Número decimal compuesto por 13 enteros y 3 decimales
+        
+        + NatureOfDiscount (string) - Descripción del descuento concedido - Máximo 80 caracteres **Requerido si aplica descuento**
+        
+        + SubTotal (string) - Se obtiene de la resta del campo “monto total” menos “monto de descuento concedido" - Número decimal compuesto por 13 enteros y 3 decimales **Requerido**
+         
+        + Tax (object) - Impuestos
+            + Code (enum) - **Código del impuesto**
+                + 01 (string) - Impuesto General sobre las Ventas
+                + 02 (string) - Impuesto Selectivo de Consumo
+                + 03 (string) - Impuesto Único a los combustibles
+                + 04 (string) - Impuesto específico de Bebidas Alcohólicas
+                + 05 (string) - Impuesto Específico sobre las bebidas envasadas sin contenido alcohólico y jabones de tocador
+                + 06 (string) - Impuesto a los Productos de Tabaco
+                + 07 (string) - Servicio
+                + 08 (string) - Otros
+            + Rate (string) - Porcentaje del impuesto - Número decimal compuesto por 4 enteros y 2 decimales **Requerido**
+            + Amount (string) - Monto del impuesto. Se obtiene de la multiplicación del campo subtotal por la tarifa - Número decimal compuesto por 13 enteros y 5 decimales **Requerido**
+            + Exoneration (enum) - **Documentos de exoneracion**
+                + DocumentType (enum) - Tipo de documento de exoneración o de autorización
+                    + 08 (string) - Impuesto General sobre las Ventas Diplomáticos
+                    + 09 (string) - Impuesto General sobre las Ventas Compras Autorizadas
+                    + 10 (string) - Impuesto General sobre las ventas Instituciones Públicas y otros Organismos
+                    + 11 (string) - Impuesto Selectivo de Consumo Compras Autorizadas
+                    + 99 (string) - Otros
+                + DocumentNumber (string) - Número de documento de exoneración o de autorización - Máximo 17 caracteres **Requerido**
+                + InstitutionName (string) - Fecha de emisión del documento de exoneración o de autorización / -MM-DDThh:mi:ss[Z|(+|-)hh:mm]. Ejemplo: 2016-09-26T13:00:00+06:00. **Requerido**
+                + TaxAmount (string) - Monto del impuesto Exonerado o autorizado sin impuesto - Número decimal compuesto por 13 enteros y 5 decimales. **Requerido**
+                + PurchasePercentage (string) - Porcentaje de la compra autorizada o exoneración - Máximo 3 dígitos **Requerido**
+            + TotalLineAmount (string) - Total por línea de detalle. Se obtiene de la suma de los campos “subtotal” mas “monto del impuesto” - Número decimal compuesto por 13 enteros y 3 decimales **Requerido**
+    + Summary (object) - Resumen en detalle de factura o tiquete
+        + Currency (string) - "USD"
+        + ExchangeRate (string) - 570.31
+        + TotalTaxedService (string) - 478.0
+        + TotalExemptService (string) - 0.0
+        + TotalTaxedGoods (string) - 0.0
+        + TotalExemptGoods (string) - 0.0
+        + TotalTaxed (string) - 478.0
+        + TotalExempt (string) - 0.0
+        + TotalSale (string) - 478.0
+        + TotalDiscounts (string) - 0.0
+        + TotalNetSale (string) - 478.0
+        + TotalTaxes (string) - 62.14
+        + TotalVoucher (string) - 540.14
+    
+    
+    + Reference (object) - 
+        + DocumentType (string) - 01
+        + DocumentNumber (string) - 50631071800310166091900100001010000000108152884101
+        + DateOfIssue (string) - 2018-06-13T16:02:28-06:00
+        + Code (string) - 01
+        + Reason (string) - Error en la informacion del cliente
+        + Other (string) - null
+  
+
++ Request (application/json)
+
+        {
+            "CompanyAPI": "78dd8617-c4f0-453b-bd5e-1912f124e731",  
+            "Environment": "stag", 
+            "Key": {   
+                "Branch": "01",   
+                "Terminal": "1",   
+                "Type": "01",   
+                "Voucher": "505",  
+                "Country": "506",  
+                "Situation": "1" 
+            },
+            "Header": {   
+                "Date": "2018-06-20T16:15:21-06:00",
+                "TermOfSale": "02", 
+                "CreditTerm": "15",  
+                "PaymentMethod": "03"  
+            },  
+            "Receiver": {  
+                "Name": "Los patitos S.A",   
+                "Identification": {    
+                    "Type": "02",    
+                    "Number": "3101234567"  
+                },  
+                "Email": "info@lospatitos.com"  
+            },
+            "Detail": [{   
+                "Number": "1",
+                "Code": {    
+                    "Type": "04",
+                    "Code": "CONTRL."  
+                },  
+                "Quantity": 1.0, 
+                "UnitOfMeasure": "Sp", 
+                "CommercialUnitOfMeasure": null,
+                "Detail": "Control de acceso Hikvision Voltaje DC 00V/1a", 
+                "UnitPrice": 213.0,  
+                "TotalAmount": 213.0,
+                "Discount": null,
+                "NatureOfDiscount": "",   
+                "SubTotal": 213.0,  
+                "Tax": null,  
+                "TotalLineAmount": 240.69 
+            }, {   
+                "Number": "2",   
+                "Code": {    
+                    "Type": "04",    
+                    "Code": "ENRVPN."   
+                },   
+                "Quantity": 1.0, 
+                "UnitOfMeasure": "Sp",
+                "CommercialUnitOfMeasure": null, 
+                "Detail": "Enrutador Vpn Conmutador de 4 puertos Gige Doble banda Linksys",
+                "UnitPrice": 265.0,  
+                "TotalAmount": 265.0,
+                "Discount": null, 
+                "NatureOfDiscount": "",
+                "SubTotal": 265.0, 
+                "Tax": [{
+                    "Code": "01",   
+                    "Rate": 13.00,  
+                    "Amount": 34.45,
+                    "Exoneration": {     
+                        "DocumentType": "01", 
+                        "DocumentNumber": "100",
+                        "InstitutionName": "Ministerio de Hacienda", 
+                        "IssueDate": "2016-09-26T13:00:00+06:00", 
+                        "TaxAmount": 130,   
+                        "PurchasePercentage": 10 
+                    },
+                }], 
+                "TotalLineAmount": 299.45 
+            }],
+            "Summary": {  
+                "Currency": "USD", 
+                "ExchangeRate": 570.31,   
+                "TotalTaxedService": 478.0, 
+                "TotalExemptService": 0.0,
+                "TotalTaxedGoods": 0.0, 
+                "TotalExemptGoods": 0.0,
+                "TotalTaxed": 478.0, 
+                "TotalExempt": 0.0, 
+                "TotalSale": 478.0,
+                "TotalDiscounts": 0.0, 
+                "TotalNetSale": 478.0, 
+                "TotalTaxes": 62.14, 
+                "TotalVoucher": 540.14  
+            },
+            "Reference": [{ 
+                "DocumentType": "01",
+                "DocumentNumber": "50631071800310166091900100001010000000108152884101",  
+                "DateOfIssue": "2018-06-13T16:02:28-06:00",    
+                "Code": "01",   
+                "Reason": "Error en la informacion del cliente"  
+            }],  
+            "Other": null 
+            } 
+        }
+
++ Response 201 (application/json)
+
+    + Body
+    
+            {
+               "HacKey": 50621534562436547576545342324356
+               "Consecutivo": 1002435612452
+            }
+
+
+#### Factura con impuesto y descuento [POST]
+
+Factura con impuesto y descuento
+
+
++ Attributes (object)
+
+    + CompanyAPI (string) - Identificador único generado al momento de crear la compañía **requerido** en el portal web de la aplicación
+    + Environment (enum) - Entorno en el que los documentos serán enviados **requerido**
+        + stag (string) - documentos en entorno de pruebas
+        + prod (string) - documentos en entorno real 
+    + key (object)
+        + branch: "01" (string) - Número de sucursal
+        + terminal: "01" (string) = Número de caja
+        + type (enum) - tipo de documento a emitir **requerido**
+            + 01 (string) - Factura electrónica
+            + 02 (string) - Nota de débito electrónica
+            + 03 (string) - Nota de crédito electrónica
+            + 04 (string) - Tiquete electrónico
+            + 05 (string) - Confirmación de aceptación del comprobante electrónico
+            + 06 (string) - Confirmación de aceptación parcial del comprobante electrónico
+            + 07 (string) - Confirmación de rechazo del comprobante electrónico
+        + voucher (string) - Número consecutivo del comprobante máximo 10 dígitos **requerido**
+        + country: 506 (string) - código de país
+        + situation: 1  (enum) - situación en la que se presenta el documento
+            + 1 (string) - normal
+            + 2 (string) - contingencia
+            + 3 (string) - sin internet
+    + Header (object)
+        + date (string) - Fecha de emisión del documento en formato ISO
+        + termOfSale (enum) - Término de la venta
+            + 01 (string) - contado
+            + 02 (string) - credito
+            + 03 (string) - consignación
+            + 04 (string) - Apartado
+            + 05 (string) - Arrendamiento con opción de compra
+            + 06 (string) - Arrendamiento en función financiera
+            + 99 (string) - Otros | se debe indicar la condición de la venta |
+        + creditTerm (string) - Plazo del crédito en caso de ser venta a contado se debe enviar como **"0"** 
+        + paymentMethod (enum) - Medio de pago de la factura
+            + 01 (string) - Efectivo
+            + 02 (string) -  Tarjeta
+            + 03 (string) - Cheque
+            + 04 (string) - Deposito - Transferencia Bancaria
+            + 99 (string) - Otros | Debe Especificar |
+
+    + Receiver (object) - Puede ser omitido en caso de que sea un Tiquete Electrónico
+        + Name (string) - Nombre o razón social del receptor - Máximo 80 caracteres. **Requerido**
+        + Identificación (enum) -
+            + Type (enum) - Tipo de identificación del receptor **Requerido**
+                + 01 (string) - Cédula Física
+                + 02 (string) - Cédula Jurídica
+                + 03 (string) - DIMEX
+                + 04 (string) - NITE
+            + Number (enum) - Número de cédula física/jurídica/NITE/DIMEX del receptor **Requerido**
+                + 01 (string) - Cédula Física
+                + 02 (string) - Cédula Jurídica
+                + 03 (string) - DIMEX
+                + 04 (string) - NITE
+        + Email (string) - Correo electrónico del receptor **Requerido**
+        \s*\w+([-+.']\w+)@\w+([-.]\w+).\w+([-.]\w+)\s. 
+   
+    + Detail (object)
+
+        + Number (string) - Número de línea **requerido** 
+    
+        + Code (enum) - Número decimal compuesto por 13 enteros y 3 decimales Máximo 2 digitos  **Requerido**
+    
+            + Type (enum) - Tipo de Código de producto/servicio
+            
+                + 01 (string) - Código del producto del vendedor
+        
+                + 02 (string) - Código del producto del comprador
+                
+                + 03 (string) - Código del producto asignado por la industria
+                
+                + 04 (string) - Código uso interno
+                
+                + 05 (string) - Otros
+                
+            + Code (string )- Código - Máximo 20 caracteres **Requerido**
+            
+        + Quantity (string) - Cantidad - Número decimal compuesto por 13 enteros y 3 decimales **Requerido**
+    
+        + UnitOfMeasure (string) - Codigo de la unidad de medida **Requerido**
+    
+        + CommercialUnitOfMeasure (string) - Nombre comercial unidad de medida - *Maximo 20 caracteres*
+        
+        + Detail(string) - Detalle de la mercancía transferida o servicio prestado - Máximo 160 caracteres **Requerido**
+        
+        + UnitPrice (string) - Precio Unitario - Número decimal compuesto por 13 enteros y 3 decimales **Requerido**
+        
+        + TotalAmount (string) - Monto total de la multiplicación de la cantidad por el precio unitario - Número decimal compuesto por 13 enteros y 3 decimales **Requerido**
+        
+        + Discount (string) - Monto de descuentos concedidos - Número decimal compuesto por 13 enteros y 3 decimales
+        
+        + NatureOfDiscount (string) - Descripción del descuento concedido - Máximo 80 caracteres **Requerido si aplica descuento**
+        
+        + SubTotal (string) - Se obtiene de la resta del campo “monto total” menos “monto de descuento concedido" - Número decimal compuesto por 13 enteros y 3 decimales **Requerido**
+         
+        + Tax (object) - Impuestos
+            + Code (enum) - **Código del impuesto**
+                + 01 (string) - Impuesto General sobre las Ventas
+                + 02 (string) - Impuesto Selectivo de Consumo
+                + 03 (string) - Impuesto Único a los combustibles
+                + 04 (string) - Impuesto específico de Bebidas Alcohólicas
+                + 05 (string) - Impuesto Específico sobre las bebidas envasadas sin contenido alcohólico y jabones de tocador
+                + 06 (string) - Impuesto a los Productos de Tabaco
+                + 07 (string) - Servicio
+                + 08 (string) - Otros
+            + Rate (string) - Porcentaje del impuesto - Número decimal compuesto por 4 enteros y 2 decimales **Requerido**
+            + Amount (string) - Monto del impuesto. Se obtiene de la multiplicación del campo subtotal por la tarifa - Número decimal compuesto por 13 enteros y 5 decimales **Requerido**
+            + Exoneration (enum) - **Documentos de exoneracion**
+                + DocumentType (enum) - Tipo de documento de exoneración o de autorización
+                    + 08 (string) - Impuesto General sobre las Ventas Diplomáticos
+                    + 09 (string) - Impuesto General sobre las Ventas Compras Autorizadas
+                    + 10 (string) - Impuesto General sobre las ventas Instituciones Públicas y otros Organismos
+                    + 11 (string) - Impuesto Selectivo de Consumo Compras Autorizadas
+                    + 99 (string) - Otros
+                + DocumentNumber (string) - Número de documento de exoneración o de autorización - Máximo 17 caracteres **Requerido**
+                + InstitutionName (string) - Fecha de emisión del documento de exoneración o de autorización / -MM-DDThh:mi:ss[Z|(+|-)hh:mm]. Ejemplo: 2016-09-26T13:00:00+06:00. **Requerido**
+                + TaxAmount (string) - Monto del impuesto Exonerado o autorizado sin impuesto - Número decimal compuesto por 13 enteros y 5 decimales. **Requerido**
+                + PurchasePercentage (string) - Porcentaje de la compra autorizada o exoneración - Máximo 3 dígitos **Requerido**
+            + TotalLineAmount (string) - Total por línea de detalle. Se obtiene de la suma de los campos “subtotal” mas “monto del impuesto” - Número decimal compuesto por 13 enteros y 3 decimales **Requerido**
+    + Summary (enum) - Resumen en detalle de factura o tiquete
+        + Currency (string) - "USD"
+        + ExchangeRate (string) - 570.31
+        + TotalTaxedService (string) - 478.0
+        + TotalExemptService (string) - 0.0
+        + TotalTaxedGoods (string) - 0.0
+        + TotalExemptGoods (string) - 0.0
+        + TotalTaxed (string) - 478.0
+        + TotalExempt (string) - 0.0
+        + TotalSale (string) - 478.0
+        + TotalDiscounts (string) - 0.0
+        + TotalNetSale (string) - 478.0
+        + TotalTaxes (string) - 62.14
+        + TotalVoucher (string) - 540.14
+    
+    
+    + Reference (enum) - 
+        + DocumentType (string) - 01
+        + DocumentNumber (string) - 50631071800310166091900100001010000000108152884101
+        + DateOfIssue (string) - 2018-06-13T16:02:28-06:00
+        + Code (string) - 01
+        + Reason (string) - Error en la informacion del cliente
+        + Other (string) - null
+  
+
+
++ Request (application/json)
+
+        {
+            "CompanyAPI": "78dd8617-c4f0-453b-bd5e-1912f124e731", 
+            "Environment": "stag", 
+            "Key": {   
+                "Branch": "01",  
+                "Terminal": "1", 
+                "Type": "01", 
+                "Voucher": "505",
+                "Country": "506", 
+                "Situation": "1"  
+            },  
+            "Header": {  
+                "Date": "2018-06-20T16:15:21-06:00",
+                "TermOfSale": "02",  
+                "CreditTerm": "15",  
+                "PaymentMethod": "03" 
+            },  
+            "Receiver": {   
+                "Name": "Los patitos S.A",  
+                "Identification": {  
+                    "Type": "02",  
+                    "Number": "3101234567"   
+                },   
+                "Email": "info@lospatitos.com"  
+            },
+            "Detail": [{   
+                "Number": "1",
+                "Code": {   
+                    "Type": "04",  
+                    "Code": "CONTRL." 
+                },
+                "Quantity": 1.0, 
+                "UnitOfMeasure": "Sp", 
+                "CommercialUnitOfMeasure": null, 
+                "Detail": "Control de acceso Hikvision Voltaje DC 00V/1a",  
+                "UnitPrice": 213.0,   
+                "TotalAmount": 213.0, 
+                "Discount": 21.3, 
+                "NatureOfDiscount": "Descuento del 10% por ejemplo",  
+                "SubTotal": 191.7,
+                "Tax": [{    
+                    "Code": "01",
+                    "Rate": 13.00,  
+                    "Amount": 27.69, 
+                    "Exoneration": null  
+                }],
+                "TotalLineAmount": 219.39  
+                }, {
+                "Number": "2",  
+                "Code": {    
+                    "Type": "04",
+                    "Code": "ENRVPN."  
+                }, 
+                "Quantity": 1.0,
+                "UnitOfMeasure": "Sp",  
+                "CommercialUnitOfMeasure": null,   
+                "Detail": "Enrutador Vpn Conmutador de 4 puertos Gige Doble banda Linksys", 
+                "UnitPrice": 265.0,  
+                "TotalAmount": 265.0, 
+                "Discount": null,  
+                "NatureOfDiscount": "", 
+                "SubTotal": 265.0, 
+                "Tax": [{  
+                    "Code": "01", 
+                    "Rate": 13.00, 
+                    "Amount": 34.45, 
+                    "Exoneration": { 
+                        "DocumentType": "01", 
+                        "DocumentNumber": "100", 
+                        "InstitutionName": "Ministerio de Hacienda", 
+                        "IssueDate": "2016-09-26T13:00:00+06:00", 
+                        "TaxAmount": 130,   
+                        "PurchasePercentage": 10   
+                    }   
+                }], 
+                "TotalLineAmount": 299.45  
+            }],
+            "Summary": {   
+                "Currency": "USD", 
+                "ExchangeRate": 570.31, 
+                "TotalTaxedService": 478.0,
+                "TotalExemptService": 0.0, 
+                "TotalTaxedGoods": 0.0,  
+                "TotalExemptGoods": 0.0, 
+                "TotalTaxed": 478.0,   
+                "TotalExempt": 0.0,  
+                "TotalSale": 478.0,  
+                "TotalDiscounts": 0.0, 
+                "TotalNetSale": 478.0,  
+                "TotalTaxes": 62.14,  
+                "TotalVoucher": 540.14  
+            },
+            "Reference": [{  
+                "DocumentType": "01", 
+                "DocumentNumber": "50631071800310166091900100001010000000108152884101",   
+                "DateOfIssue": "2018-06-13T16:02:28-06:00", 
+                "Code": "01",   
+                "Reason": "Error en la informacion del cliente"  
+            }],
+            "Other": null
+        }
+
++ Response 201 (application/json)
+
+    + Headers
+
+            Location: /application/json/
+
+    + Body
+
+            {
+               "HacKey": 50621534562436547576545342324356
+               "Consecutivo": 1002435612452
+            }
+
+
+
+#### Factura con descuento y sin impuestos [POST]
+
+Factura con descuento y sin impuestos
+
+
++ Attributes (object)
+
+    + CompanyAPI (string) - Identificador único generado al momento de crear la compañía **requerido** en el portal web de la aplicación
+    + Environment (enum) - Entorno en el que los documentos serán enviados **requerido**
+        + stag (string) - documentos en entorno de pruebas
+        + prod (string) - documentos en entorno real 
+    + key (object)
+        + branch: "01" (string) - Número de sucursal
+        + terminal: "01" (string) = Número de caja
+        + type (enum) - tipo de documento a emitir **requerido**
+            + 01 (string) - Factura electrónica
+            + 02 (string) - Nota de débito electrónica
+            + 03 (string) - Nota de crédito electrónica
+            + 04 (string) - Tiquete electrónico
+            + 05 (string) - Confirmación de aceptación del comprobante electrónico
+            + 06 (string) - Confirmación de aceptación parcial del comprobante electrónico
+            + 07 (string) - Confirmación de rechazo del comprobante electrónico
+        + voucher (string) - Número consecutivo del comprobante máximo 10 dígitos **requerido**
+        + country: 506 (string) - código de país
+        + situation: 1  (enum) - situación en la que se presenta el documento
+            + 1 (string) - normal
+            + 2 (string) - contingencia
+            + 3 (string) - sin internet
+    + Header (object)
+        + date (string) - Fecha de emisión del documento en formato ISO
+        + termOfSale (enum) - Término de la venta
+            + 01 (string) - contado
+            + 02 (string) - credito
+            + 03 (string) - consignación
+            + 04 (string) - Apartado
+            + 05 (string) - Arrendamiento con opción de compra
+            + 06 (string) - Arrendamiento en función financiera
+            + 99 (string) - Otros | se debe indicar la condición de la venta |
+        + creditTerm (string) - Plazo del crédito en caso de ser venta a contado se debe enviar como **"0"** 
+        + paymentMethod (enum) - Medio de pago de la factura
+            + 01 (string) - Efectivo
+            + 02 (string) -  Tarjeta
+            + 03 (string) - Cheque
+            + 04 (string) - Deposito - Transferencia Bancaria
+            + 99 (string) - Otros | Debe Especificar |
+
+    + Receiver (object) - Puede ser omitido en caso de que sea un Tiquete Electrónico
+        + Name (string) - Nombre o razón social del receptor - Máximo 80 caracteres. **Requerido**
+        + Identificación (enum) -
+            + Type (enum) - Tipo de identificación del receptor **Requerido**
+                + 01 (string) - Cédula Física
+                + 02 (string) - Cédula Jurídica
+                + 03 (string) - DIMEX
+                + 04 (string) - NITE
+            + Number (enum) - Número de cédula física/jurídica/NITE/DIMEX del receptor **Requerido**
+                + 01 (string) - Cédula Física
+                + 02 (string) - Cédula Jurídica
+                + 03 (string) - DIMEX
+                + 04 (string) - NITE
+        + Email (string) - Correo electrónico del receptor **Requerido**
+        \s*\w+([-+.']\w+)@\w+([-.]\w+).\w+([-.]\w+)\s. 
+   
+    + Detail (object)
+
+        + Number (string) - Número de línea **requerido** 
+    
+        + Code (enum) - Número decimal compuesto por 13 enteros y 3 decimales Máximo 2 digitos  **Requerido**
+    
+            + Type (enum) - Tipo de Código de producto/servicio
+            
+                + 01 (string) - Código del producto del vendedor
+        
+                + 02 (string) - Código del producto del comprador
+                
+                + 03 (string) - Código del producto asignado por la industria
+                
+                + 04 (string) - Código uso interno
+                
+                + 05 (string) - Otros
+                
+            + Code (string )- Código - Máximo 20 caracteres **Requerido**
+            
+        + Quantity (string) - Cantidad - Número decimal compuesto por 13 enteros y 3 decimales **Requerido**
+    
+        + UnitOfMeasure (string) - Codigo de la unidad de medida **Requerido**
+    
+        + CommercialUnitOfMeasure (string) - Nombre comercial unidad de medida - *Maximo 20 caracteres*
+        
+        + Detail(string) - Detalle de la mercancía transferida o servicio prestado - Máximo 160 caracteres **Requerido**
+        
+        + UnitPrice (string) - Precio Unitario - Número decimal compuesto por 13 enteros y 3 decimales **Requerido**
+        
+        + TotalAmount (string) - Monto total de la multiplicación de la cantidad por el precio unitario - Número decimal compuesto por 13 enteros y 3 decimales **Requerido**
+        
+        + Discount (string) - Monto de descuentos concedidos - Número decimal compuesto por 13 enteros y 3 decimales
+        
+        + NatureOfDiscount (string) - Descripción del descuento concedido - Máximo 80 caracteres **Requerido si aplica descuento**
+        
+        + SubTotal (string) - Se obtiene de la resta del campo “monto total” menos “monto de descuento concedido" - Número decimal compuesto por 13 enteros y 3 decimales **Requerido**
+         
+        + Tax (object) - Impuestos
+            + Code (enum) - **Código del impuesto**
+                + 01 (string) - Impuesto General sobre las Ventas
+                + 02 (string) - Impuesto Selectivo de Consumo
+                + 03 (string) - Impuesto Único a los combustibles
+                + 04 (string) - Impuesto específico de Bebidas Alcohólicas
+                + 05 (string) - Impuesto Específico sobre las bebidas envasadas sin contenido alcohólico y jabones de tocador
+                + 06 (string) - Impuesto a los Productos de Tabaco
+                + 07 (string) - Servicio
+                + 08 (string) - Otros
+            + Rate (string) - Porcentaje del impuesto - Número decimal compuesto por 4 enteros y 2 decimales **Requerido**
+            + Amount (string) - Monto del impuesto. Se obtiene de la multiplicación del campo subtotal por la tarifa - Número decimal compuesto por 13 enteros y 5 decimales **Requerido**
+            + Exoneration (enum) - **Documentos de exoneracion**
+                + DocumentType (enum) - Tipo de documento de exoneración o de autorización
+                    + 08 (string) - Impuesto General sobre las Ventas Diplomáticos
+                    + 09 (string) - Impuesto General sobre las Ventas Compras Autorizadas
+                    + 10 (string) - Impuesto General sobre las ventas Instituciones Públicas y otros Organismos
+                    + 11 (string) - Impuesto Selectivo de Consumo Compras Autorizadas
+                    + 99 (string) - Otros
+                + DocumentNumber (string) - Número de documento de exoneración o de autorización - Máximo 17 caracteres **Requerido**
+                + InstitutionName (string) - Fecha de emisión del documento de exoneración o de autorización / -MM-DDThh:mi:ss[Z|(+|-)hh:mm]. Ejemplo: 2016-09-26T13:00:00+06:00. **Requerido**
+                + TaxAmount (string) - Monto del impuesto Exonerado o autorizado sin impuesto - Número decimal compuesto por 13 enteros y 5 decimales. **Requerido**
+                + PurchasePercentage (string) - Porcentaje de la compra autorizada o exoneración - Máximo 3 dígitos **Requerido**
+            + TotalLineAmount (string) - Total por línea de detalle. Se obtiene de la suma de los campos “subtotal” mas “monto del impuesto” - Número decimal compuesto por 13 enteros y 3 decimales **Requerido**
+    + Summary (enum) - Resumen en detalle de factura o tiquete
+        + Currency (string) - "USD"
+        + ExchangeRate (string) - 570.31
+        + TotalTaxedService (string) - 478.0
+        + TotalExemptService (string) - 0.0
+        + TotalTaxedGoods (string) - 0.0
+        + TotalExemptGoods (string) - 0.0
+        + TotalTaxed (string) - 478.0
+        + TotalExempt (string) - 0.0
+        + TotalSale (string) - 478.0
+        + TotalDiscounts (string) - 0.0
+        + TotalNetSale (string) - 478.0
+        + TotalTaxes (string) - 62.14
+        + TotalVoucher (string) - 540.14
+    
+    
+    + Reference (enum) - 
+        + DocumentType (string) - 01
+        + DocumentNumber (string) - 50631071800310166091900100001010000000108152884101
+        + DateOfIssue (string) - 2018-06-13T16:02:28-06:00
+        + Code (string) - 01
+        + Reason (string) - Error en la informacion del cliente
+        + Other (string) - null
+  
+
+
++ Request (application/json)
+
+        {
+            "CompanyAPI": "78dd8617-c4f0-453b-bd5e-1912f124e731",  
+            "Environment": "stag", 
+            "Key": {   
+                "Branch": "01",
+                "Terminal": "1",
+                "Type": "01",  
+                "Voucher": "505",
+                "Country": "506", 
+                "Situation": "1"  
+            },  
+            "Header": {  
+                "Date": "2018-06-20T16:15:21-06:00", 
+                "TermOfSale": "02", 
+                "CreditTerm": "15", 
+                "PaymentMethod": "03"  
+            },
+            "Receiver": {
+                "Name": "Los patitos S.A", 
+                "Identification": {  
+                    "Type": "02",  
+                    "Number": "3101234567"  
+                },  
+                "Email": "info@lospatitos.com"  
+            },
+            "Detail": [{  
+                "Number": "1", 
+                "Code": {  
+                    "Type": "04",
+                    "Code": "CONTRL."  
+                },   
+                "Quantity": 1.0,  
+                "UnitOfMeasure": "Sp",  
+                "CommercialUnitOfMeasure": null, 
+                "Detail": "Control de acceso Hikvision Voltaje DC 00V/1a",  
+                "UnitPrice": 213.0,  
+                "TotalAmount": 213.0,   
+                "Discount": 21.3,  
+                "NatureOfDiscount": "Descuento del 10% de ejemplo",  
+                "SubTotal": 191.7,  
+                "Tax": null,  
+                "TotalLineAmount": 191.7 
+                }, { 
+                    "Number": "2",
+                    "Code": { 
+                        "Type": "04", 
+                        "Code": "ENRVPN."  
+                    },
+                },  
+                "Quantity": 1.0,
+                "UnitOfMeasure": "Sp",
+                "CommercialUnitOfMeasure": null,
+                "Detail": "Enrutador Vpn Conmutador de 4 puertos Gige Doble banda Linksys",
+                "UnitPrice": 265.0, 
+                "TotalAmount": 265.0, 
+                "Discount": null,   
+                "NatureOfDiscount": "", 
+                "SubTotal": 265.0, 
+                "Tax": [{    
+                    "Code": "01", 
+                    "Rate": 13.00, 
+                    "Amount": 34.45, 
+                    "Exoneration": { 
+                        "DocumentType": "01",
+                        "DocumentNumber": "100", 
+                        "InstitutionName": "Ministerio de Hacienda", 
+                        "IssueDate": "2016-09-26T13:00:00+06:00",  
+                        "TaxAmount": 130,   
+                        "PurchasePercentage": 10   
+                        }  
+                }],
+                "TotalLineAmount": 299.45  
+            }],
+            "Summary": {   
+                "Currency": "USD",  
+                "ExchangeRate": 570.31,
+                "TotalTaxedService": 478.0, 
+                "TotalExemptService": 0.0,  
+                "TotalTaxedGoods": 0.0,  
+                "TotalExemptGoods": 0.0, 
+                "TotalTaxed": 478.0,  
+                "TotalExempt": 0.0,  
+                "TotalSale": 478.0,  
+                "TotalDiscounts": 0.0, 
+                "TotalNetSale": 478.0, 
+                "TotalTaxes": 62.14,  
+                "TotalVoucher": 540.14 
+            },
+            "Reference": [{  
+                "DocumentType": "01",
+                "DocumentNumber": "50631071800310166091900100001010000000108152884101",
+                "DateOfIssue": "2018-06-13T16:02:28-06:00",
+                "Code": "01",     
+                "Reason": "Error en la informacion del cliente"  
+            }],  
+            "Other": null
+        }
+
++ Response 201 (application/json)
+
+    + Headers
+
+            Location: /application/json/
+
+    + Body
+
+            {
+               "HacKey": 50621534562436547576545342324356
+               "Consecutivo": 1002435612452
+            }
+
+
+#### Factura sin impuestos y con descuento [POST]
+
+Factura sin impuestos y con descuento
+
+
++ Attributes (object)
+
+    + CompanyAPI (string) - Identificador único generado al momento de crear la compañía **requerido** en el portal web de la aplicación
+    + Environment (enum) - Entorno en el que los documentos serán enviados **requerido**
+        + stag (string) - documentos en entorno de pruebas
+        + prod (string) - documentos en entorno real 
+    + key (object)
+        + branch: "01" (string) - Número de sucursal
+        + terminal: "01" (string) = Número de caja
+        + type (enum) - tipo de documento a emitir **requerido**
+            + 01 (string) - Factura electrónica
+            + 02 (string) - Nota de débito electrónica
+            + 03 (string) - Nota de crédito electrónica
+            + 04 (string) - Tiquete electrónico
+            + 05 (string) - Confirmación de aceptación del comprobante electrónico
+            + 06 (string) - Confirmación de aceptación parcial del comprobante electrónico
+            + 07 (string) - Confirmación de rechazo del comprobante electrónico
+        + voucher (string) - Número consecutivo del comprobante máximo 10 dígitos **requerido**
+        + country: 506 (string) - código de país
+        + situation: 1  (enum) - situación en la que se presenta el documento
+            + 1 (string) - normal
+            + 2 (string) - contingencia
+            + 3 (string) - sin internet
+    + Header (object)
+        + date (string) - Fecha de emisión del documento en formato ISO
+        + termOfSale (enum) - Término de la venta
+            + 01 (string) - contado
+            + 02 (string) - credito
+            + 03 (string) - consignación
+            + 04 (string) - Apartado
+            + 05 (string) - Arrendamiento con opción de compra
+            + 06 (string) - Arrendamiento en función financiera
+            + 99 (string) - Otros | se debe indicar la condición de la venta |
+        + creditTerm (string) - Plazo del crédito en caso de ser venta a contado se debe enviar como **"0"** 
+        + paymentMethod (enum) - Medio de pago de la factura
+            + 01 (string) - Efectivo
+            + 02 (string) -  Tarjeta
+            + 03 (string) - Cheque
+            + 04 (string) - Deposito - Transferencia Bancaria
+            + 99 (string) - Otros | Debe Especificar |
+
+    + Receiver (object) - Puede ser omitido en caso de que sea un Tiquete Electrónico
+        + Name (string) - Nombre o razón social del receptor - Máximo 80 caracteres. **Requerido**
+        + Identificación (enum) -
+            + Type (enum) - Tipo de identificación del receptor **Requerido**
+                + 01 (string) - Cédula Física
+                + 02 (string) - Cédula Jurídica
+                + 03 (string) - DIMEX
+                + 04 (string) - NITE
+            + Number (enum) - Número de cédula física/jurídica/NITE/DIMEX del receptor **Requerido**
+                + 01 (string) - Cédula Física
+                + 02 (string) - Cédula Jurídica
+                + 03 (string) - DIMEX
+                + 04 (string) - NITE
+        + Email (string) - Correo electrónico del receptor **Requerido**
+        \s*\w+([-+.']\w+)@\w+([-.]\w+).\w+([-.]\w+)\s. 
+   
+    + Detail (object)
+
+        + Number (string) - Número de línea **requerido** 
+    
+        + Code (enum) - Número decimal compuesto por 13 enteros y 3 decimales Máximo 2 digitos  **Requerido**
+    
+            + Type (enum) - Tipo de Código de producto/servicio
+            
+                + 01 (string) - Código del producto del vendedor
+        
+                + 02 (string) - Código del producto del comprador
+                
+                + 03 (string) - Código del producto asignado por la industria
+                
+                + 04 (string) - Código uso interno
+                
+                + 05 (string) - Otros
+                
+            + Code (string )- Código - Máximo 20 caracteres **Requerido**
+            
+        + Quantity (string) - Cantidad - Número decimal compuesto por 13 enteros y 3 decimales **Requerido**
+    
+        + UnitOfMeasure (string) - Codigo de la unidad de medida **Requerido**
+    
+        + CommercialUnitOfMeasure (string) - Nombre comercial unidad de medida - *Maximo 20 caracteres*
+        
+        + Detail(string) - Detalle de la mercancía transferida o servicio prestado - Máximo 160 caracteres **Requerido**
+        
+        + UnitPrice (string) - Precio Unitario - Número decimal compuesto por 13 enteros y 3 decimales **Requerido**
+        
+        + TotalAmount (string) - Monto total de la multiplicación de la cantidad por el precio unitario - Número decimal compuesto por 13 enteros y 3 decimales **Requerido**
+        
+        + Discount (string) - Monto de descuentos concedidos - Número decimal compuesto por 13 enteros y 3 decimales
+        
+        + NatureOfDiscount (string) - Descripción del descuento concedido - Máximo 80 caracteres **Requerido si aplica descuento**
+        
+        + SubTotal (string) - Se obtiene de la resta del campo “monto total” menos “monto de descuento concedido" - Número decimal compuesto por 13 enteros y 3 decimales **Requerido**
+         
+        + Tax (object) - Impuestos
+            + Code (enum) - **Código del impuesto**
+                + 01 (string) - Impuesto General sobre las Ventas
+                + 02 (string) - Impuesto Selectivo de Consumo
+                + 03 (string) - Impuesto Único a los combustibles
+                + 04 (string) - Impuesto específico de Bebidas Alcohólicas
+                + 05 (string) - Impuesto Específico sobre las bebidas envasadas sin contenido alcohólico y jabones de tocador
+                + 06 (string) - Impuesto a los Productos de Tabaco
+                + 07 (string) - Servicio
+                + 08 (string) - Otros
+            + Rate (string) - Porcentaje del impuesto - Número decimal compuesto por 4 enteros y 2 decimales **Requerido**
+            + Amount (string) - Monto del impuesto. Se obtiene de la multiplicación del campo subtotal por la tarifa - Número decimal compuesto por 13 enteros y 5 decimales **Requerido**
+            + Exoneration (enum) - **Documentos de exoneracion**
+                + DocumentType (enum) - Tipo de documento de exoneración o de autorización
+                    + 08 (string) - Impuesto General sobre las Ventas Diplomáticos
+                    + 09 (string) - Impuesto General sobre las Ventas Compras Autorizadas
+                    + 10 (string) - Impuesto General sobre las ventas Instituciones Públicas y otros Organismos
+                    + 11 (string) - Impuesto Selectivo de Consumo Compras Autorizadas
+                    + 99 (string) - Otros
+                + DocumentNumber (string) - Número de documento de exoneración o de autorización - Máximo 17 caracteres **Requerido**
+                + InstitutionName (string) - Fecha de emisión del documento de exoneración o de autorización / -MM-DDThh:mi:ss[Z|(+|-)hh:mm]. Ejemplo: 2016-09-26T13:00:00+06:00. **Requerido**
+                + TaxAmount (string) - Monto del impuesto Exonerado o autorizado sin impuesto - Número decimal compuesto por 13 enteros y 5 decimales. **Requerido**
+                + PurchasePercentage (string) - Porcentaje de la compra autorizada o exoneración - Máximo 3 dígitos **Requerido**
+            + TotalLineAmount (string) - Total por línea de detalle. Se obtiene de la suma de los campos “subtotal” mas “monto del impuesto” - Número decimal compuesto por 13 enteros y 3 decimales **Requerido**
+    + Summary (enum) - Resumen en detalle de factura o tiquete
+        + Currency (string) - "USD"
+        + ExchangeRate (string) - 570.31
+        + TotalTaxedService (string) - 478.0
+        + TotalExemptService (string) - 0.0
+        + TotalTaxedGoods (string) - 0.0
+        + TotalExemptGoods (string) - 0.0
+        + TotalTaxed (string) - 478.0
+        + TotalExempt (string) - 0.0
+        + TotalSale (string) - 478.0
+        + TotalDiscounts (string) - 0.0
+        + TotalNetSale (string) - 478.0
+        + TotalTaxes (string) - 62.14
+        + TotalVoucher (string) - 540.14
+    
+    
+    + Reference (enum) - 
+        + DocumentType (string) - 01
+        + DocumentNumber (string) - 50631071800310166091900100001010000000108152884101
+        + DateOfIssue (string) - 2018-06-13T16:02:28-06:00
+        + Code (string) - 01
+        + Reason (string) - Error en la informacion del cliente
+        + Other (string) - null
+  
+
+
++ Request (application/json)
+
+        {
+            "CompanyAPI": "78dd8617-c4f0-453b-bd5e-1912f124e731", 
+            "Environment": "stag", 
+            "Key": { 
+                "Branch": "01", 
+                "Terminal": "1", 
+                "Type": "01",  
+                "Voucher": "505", 
+                "Country": "506",  
+                "Situation": "1"  
+            }, 
+            "Header": { 
+                "Date": "2018-06-20T16:15:21-06:00",  
+                "TermOfSale": "02",  
+                "CreditTerm": "15", 
+                "PaymentMethod": "03"  
+            }, 
+            "Receiver": {  
+                "Name": "Los patitos S.A",
+                "Identification": {
+                    "Type": "02",  
+                    "Number": "3101234567" 
+                },  
+                "Email": "info@lospatitos.com"  
+            }, 
+            "Detail": [{  
+                "Number": "1",  
+                "Code": {    
+                    "Type": "04", 
+                    "Code": "CONTRL." 
+                },   
+                "Quantity": 1.0, 
+                "UnitOfMeasure": "Sp", 
+                "CommercialUnitOfMeasure": null, 
+                "Detail": "Control de acceso Hikvision Voltaje DC 00V/1a", 
+                "UnitPrice": 213.0,  
+                "TotalAmount": 213.0,  
+                "Discount": 21.3,  
+                "NatureOfDiscount": "Descuento del 10% de ejemplo", 
+                "SubTotal": 191.7, 
+                "Tax": null,  
+                "TotalLineAmount": 191.7 
+                }, {  
+                "Number": "2",  
+                "Code": {   
+                    "Type": "04",
+                    "Code": "ENRVPN."   
+                },   
+                "Quantity": 1.0,
+                "UnitOfMeasure": "Sp",
+                "CommercialUnitOfMeasure": null, 
+                "Detail": "Enrutador Vpn Conmutador de 4 puertos Gige Doble banda Linksys",
+                "UnitPrice": 265.0,   
+                "TotalAmount": 265.0, 
+                "Discount": null, 
+                "NatureOfDiscount": "", 
+                "SubTotal": 265.0,  
+                "Tax": [{   
+                    "Code": "01", 
+                    "Rate": 13.00, 
+                    "Amount": 34.45, 
+                    "Exoneration": {  
+                        "DocumentType": "01", 
+                        "DocumentNumber": "100", 
+                        "InstitutionName": "Ministerio de Hacienda", 
+                        "IssueDate": "2016-09-26T13:00:00+06:00",   
+                        "TaxAmount": 130,    
+                        "PurchasePercentage": 10   
+                    }   
+                }],
+                "TotalLineAmount": 299.45  
+            }],
+            "Summary": {  
+                "Currency": "USD", 
+                "ExchangeRate": 570.31, 
+                "TotalTaxedService": 478.0, 
+                "TotalExemptService": 0.0,  
+                "TotalTaxedGoods": 0.0,  
+                "TotalExemptGoods": 0.0, 
+                "TotalTaxed": 478.0,  
+                "TotalExempt": 0.0,  
+                "TotalSale": 478.0,  
+                "TotalDiscounts": 0.0, 
+                "TotalNetSale": 478.0, 
+                "TotalTaxes": 62.14, 
+                "TotalVoucher": 540.14 
+            },
+            "Reference": [{   
+                "DocumentType": "01",
+                "DocumentNumber": "50631071800310166091900100001010000000108152884101", 
+                "DateOfIssue": "2018-06-13T16:02:28-06:00",  
+                "Code": "01",   
+                "Reason": "Error en la informacion del cliente"  
+            }], 
+            "Other": null
+        }
+      
++ Response 201 (application/json)
+
+    + Headers
+
+            Location: /application/json/
+
+    + Body
+
+            {
+               "HacKey": 50621534562436547576545342324356
+               "Consecutivo": 1002435612452
+            }
+  
+#### Tiquete con impuesto [POST]
+
+Toma de la base de datos información del tiquete con los datos sobre impuestos
+
+
++ Attributes (object)
+
+    + CompanyAPI (string) - Identificador único generado al momento de crear la compañía **requerido** en el portal web de la aplicación
+    + Environment (enum) - Entorno en el que los documentos serán enviados **requerido**
+        + stag (string) - documentos en entorno de pruebas
+        + prod (string) - documentos en entorno real 
+    + key (object)
+        + branch: "01" (string) - Número de sucursal
+        + terminal: "01" (string) = Número de caja
+        + type (enum) - tipo de documento a emitir **requerido**
+            + 01 (string) - Factura electrónica
+            + 02 (string) - Nota de débito electrónica
+            + 03 (string) - Nota de crédito electrónica
+            + 04 (string) - Tiquete electrónico
+            + 05 (string) - Confirmación de aceptación del comprobante electrónico
+            + 06 (string) - Confirmación de aceptación parcial del comprobante electrónico
+            + 07 (string) - Confirmación de rechazo del comprobante electrónico
+        + voucher (string) - Número consecutivo del comprobante máximo 10 dígitos **requerido**
+        + country: 506 (string) - código de país
+        + situation: 1  (enum) - situación en la que se presenta el documento
+            + 1 (string) - normal
+            + 2 (string) - contingencia
+            + 3 (string) - sin internet
+    + Header (object)
+        + date (string) - Fecha de emisión del documento en formato ISO
+        + termOfSale (enum) - Término de la venta
+            + 01 (string) - contado
+            + 02 (string) - credito
+            + 03 (string) - consignación
+            + 04 (string) - Apartado
+            + 05 (string) - Arrendamiento con opción de compra
+            + 06 (string) - Arrendamiento en función financiera
+            + 99 (string) - Otros | se debe indicar la condición de la venta |
+        + creditTerm (string) - Plazo del crédito en caso de ser venta a contado se debe enviar como **"0"** 
+        + paymentMethod (enum) - Medio de pago de la factura
+            + 01 (string) - Efectivo
+            + 02 (string) -  Tarjeta
+            + 03 (string) - Cheque
+            + 04 (string) - Deposito - Transferencia Bancaria
+            + 99 (string) - Otros | Debe Especificar |
+
+    + Receiver (object) - Puede ser omitido en caso de que sea un Tiquete Electrónico
+        + Name (string) - Nombre o razón social del receptor - Máximo 80 caracteres. **Requerido**
+        + Identificación (enum) -
+            + Type (enum) - Tipo de identificación del receptor **Requerido**
+                + 01 (string) - Cédula Física
+                + 02 (string) - Cédula Jurídica
+                + 03 (string) - DIMEX
+                + 04 (string) - NITE
+            + Number (enum) - Número de cédula física/jurídica/NITE/DIMEX del receptor **Requerido**
+                + 01 (string) - Cédula Física
+                + 02 (string) - Cédula Jurídica
+                + 03 (string) - DIMEX
+                + 04 (string) - NITE
+        + Email (string) - Correo electrónico del receptor **Requerido**
+        \s*\w+([-+.']\w+)@\w+([-.]\w+).\w+([-.]\w+)\s. 
+   
+    + Detail (object)
+
+        + Number (string) - Número de línea **requerido** 
+    
+        + Code (enum) - Número decimal compuesto por 13 enteros y 3 decimales Máximo 2 digitos  **Requerido**
+    
+            + Type (enum) - Tipo de Código de producto/servicio
+            
+                + 01 (string) - Código del producto del vendedor
+        
+                + 02 (string) - Código del producto del comprador
+                
+                + 03 (string) - Código del producto asignado por la industria
+                
+                + 04 (string) - Código uso interno
+                
+                + 05 (string) - Otros
+                
+            + Code (string )- Código - Máximo 20 caracteres **Requerido**
+            
+        + Quantity (string) - Cantidad - Número decimal compuesto por 13 enteros y 3 decimales **Requerido**
+    
+        + UnitOfMeasure (string) - Codigo de la unidad de medida **Requerido**
+    
+        + CommercialUnitOfMeasure (string) - Nombre comercial unidad de medida - *Maximo 20 caracteres*
+        
+        + Detail(string) - Detalle de la mercancía transferida o servicio prestado - Máximo 160 caracteres **Requerido**
+        
+        + UnitPrice (string) - Precio Unitario - Número decimal compuesto por 13 enteros y 3 decimales **Requerido**
+        
+        + TotalAmount (string) - Monto total de la multiplicación de la cantidad por el precio unitario - Número decimal compuesto por 13 enteros y 3 decimales **Requerido**
+        
+        + Discount (string) - Monto de descuentos concedidos - Número decimal compuesto por 13 enteros y 3 decimales
+        
+        + NatureOfDiscount (string) - Descripción del descuento concedido - Máximo 80 caracteres **Requerido si aplica descuento**
+        
+        + SubTotal (string) - Se obtiene de la resta del campo “monto total” menos “monto de descuento concedido" - Número decimal compuesto por 13 enteros y 3 decimales **Requerido**
+         
+        + Tax (object) - Impuestos
+            + Code (enum) - **Código del impuesto**
+                + 01 (string) - Impuesto General sobre las Ventas
+                + 02 (string) - Impuesto Selectivo de Consumo
+                + 03 (string) - Impuesto Único a los combustibles
+                + 04 (string) - Impuesto específico de Bebidas Alcohólicas
+                + 05 (string) - Impuesto Específico sobre las bebidas envasadas sin contenido alcohólico y jabones de tocador
+                + 06 (string) - Impuesto a los Productos de Tabaco
+                + 07 (string) - Servicio
+                + 08 (string) - Otros
+            + Rate (string) - Porcentaje del impuesto - Número decimal compuesto por 4 enteros y 2 decimales **Requerido**
+            + Amount (string) - Monto del impuesto. Se obtiene de la multiplicación del campo subtotal por la tarifa - Número decimal compuesto por 13 enteros y 5 decimales **Requerido**
+            + Exoneration (enum) - **Documentos de exoneracion**
+                + DocumentType (enum) - Tipo de documento de exoneración o de autorización
+                    + 08 (string) - Impuesto General sobre las Ventas Diplomáticos
+                    + 09 (string) - Impuesto General sobre las Ventas Compras Autorizadas
+                    + 10 (string) - Impuesto General sobre las ventas Instituciones Públicas y otros Organismos
+                    + 11 (string) - Impuesto Selectivo de Consumo Compras Autorizadas
+                    + 99 (string) - Otros
+                + DocumentNumber (string) - Número de documento de exoneración o de autorización - Máximo 17 caracteres **Requerido**
+                + InstitutionName (string) - Fecha de emisión del documento de exoneración o de autorización / -MM-DDThh:mi:ss[Z|(+|-)hh:mm]. Ejemplo: 2016-09-26T13:00:00+06:00. **Requerido**
+                + TaxAmount (string) - Monto del impuesto Exonerado o autorizado sin impuesto - Número decimal compuesto por 13 enteros y 5 decimales. **Requerido**
+                + PurchasePercentage (string) - Porcentaje de la compra autorizada o exoneración - Máximo 3 dígitos **Requerido**
+            + TotalLineAmount (string) - Total por línea de detalle. Se obtiene de la suma de los campos “subtotal” mas “monto del impuesto” - Número decimal compuesto por 13 enteros y 3 decimales **Requerido**
+    + Summary (enum) - Resumen en detalle de factura o tiquete
+        + Currency (string) - "USD"
+        + ExchangeRate (string) - 570.31
+        + TotalTaxedService (string) - 478.0
+        + TotalExemptService (string) - 0.0
+        + TotalTaxedGoods (string) - 0.0
+        + TotalExemptGoods (string) - 0.0
+        + TotalTaxed (string) - 478.0
+        + TotalExempt (string) - 0.0
+        + TotalSale (string) - 478.0
+        + TotalDiscounts (string) - 0.0
+        + TotalNetSale (string) - 478.0
+        + TotalTaxes (string) - 62.14
+        + TotalVoucher (string) - 540.14
+    
+    
+    + Reference (enum) - 
+        + DocumentType (string) - 01
+        + DocumentNumber (string) - 50631071800310166091900100001010000000108152884101
+        + DateOfIssue (string) - 2018-06-13T16:02:28-06:00
+        + Code (string) - 01
+        + Reason (string) - Error en la informacion del cliente
+        + Other (string) - null
+  
+
+
++ Request (application/json)
+
+        {
+            "CompanyAPI": "78dd8617-c4f0-453b-bd5e-1912f124e731",
+            "Environment": "stag",
+            "key": {
+                "Branch": "01",
+                "Terminal": "1",
+                "Type": "04",
+                "Voucher": "505",
+                "Country": "506",
+                "Situation": "1"
+            },
+            "Header": {   
+                "Date": "2018-06-20T16:15:21-06:00",  
+                "TermOfSale": "02",   
+                "CreditTerm": "15",   
+                "PaymentMethod": "03"  
+            },
+            "Receiver": {   
+                "Name": "Los patitos S.A", 
+                "Identification": {    
+                    "Type": "02",    
+                    "Number": "3101234567"   
+                },  
+                "Email": "info@lospatitos.com"  
+            },
+            "Detail": [{   
+                "Number": "1", 
+                "Code": {    
+                    "Type": "04", 
+                    "Code": "CONTRL."   
+                },  
+                "Quantity": 1.0,   
+                "UnitOfMeasure": "Sp",   
+                "CommercialUnitOfMeasure": null,  
+                "Detail": "Control de acceso Hikvision Voltaje DC 00V/1a",   
+                "UnitPrice": 213.0,  
+                "TotalAmount": 213.0,   
+                "Discount": null,  
+                "NatureOfDiscount": "",  
+                "SubTotal": 213.0,   
+                "Tax": 
+                    [{    
+                        "Code": "01",    
+                        "Rate": 13.00,   
+                        "Amount": 27.69,    
+                        "Exoneration": null   
+                    }],
+                "TotalLineAmount": 240.69  
+            },
+            {   
+                "Number": "2",   
+                "Code": {    
+                    "Type": "04",    
+                    "Code": "ENRVPN."   
+                },
+                "Quantity": 1.0,   
+                "UnitOfMeasure": "Sp",   
+                "CommercialUnitOfMeasure": null,   
+                "Detail": "Enrutador Vpn Conmutador de 4 puertos Gige Doble banda Linksys",
+                "UnitPrice": 265.0,   
+                "TotalAmount": 265.0,   
+                "Discount": null,  
+                "NatureOfDiscount": "",  
+                "SubTotal": 265.0, 
+                "Tax": [{ 
+                    "Code": "01",  
+                    "Rate": 13.00, 
+                    "Amount": 34.45, 
+                    "Exoneration": { 
+                        "DocumentType": "01",   
+                        "DocumentNumber": "100", 
+                        "InstitutionName": "Ministerio de Hacienda",  
+                        "IssueDate": "2016-09-26T13:00:00+06:00", 
+                        "TaxAmount": 130,    
+                        "PurchasePercentage": 10    
+                    }   
+                }],
+                "TotalLineAmount": 299.45  
+            }],
+            "Summary": {   
+                "Currency": "USD",   
+                "ExchangeRate": 570.31,  
+                "TotalTaxedService": 478.0, 
+                "TotalExemptService": 0.0,  
+                "TotalTaxedGoods": 0.0, 
+                "TotalExemptGoods": 0.0, 
+                "TotalTaxed": 478.0,  
+                "TotalExempt": 0.0,   
+                "TotalSale": 478.0, 
+                "TotalDiscounts": 0.0,  
+                "TotalNetSale": 478.0,  
+                "TotalTaxes": 62.14,  
+                "TotalVoucher": 540.14  
+            },
+            "Reference": [{   
+                "DocumentType": "01", 
+                "DocumentNumber": "50631071800310166091900100001010000000108152884101",   
+                "DateOfIssue": "2018-06-13T16:02:28-06:00",  
+                "Code": "01",     
+                "Reason": "Error en la informacion del cliente"  
+            }],  
+            "Other": null 
+        }
+    
++ Response 201 (application/json)
+
+    + Headers
+
+            Location: /application/json/
+
+    + Body
+
+            {
+               "HacKey": 50621534562436547576545342324356
+               "Consecutivo": 1002435612452
+            }
+
+#### Tiquete sin impuestos [POST]
+
+JSON del Tiquete sin impuestos
+
+
++ Attributes (object)
+
+    + CompanyAPI (string) - Identificador único generado al momento de crear la compañía **requerido** en el portal web de la aplicación
+    + Environment (enum) - Entorno en el que los documentos serán enviados **requerido**
+        + stag (string) - documentos en entorno de pruebas
+        + prod (string) - documentos en entorno real 
+    + key (object)
+        + branch: "01" (string) - Número de sucursal
+        + terminal: "01" (string) = Número de caja
+        + type (enum) - tipo de documento a emitir **requerido**
+            + 01 (string) - Factura electrónica
+            + 02 (string) - Nota de débito electrónica
+            + 03 (string) - Nota de crédito electrónica
+            + 04 (string) - Tiquete electrónico
+            + 05 (string) - Confirmación de aceptación del comprobante electrónico
+            + 06 (string) - Confirmación de aceptación parcial del comprobante electrónico
+            + 07 (string) - Confirmación de rechazo del comprobante electrónico
+        + voucher (string) - Número consecutivo del comprobante máximo 10 dígitos **requerido**
+        + country: 506 (string) - código de país
+        + situation: 1  (enum) - situación en la que se presenta el documento
+            + 1 (string) - normal
+            + 2 (string) - contingencia
+            + 3 (string) - sin internet
+    + Header (object)
+        + date (string) - Fecha de emisión del documento en formato ISO
+        + termOfSale (enum) - Término de la venta
+            + 01 (string) - contado
+            + 02 (string) - credito
+            + 03 (string) - consignación
+            + 04 (string) - Apartado
+            + 05 (string) - Arrendamiento con opción de compra
+            + 06 (string) - Arrendamiento en función financiera
+            + 99 (string) - Otros | se debe indicar la condición de la venta |
+        + creditTerm (string) - Plazo del crédito en caso de ser venta a contado se debe enviar como **"0"** 
+        + paymentMethod (enum) - Medio de pago de la factura
+            + 01 (string) - Efectivo
+            + 02 (string) -  Tarjeta
+            + 03 (string) - Cheque
+            + 04 (string) - Deposito - Transferencia Bancaria
+            + 99 (string) - Otros | Debe Especificar |
+
+    + Receiver (object) - Puede ser omitido en caso de que sea un Tiquete Electrónico
+        + Name (string) - Nombre o razón social del receptor - Máximo 80 caracteres. **Requerido**
+        + Identificación (enum) -
+            + Type (enum) - Tipo de identificación del receptor **Requerido**
+                + 01 (string) - Cédula Física
+                + 02 (string) - Cédula Jurídica
+                + 03 (string) - DIMEX
+                + 04 (string) - NITE
+            + Number (enum) - Número de cédula física/jurídica/NITE/DIMEX del receptor **Requerido**
+                + 01 (string) - Cédula Física
+                + 02 (string) - Cédula Jurídica
+                + 03 (string) - DIMEX
+                + 04 (string) - NITE
+        + Email (string) - Correo electrónico del receptor **Requerido**
+        \s*\w+([-+.']\w+)@\w+([-.]\w+).\w+([-.]\w+)\s. 
+   
+    + Detail (object)
+
+        + Number (string) - Número de línea **requerido** 
+    
+        + Code (enum) - Número decimal compuesto por 13 enteros y 3 decimales Máximo 2 digitos  **Requerido**
+    
+            + Type (enum) - Tipo de Código de producto/servicio
+            
+                + 01 (string) - Código del producto del vendedor
+        
+                + 02 (string) - Código del producto del comprador
+                
+                + 03 (string) - Código del producto asignado por la industria
+                
+                + 04 (string) - Código uso interno
+                
+                + 05 (string) - Otros
+                
+            + Code (string )- Código - Máximo 20 caracteres **Requerido**
+            
+        + Quantity (string) - Cantidad - Número decimal compuesto por 13 enteros y 3 decimales **Requerido**
+    
+        + UnitOfMeasure (string) - Codigo de la unidad de medida **Requerido**
+    
+        + CommercialUnitOfMeasure (string) - Nombre comercial unidad de medida - *Maximo 20 caracteres*
+        
+        + Detail(string) - Detalle de la mercancía transferida o servicio prestado - Máximo 160 caracteres **Requerido**
+        
+        + UnitPrice (string) - Precio Unitario - Número decimal compuesto por 13 enteros y 3 decimales **Requerido**
+        
+        + TotalAmount (string) - Monto total de la multiplicación de la cantidad por el precio unitario - Número decimal compuesto por 13 enteros y 3 decimales **Requerido**
+        
+        + Discount (string) - Monto de descuentos concedidos - Número decimal compuesto por 13 enteros y 3 decimales
+        
+        + NatureOfDiscount (string) - Descripción del descuento concedido - Máximo 80 caracteres **Requerido si aplica descuento**
+        
+        + SubTotal (string) - Se obtiene de la resta del campo “monto total” menos “monto de descuento concedido" - Número decimal compuesto por 13 enteros y 3 decimales **Requerido**
+         
+        + Tax (object) - Impuestos
+            + Code (enum) - **Código del impuesto**
+                + 01 (string) - Impuesto General sobre las Ventas
+                + 02 (string) - Impuesto Selectivo de Consumo
+                + 03 (string) - Impuesto Único a los combustibles
+                + 04 (string) - Impuesto específico de Bebidas Alcohólicas
+                + 05 (string) - Impuesto Específico sobre las bebidas envasadas sin contenido alcohólico y jabones de tocador
+                + 06 (string) - Impuesto a los Productos de Tabaco
+                + 07 (string) - Servicio
+                + 08 (string) - Otros
+            + Rate (string) - Porcentaje del impuesto - Número decimal compuesto por 4 enteros y 2 decimales **Requerido**
+            + Amount (string) - Monto del impuesto. Se obtiene de la multiplicación del campo subtotal por la tarifa - Número decimal compuesto por 13 enteros y 5 decimales **Requerido**
+            + Exoneration (enum) - **Documentos de exoneracion**
+                + DocumentType (enum) - Tipo de documento de exoneración o de autorización
+                    + 08 (string) - Impuesto General sobre las Ventas Diplomáticos
+                    + 09 (string) - Impuesto General sobre las Ventas Compras Autorizadas
+                    + 10 (string) - Impuesto General sobre las ventas Instituciones Públicas y otros Organismos
+                    + 11 (string) - Impuesto Selectivo de Consumo Compras Autorizadas
+                    + 99 (string) - Otros
+                + DocumentNumber (string) - Número de documento de exoneración o de autorización - Máximo 17 caracteres **Requerido**
+                + InstitutionName (string) - Fecha de emisión del documento de exoneración o de autorización / -MM-DDThh:mi:ss[Z|(+|-)hh:mm]. Ejemplo: 2016-09-26T13:00:00+06:00. **Requerido**
+                + TaxAmount (string) - Monto del impuesto Exonerado o autorizado sin impuesto - Número decimal compuesto por 13 enteros y 5 decimales. **Requerido**
+                + PurchasePercentage (string) - Porcentaje de la compra autorizada o exoneración - Máximo 3 dígitos **Requerido**
+            + TotalLineAmount (string) - Total por línea de detalle. Se obtiene de la suma de los campos “subtotal” mas “monto del impuesto” - Número decimal compuesto por 13 enteros y 3 decimales **Requerido**
+    + Summary (enum) - Resumen en detalle de factura o tiquete
+        + Currency (string) - "USD"
+        + ExchangeRate (string) - 570.31
+        + TotalTaxedService (string) - 478.0
+        + TotalExemptService (string) - 0.0
+        + TotalTaxedGoods (string) - 0.0
+        + TotalExemptGoods (string) - 0.0
+        + TotalTaxed (string) - 478.0
+        + TotalExempt (string) - 0.0
+        + TotalSale (string) - 478.0
+        + TotalDiscounts (string) - 0.0
+        + TotalNetSale (string) - 478.0
+        + TotalTaxes (string) - 62.14
+        + TotalVoucher (string) - 540.14
+    
+    
+    + Reference (enum) - 
+        + DocumentType (string) - 01
+        + DocumentNumber (string) - 50631071800310166091900100001010000000108152884101
+        + DateOfIssue (string) - 2018-06-13T16:02:28-06:00
+        + Code (string) - 01
+        + Reason (string) - Error en la informacion del cliente
+        + Other (string) - null
+  
+
+
++ Request (application/json)
+
+        {
+            "CompanyAPI": "78dd8617-c4f0-453b-bd5e-1912f124e731",  
+            "Environment": "stag", 
+            "Key": {   
+                "Branch": "01",   
+                "Terminal": "1",   
+                "Type": "04",   
+                "Voucher": "505",  
+                "Country": "506",  
+                "Situation": "1" 
+            },
+            "Header": {   
+                "Date": "2018-06-20T16:15:21-06:00",
+                "TermOfSale": "02", 
+                "CreditTerm": "15",  
+                "PaymentMethod": "03"  
+            },  
+            "Receiver": {  
+                "Name": "Los patitos S.A",   
+                "Identification": {    
+                    "Type": "02",    
+                    "Number": "3101234567"  
+                },  
+                "Email": "info@lospatitos.com"  
+            },
+            "Detail": [{   
+                "Number": "1",
+                "Code": {    
+                    "Type": "04",
+                    "Code": "CONTRL."  
+                },  
+                "Quantity": 1.0, 
+                "UnitOfMeasure": "Sp", 
+                "CommercialUnitOfMeasure": null,
+                "Detail": "Control de acceso Hikvision Voltaje DC 00V/1a", 
+                "UnitPrice": 213.0,  
+                "TotalAmount": 213.0,
+                "Discount": null,
+                "NatureOfDiscount": "",   
+                "SubTotal": 213.0,  
+                "Tax": null,  
+                "TotalLineAmount": 240.69 
+            }, {   
+                "Number": "2",   
+                "Code": {    
+                    "Type": "04",    
+                    "Code": "ENRVPN."   
+                },   
+                "Quantity": 1.0, 
+                "UnitOfMeasure": "Sp",
+                "CommercialUnitOfMeasure": null, 
+                "Detail": "Enrutador Vpn Conmutador de 4 puertos Gige Doble banda Linksys",
+                "UnitPrice": 265.0,  
+                "TotalAmount": 265.0,
+                "Discount": null, 
+                "NatureOfDiscount": "",
+                "SubTotal": 265.0, 
+                "Tax": [{
+                    "Code": "01",   
+                    "Rate": 13.00,  
+                    "Amount": 34.45,
+                    "Exoneration": {     
+                        "DocumentType": "01", 
+                        "DocumentNumber": "100",
+                        "InstitutionName": "Ministerio de Hacienda", 
+                        "IssueDate": "2016-09-26T13:00:00+06:00", 
+                        "TaxAmount": 130,   
+                        "PurchasePercentage": 10 
+                    },
+                }], 
+                "TotalLineAmount": 299.45 
+            }],
+            "Summary": {  
+                "Currency": "USD", 
+                "ExchangeRate": 570.31,   
+                "TotalTaxedService": 478.0, 
+                "TotalExemptService": 0.0,
+                "TotalTaxedGoods": 0.0, 
+                "TotalExemptGoods": 0.0,
+                "TotalTaxed": 478.0, 
+                "TotalExempt": 0.0, 
+                "TotalSale": 478.0,
+                "TotalDiscounts": 0.0, 
+                "TotalNetSale": 478.0, 
+                "TotalTaxes": 62.14, 
+                "TotalVoucher": 540.14  
+            },
+            "Reference": [{ 
+                "DocumentType": "01",
+                "DocumentNumber": "50631071800310166091900100001010000000108152884101",  
+                "DateOfIssue": "2018-06-13T16:02:28-06:00",    
+                "Code": "01",   
+                "Reason": "Error en la informacion del cliente"  
+            }],  
+            "Other": null 
+            } 
+        }
+
++ Response 201 (application/json)
+
+    + Headers
+
+            Location: /application/json/
+
+    + Body
+
+            {
+               "HacKey": 50621534562436547576545342324356
+               "Consecutivo": 1002435612452
+            }
+
+
+#### Tiquete con impuesto y descuento [POST]
+
+Tiquete con impuesto y descuento
+
+
++ Attributes (object)
+
+    + CompanyAPI (string) - Identificador único generado al momento de crear la compañía **requerido** en el portal web de la aplicación
+    + Environment (enum) - Entorno en el que los documentos serán enviados **requerido**
+        + stag (string) - documentos en entorno de pruebas
+        + prod (string) - documentos en entorno real 
+    + key (object)
+        + branch: "01" (string) - Número de sucursal
+        + terminal: "01" (string) = Número de caja
+        + type (enum) - tipo de documento a emitir **requerido**
+            + 01 (string) - Factura electrónica
+            + 02 (string) - Nota de débito electrónica
+            + 03 (string) - Nota de crédito electrónica
+            + 04 (string) - Tiquete electrónico
+            + 05 (string) - Confirmación de aceptación del comprobante electrónico
+            + 06 (string) - Confirmación de aceptación parcial del comprobante electrónico
+            + 07 (string) - Confirmación de rechazo del comprobante electrónico
+        + voucher (string) - Número consecutivo del comprobante máximo 10 dígitos **requerido**
+        + country: 506 (string) - código de país
+        + situation: 1  (enum) - situación en la que se presenta el documento
+            + 1 (string) - normal
+            + 2 (string) - contingencia
+            + 3 (string) - sin internet
+    + Header (object)
+        + date (string) - Fecha de emisión del documento en formato ISO
+        + termOfSale (enum) - Término de la venta
+            + 01 (string) - contado
+            + 02 (string) - credito
+            + 03 (string) - consignación
+            + 04 (string) - Apartado
+            + 05 (string) - Arrendamiento con opción de compra
+            + 06 (string) - Arrendamiento en función financiera
+            + 99 (string) - Otros | se debe indicar la condición de la venta |
+        + creditTerm (string) - Plazo del crédito en caso de ser venta a contado se debe enviar como **"0"** 
+        + paymentMethod (enum) - Medio de pago de la factura
+            + 01 (string) - Efectivo
+            + 02 (string) -  Tarjeta
+            + 03 (string) - Cheque
+            + 04 (string) - Deposito - Transferencia Bancaria
+            + 99 (string) - Otros | Debe Especificar |
+
+    + Receiver (object) - Puede ser omitido en caso de que sea un Tiquete Electrónico
+        + Name (string) - Nombre o razón social del receptor - Máximo 80 caracteres. **Requerido**
+        + Identificación (enum) -
+            + Type (enum) - Tipo de identificación del receptor **Requerido**
+                + 01 (string) - Cédula Física
+                + 02 (string) - Cédula Jurídica
+                + 03 (string) - DIMEX
+                + 04 (string) - NITE
+            + Number (enum) - Número de cédula física/jurídica/NITE/DIMEX del receptor **Requerido**
+                + 01 (string) - Cédula Física
+                + 02 (string) - Cédula Jurídica
+                + 03 (string) - DIMEX
+                + 04 (string) - NITE
+        + Email (string) - Correo electrónico del receptor **Requerido**
+        \s*\w+([-+.']\w+)@\w+([-.]\w+).\w+([-.]\w+)\s. 
+   
+    + Detail (object)
+
+        + Number (string) - Número de línea **requerido** 
+    
+        + Code (enum) - Número decimal compuesto por 13 enteros y 3 decimales Máximo 2 digitos  **Requerido**
+    
+            + Type (enum) - Tipo de Código de producto/servicio
+            
+                + 01 (string) - Código del producto del vendedor
+        
+                + 02 (string) - Código del producto del comprador
+                
+                + 03 (string) - Código del producto asignado por la industria
+                
+                + 04 (string) - Código uso interno
+                
+                + 05 (string) - Otros
+                
+            + Code (string )- Código - Máximo 20 caracteres **Requerido**
+            
+        + Quantity (string) - Cantidad - Número decimal compuesto por 13 enteros y 3 decimales **Requerido**
+    
+        + UnitOfMeasure (string) - Codigo de la unidad de medida **Requerido**
+    
+        + CommercialUnitOfMeasure (string) - Nombre comercial unidad de medida - *Maximo 20 caracteres*
+        
+        + Detail(string) - Detalle de la mercancía transferida o servicio prestado - Máximo 160 caracteres **Requerido**
+        
+        + UnitPrice (string) - Precio Unitario - Número decimal compuesto por 13 enteros y 3 decimales **Requerido**
+        
+        + TotalAmount (string) - Monto total de la multiplicación de la cantidad por el precio unitario - Número decimal compuesto por 13 enteros y 3 decimales **Requerido**
+        
+        + Discount (string) - Monto de descuentos concedidos - Número decimal compuesto por 13 enteros y 3 decimales
+        
+        + NatureOfDiscount (string) - Descripción del descuento concedido - Máximo 80 caracteres **Requerido si aplica descuento**
+        
+        + SubTotal (string) - Se obtiene de la resta del campo “monto total” menos “monto de descuento concedido" - Número decimal compuesto por 13 enteros y 3 decimales **Requerido**
+         
+        + Tax (object) - Impuestos
+            + Code (enum) - **Código del impuesto**
+                + 01 (string) - Impuesto General sobre las Ventas
+                + 02 (string) - Impuesto Selectivo de Consumo
+                + 03 (string) - Impuesto Único a los combustibles
+                + 04 (string) - Impuesto específico de Bebidas Alcohólicas
+                + 05 (string) - Impuesto Específico sobre las bebidas envasadas sin contenido alcohólico y jabones de tocador
+                + 06 (string) - Impuesto a los Productos de Tabaco
+                + 07 (string) - Servicio
+                + 08 (string) - Otros
+            + Rate (string) - Porcentaje del impuesto - Número decimal compuesto por 4 enteros y 2 decimales **Requerido**
+            + Amount (string) - Monto del impuesto. Se obtiene de la multiplicación del campo subtotal por la tarifa - Número decimal compuesto por 13 enteros y 5 decimales **Requerido**
+            + Exoneration (enum) - **Documentos de exoneracion**
+                + DocumentType (enum) - Tipo de documento de exoneración o de autorización
+                    + 08 (string) - Impuesto General sobre las Ventas Diplomáticos
+                    + 09 (string) - Impuesto General sobre las Ventas Compras Autorizadas
+                    + 10 (string) - Impuesto General sobre las ventas Instituciones Públicas y otros Organismos
+                    + 11 (string) - Impuesto Selectivo de Consumo Compras Autorizadas
+                    + 99 (string) - Otros
+                + DocumentNumber (string) - Número de documento de exoneración o de autorización - Máximo 17 caracteres **Requerido**
+                + InstitutionName (string) - Fecha de emisión del documento de exoneración o de autorización / -MM-DDThh:mi:ss[Z|(+|-)hh:mm]. Ejemplo: 2016-09-26T13:00:00+06:00. **Requerido**
+                + TaxAmount (string) - Monto del impuesto Exonerado o autorizado sin impuesto - Número decimal compuesto por 13 enteros y 5 decimales. **Requerido**
+                + PurchasePercentage (string) - Porcentaje de la compra autorizada o exoneración - Máximo 3 dígitos **Requerido**
+            + TotalLineAmount (string) - Total por línea de detalle. Se obtiene de la suma de los campos “subtotal” mas “monto del impuesto” - Número decimal compuesto por 13 enteros y 3 decimales **Requerido**
+    + Summary (enum) - Resumen en detalle de factura o tiquete
+        + Currency (string) - "USD"
+        + ExchangeRate (string) - 570.31
+        + TotalTaxedService (string) - 478.0
+        + TotalExemptService (string) - 0.0
+        + TotalTaxedGoods (string) - 0.0
+        + TotalExemptGoods (string) - 0.0
+        + TotalTaxed (string) - 478.0
+        + TotalExempt (string) - 0.0
+        + TotalSale (string) - 478.0
+        + TotalDiscounts (string) - 0.0
+        + TotalNetSale (string) - 478.0
+        + TotalTaxes (string) - 62.14
+        + TotalVoucher (string) - 540.14
+    
+    
+    + Reference (enum) - 
+        + DocumentType (string) - 01
+        + DocumentNumber (string) - 50631071800310166091900100001010000000108152884101
+        + DateOfIssue (string) - 2018-06-13T16:02:28-06:00
+        + Code (string) - 01
+        + Reason (string) - Error en la informacion del cliente
+        + Other (string) - null
+  
+
+
++ Request (application/json)
+
+        {
+            "CompanyAPI": "78dd8617-c4f0-453b-bd5e-1912f124e731", 
+            "Environment": "stag", 
+            "Key": {   
+                "Branch": "01",  
+                "Terminal": "1", 
+                "Type": "04", 
+                "Voucher": "505",
+                "Country": "506", 
+                "Situation": "1"  
+            },  
+            "Header": {  
+                "Date": "2018-06-20T16:15:21-06:00",
+                "TermOfSale": "02",  
+                "CreditTerm": "15",  
+                "PaymentMethod": "03" 
+            },  
+            "Receiver": {   
+                "Name": "Los patitos S.A",  
+                "Identification": {  
+                    "Type": "02",  
+                    "Number": "3101234567"   
+                },   
+                "Email": "info@lospatitos.com"  
+            },
+            "Detail": [{   
+                "Number": "1",
+                "Code": {   
+                    "Type": "04",  
+                    "Code": "CONTRL." 
+                },
+                "Quantity": 1.0, 
+                "UnitOfMeasure": "Sp", 
+                "CommercialUnitOfMeasure": null, 
+                "Detail": "Control de acceso Hikvision Voltaje DC 00V/1a",  
+                "UnitPrice": 213.0,   
+                "TotalAmount": 213.0, 
+                "Discount": 21.3, 
+                "NatureOfDiscount": "Descuento del 10% por ejemplo",  
+                "SubTotal": 191.7,
+                "Tax": [{    
+                    "Code": "01",
+                    "Rate": 13.00,  
+                    "Amount": 27.69, 
+                    "Exoneration": null  
+                }],
+                "TotalLineAmount": 219.39  
+                }, {
+                "Number": "2",  
+                "Code": {    
+                    "Type": "04",
+                    "Code": "ENRVPN."  
+                }, 
+                "Quantity": 1.0,
+                "UnitOfMeasure": "Sp",  
+                "CommercialUnitOfMeasure": null,   
+                "Detail": "Enrutador Vpn Conmutador de 4 puertos Gige Doble banda Linksys", 
+                "UnitPrice": 265.0,  
+                "TotalAmount": 265.0, 
+                "Discount": null,  
+                "NatureOfDiscount": "", 
+                "SubTotal": 265.0, 
+                "Tax": [{  
+                    "Code": "01", 
+                    "Rate": 13.00, 
+                    "Amount": 34.45, 
+                    "Exoneration": { 
+                        "DocumentType": "01", 
+                        "DocumentNumber": "100", 
+                        "InstitutionName": "Ministerio de Hacienda", 
+                        "IssueDate": "2016-09-26T13:00:00+06:00", 
+                        "TaxAmount": 130,   
+                        "PurchasePercentage": 10   
+                    }   
+                }], 
+                "TotalLineAmount": 299.45  
+            }],
+            "Summary": {   
+                "Currency": "USD", 
+                "ExchangeRate": 570.31, 
+                "TotalTaxedService": 478.0,
+                "TotalExemptService": 0.0, 
+                "TotalTaxedGoods": 0.0,  
+                "TotalExemptGoods": 0.0, 
+                "TotalTaxed": 478.0,   
+                "TotalExempt": 0.0,  
+                "TotalSale": 478.0,  
+                "TotalDiscounts": 0.0, 
+                "TotalNetSale": 478.0,  
+                "TotalTaxes": 62.14,  
+                "TotalVoucher": 540.14  
+            },
+            "Reference": [{  
+                "DocumentType": "01", 
+                "DocumentNumber": "50631071800310166091900100001010000000108152884101",   
+                "DateOfIssue": "2018-06-13T16:02:28-06:00", 
+                "Code": "01",   
+                "Reason": "Error en la informacion del cliente"  
+            }],
+            "Other": null
+        }
+
++ Response 201 (application/json)
+
+    + Headers
+
+            Location: /application/json/
+
+    + Body
+
+            {
+               "HacKey": 50621534562436547576545342324356
+               "Consecutivo": 1002435612452
+            }
+
+
+#### Tiquete con descuento y sin impuestos [POST]
+
+Tiquete con descuento y sin impuestos
+
+
++ Attributes (object)
+
+    + CompanyAPI (string) - Identificador único generado al momento de crear la compañía **requerido** en el portal web de la aplicación
+    + Environment (enum) - Entorno en el que los documentos serán enviados **requerido**
+        + stag (string) - documentos en entorno de pruebas
+        + prod (string) - documentos en entorno real 
+    + key (object)
+        + branch: "01" (string) - Número de sucursal
+        + terminal: "01" (string) = Número de caja
+        + type (enum) - tipo de documento a emitir **requerido**
+            + 01 (string) - Factura electrónica
+            + 02 (string) - Nota de débito electrónica
+            + 03 (string) - Nota de crédito electrónica
+            + 04 (string) - Tiquete electrónico
+            + 05 (string) - Confirmación de aceptación del comprobante electrónico
+            + 06 (string) - Confirmación de aceptación parcial del comprobante electrónico
+            + 07 (string) - Confirmación de rechazo del comprobante electrónico
+        + voucher (string) - Número consecutivo del comprobante máximo 10 dígitos **requerido**
+        + country: 506 (string) - código de país
+        + situation: 1  (enum) - situación en la que se presenta el documento
+            + 1 (string) - normal
+            + 2 (string) - contingencia
+            + 3 (string) - sin internet
+    + Header (object)
+        + date (string) - Fecha de emisión del documento en formato ISO
+        + termOfSale (enum) - Término de la venta
+            + 01 (string) - contado
+            + 02 (string) - credito
+            + 03 (string) - consignación
+            + 04 (string) - Apartado
+            + 05 (string) - Arrendamiento con opción de compra
+            + 06 (string) - Arrendamiento en función financiera
+            + 99 (string) - Otros | se debe indicar la condición de la venta |
+        + creditTerm (string) - Plazo del crédito en caso de ser venta a contado se debe enviar como **"0"** 
+        + paymentMethod (enum) - Medio de pago de la factura
+            + 01 (string) - Efectivo
+            + 02 (string) -  Tarjeta
+            + 03 (string) - Cheque
+            + 04 (string) - Deposito - Transferencia Bancaria
+            + 99 (string) - Otros | Debe Especificar |
+
+    + Receiver (object) - Puede ser omitido en caso de que sea un Tiquete Electrónico
+        + Name (string) - Nombre o razón social del receptor - Máximo 80 caracteres. **Requerido**
+        + Identificación (enum) -
+            + Type (enum) - Tipo de identificación del receptor **Requerido**
+                + 01 (string) - Cédula Física
+                + 02 (string) - Cédula Jurídica
+                + 03 (string) - DIMEX
+                + 04 (string) - NITE
+            + Number (enum) - Número de cédula física/jurídica/NITE/DIMEX del receptor **Requerido**
+                + 01 (string) - Cédula Física
+                + 02 (string) - Cédula Jurídica
+                + 03 (string) - DIMEX
+                + 04 (string) - NITE
+        + Email (string) - Correo electrónico del receptor **Requerido**
+        \s*\w+([-+.']\w+)@\w+([-.]\w+).\w+([-.]\w+)\s. 
+   
+    + Detail (object)
+
+        + Number (string) - Número de línea **requerido** 
+    
+        + Code (enum) - Número decimal compuesto por 13 enteros y 3 decimales Máximo 2 digitos  **Requerido**
+    
+            + Type (enum) - Tipo de Código de producto/servicio
+            
+                + 01 (string) - Código del producto del vendedor
+        
+                + 02 (string) - Código del producto del comprador
+                
+                + 03 (string) - Código del producto asignado por la industria
+                
+                + 04 (string) - Código uso interno
+                
+                + 05 (string) - Otros
+                
+            + Code (string )- Código - Máximo 20 caracteres **Requerido**
+            
+        + Quantity (string) - Cantidad - Número decimal compuesto por 13 enteros y 3 decimales **Requerido**
+    
+        + UnitOfMeasure (string) - Codigo de la unidad de medida **Requerido**
+    
+        + CommercialUnitOfMeasure (string) - Nombre comercial unidad de medida - *Maximo 20 caracteres*
+        
+        + Detail(string) - Detalle de la mercancía transferida o servicio prestado - Máximo 160 caracteres **Requerido**
+        
+        + UnitPrice (string) - Precio Unitario - Número decimal compuesto por 13 enteros y 3 decimales **Requerido**
+        
+        + TotalAmount (string) - Monto total de la multiplicación de la cantidad por el precio unitario - Número decimal compuesto por 13 enteros y 3 decimales **Requerido**
+        
+        + Discount (string) - Monto de descuentos concedidos - Número decimal compuesto por 13 enteros y 3 decimales
+        
+        + NatureOfDiscount (string) - Descripción del descuento concedido - Máximo 80 caracteres **Requerido si aplica descuento**
+        
+        + SubTotal (string) - Se obtiene de la resta del campo “monto total” menos “monto de descuento concedido" - Número decimal compuesto por 13 enteros y 3 decimales **Requerido**
+         
+        + Tax (object) - Impuestos
+            + Code (enum) - **Código del impuesto**
+                + 01 (string) - Impuesto General sobre las Ventas
+                + 02 (string) - Impuesto Selectivo de Consumo
+                + 03 (string) - Impuesto Único a los combustibles
+                + 04 (string) - Impuesto específico de Bebidas Alcohólicas
+                + 05 (string) - Impuesto Específico sobre las bebidas envasadas sin contenido alcohólico y jabones de tocador
+                + 06 (string) - Impuesto a los Productos de Tabaco
+                + 07 (string) - Servicio
+                + 08 (string) - Otros
+            + Rate (string) - Porcentaje del impuesto - Número decimal compuesto por 4 enteros y 2 decimales **Requerido**
+            + Amount (string) - Monto del impuesto. Se obtiene de la multiplicación del campo subtotal por la tarifa - Número decimal compuesto por 13 enteros y 5 decimales **Requerido**
+            + Exoneration (enum) - **Documentos de exoneracion**
+                + DocumentType (enum) - Tipo de documento de exoneración o de autorización
+                    + 08 (string) - Impuesto General sobre las Ventas Diplomáticos
+                    + 09 (string) - Impuesto General sobre las Ventas Compras Autorizadas
+                    + 10 (string) - Impuesto General sobre las ventas Instituciones Públicas y otros Organismos
+                    + 11 (string) - Impuesto Selectivo de Consumo Compras Autorizadas
+                    + 99 (string) - Otros
+                + DocumentNumber (string) - Número de documento de exoneración o de autorización - Máximo 17 caracteres **Requerido**
+                + InstitutionName (string) - Fecha de emisión del documento de exoneración o de autorización / -MM-DDThh:mi:ss[Z|(+|-)hh:mm]. Ejemplo: 2016-09-26T13:00:00+06:00. **Requerido**
+                + TaxAmount (string) - Monto del impuesto Exonerado o autorizado sin impuesto - Número decimal compuesto por 13 enteros y 5 decimales. **Requerido**
+                + PurchasePercentage (string) - Porcentaje de la compra autorizada o exoneración - Máximo 3 dígitos **Requerido**
+            + TotalLineAmount (string) - Total por línea de detalle. Se obtiene de la suma de los campos “subtotal” mas “monto del impuesto” - Número decimal compuesto por 13 enteros y 3 decimales **Requerido**
+    + Summary (enum) - Resumen en detalle de factura o tiquete
+        + Currency (string) - "USD"
+        + ExchangeRate (string) - 570.31
+        + TotalTaxedService (string) - 478.0
+        + TotalExemptService (string) - 0.0
+        + TotalTaxedGoods (string) - 0.0
+        + TotalExemptGoods (string) - 0.0
+        + TotalTaxed (string) - 478.0
+        + TotalExempt (string) - 0.0
+        + TotalSale (string) - 478.0
+        + TotalDiscounts (string) - 0.0
+        + TotalNetSale (string) - 478.0
+        + TotalTaxes (string) - 62.14
+        + TotalVoucher (string) - 540.14
+    
+    
+    + Reference (enum) - 
+        + DocumentType (string) - 01
+        + DocumentNumber (string) - 50631071800310166091900100001010000000108152884101
+        + DateOfIssue (string) - 2018-06-13T16:02:28-06:00
+        + Code (string) - 01
+        + Reason (string) - Error en la informacion del cliente
+        + Other (string) - null
+  
+
+
++ Request (application/json)
+
+        {
+            "CompanyAPI": "78dd8617-c4f0-453b-bd5e-1912f124e731",  
+            "Environment": "stag", 
+            "Key": {   
+                "Branch": "01",
+                "Terminal": "1",
+                "Type": "04",  
+                "Voucher": "505",
+                "Country": "506", 
+                "Situation": "1"  
+            },  
+            "Header": {  
+                "Date": "2018-06-20T16:15:21-06:00", 
+                "TermOfSale": "02", 
+                "CreditTerm": "15", 
+                "PaymentMethod": "03"  
+            },
+            "Receiver": {
+                "Name": "Los patitos S.A", 
+                "Identification": {  
+                    "Type": "02",  
+                    "Number": "3101234567"  
+                },  
+                "Email": "info@lospatitos.com"  
+            },
+            "Detail": [{  
+                "Number": "1", 
+                "Code": {  
+                    "Type": "04",
+                    "Code": "CONTRL."  
+                },   
+                "Quantity": 1.0,  
+                "UnitOfMeasure": "Sp",  
+                "CommercialUnitOfMeasure": null, 
+                "Detail": "Control de acceso Hikvision Voltaje DC 00V/1a",  
+                "UnitPrice": 213.0,  
+                "TotalAmount": 213.0,   
+                "Discount": 21.3,  
+                "NatureOfDiscount": "Descuento del 10% de ejemplo",  
+                "SubTotal": 191.7,  
+                "Tax": null,  
+                "TotalLineAmount": 191.7 
+                }, { 
+                    "Number": "2",
+                    "Code": { 
+                        "Type": "04", 
+                        "Code": "ENRVPN."  
+                    },
+                },  
+                "Quantity": 1.0,
+                "UnitOfMeasure": "Sp",
+                "CommercialUnitOfMeasure": null,
+                "Detail": "Enrutador Vpn Conmutador de 4 puertos Gige Doble banda Linksys",
+                "UnitPrice": 265.0, 
+                "TotalAmount": 265.0, 
+                "Discount": null,   
+                "NatureOfDiscount": "", 
+                "SubTotal": 265.0, 
+                "Tax": [{    
+                    "Code": "01", 
+                    "Rate": 13.00, 
+                    "Amount": 34.45, 
+                    "Exoneration": { 
+                        "DocumentType": "01",
+                        "DocumentNumber": "100", 
+                        "InstitutionName": "Ministerio de Hacienda", 
+                        "IssueDate": "2016-09-26T13:00:00+06:00",  
+                        "TaxAmount": 130,   
+                        "PurchasePercentage": 10   
+                        }  
+                }],
+                "TotalLineAmount": 299.45  
+            }],
+            "Summary": {   
+                "Currency": "USD",  
+                "ExchangeRate": 570.31,
+                "TotalTaxedService": 478.0, 
+                "TotalExemptService": 0.0,  
+                "TotalTaxedGoods": 0.0,  
+                "TotalExemptGoods": 0.0, 
+                "TotalTaxed": 478.0,  
+                "TotalExempt": 0.0,  
+                "TotalSale": 478.0,  
+                "TotalDiscounts": 0.0, 
+                "TotalNetSale": 478.0, 
+                "TotalTaxes": 62.14,  
+                "TotalVoucher": 540.14 
+            },
+            "Reference": [{  
+                "DocumentType": "01",
+                "DocumentNumber": "50631071800310166091900100001010000000108152884101",
+                "DateOfIssue": "2018-06-13T16:02:28-06:00",
+                "Code": "01",     
+                "Reason": "Error en la informacion del cliente"  
+            }],  
+            "Other": null
+        }
+
++ Response 201 (application/json)
+
+    + Headers
+
+            Location: /application/json/
+
+    + Body
+
+            {
+               "HacKey": 50621534562436547576545342324356
+               "Consecutivo": 1002435612452
+            }
+
+#### Tiquete sin impuestos y con descuento [POST]
+
+Tiquete sin impuestos y con descuento
+
+
++ Attributes (object)
+
+    + CompanyAPI (string) - Identificador único generado al momento de crear la compañía **requerido** en el portal web de la aplicación
+    + Environment (enum) - Entorno en el que los documentos serán enviados **requerido**
+        + stag (string) - documentos en entorno de pruebas
+        + prod (string) - documentos en entorno real 
+    + key (object)
+        + branch: "01" (string) - Número de sucursal
+        + terminal: "01" (string) = Número de caja
+        + type (enum) - tipo de documento a emitir **requerido**
+            + 01 (string) - Factura electrónica
+            + 02 (string) - Nota de débito electrónica
+            + 03 (string) - Nota de crédito electrónica
+            + 04 (string) - Tiquete electrónico
+            + 05 (string) - Confirmación de aceptación del comprobante electrónico
+            + 06 (string) - Confirmación de aceptación parcial del comprobante electrónico
+            + 07 (string) - Confirmación de rechazo del comprobante electrónico
+        + voucher (string) - Número consecutivo del comprobante máximo 10 dígitos **requerido**
+        + country: 506 (string) - código de país
+        + situation: 1  (enum) - situación en la que se presenta el documento
+            + 1 (string) - normal
+            + 2 (string) - contingencia
+            + 3 (string) - sin internet
+    + Header (object)
+        + date (string) - Fecha de emisión del documento en formato ISO
+        + termOfSale (enum) - Término de la venta
+            + 01 (string) - contado
+            + 02 (string) - credito
+            + 03 (string) - consignación
+            + 04 (string) - Apartado
+            + 05 (string) - Arrendamiento con opción de compra
+            + 06 (string) - Arrendamiento en función financiera
+            + 99 (string) - Otros | se debe indicar la condición de la venta |
+        + creditTerm (string) - Plazo del crédito en caso de ser venta a contado se debe enviar como **"0"** 
+        + paymentMethod (enum) - Medio de pago de la factura
+            + 01 (string) - Efectivo
+            + 02 (string) -  Tarjeta
+            + 03 (string) - Cheque
+            + 04 (string) - Deposito - Transferencia Bancaria
+            + 99 (string) - Otros | Debe Especificar |
+
+    + Receiver (object) - Puede ser omitido en caso de que sea un Tiquete Electrónico
+        + Name (string) - Nombre o razón social del receptor - Máximo 80 caracteres. **Requerido**
+        + Identificación (enum) -
+            + Type (enum) - Tipo de identificación del receptor **Requerido**
+                + 01 (string) - Cédula Física
+                + 02 (string) - Cédula Jurídica
+                + 03 (string) - DIMEX
+                + 04 (string) - NITE
+            + Number (enum) - Número de cédula física/jurídica/NITE/DIMEX del receptor **Requerido**
+                + 01 (string) - Cédula Física
+                + 02 (string) - Cédula Jurídica
+                + 03 (string) - DIMEX
+                + 04 (string) - NITE
+        + Email (string) - Correo electrónico del receptor **Requerido**
+        \s*\w+([-+.']\w+)@\w+([-.]\w+).\w+([-.]\w+)\s. 
+   
+    + Detail (object)
+
+        + Number (string) - Número de línea **requerido** 
+    
+        + Code (enum) - Número decimal compuesto por 13 enteros y 3 decimales Máximo 2 digitos  **Requerido**
+    
+            + Type (enum) - Tipo de Código de producto/servicio
+            
+                + 01 (string) - Código del producto del vendedor
+        
+                + 02 (string) - Código del producto del comprador
+                
+                + 03 (string) - Código del producto asignado por la industria
+                
+                + 04 (string) - Código uso interno
+                
+                + 05 (string) - Otros
+                
+            + Code (string )- Código - Máximo 20 caracteres **Requerido**
+            
+        + Quantity (string) - Cantidad - Número decimal compuesto por 13 enteros y 3 decimales **Requerido**
+    
+        + UnitOfMeasure (string) - Codigo de la unidad de medida **Requerido**
+    
+        + CommercialUnitOfMeasure (string) - Nombre comercial unidad de medida - *Maximo 20 caracteres*
+        
+        + Detail(string) - Detalle de la mercancía transferida o servicio prestado - Máximo 160 caracteres **Requerido**
+        
+        + UnitPrice (string) - Precio Unitario - Número decimal compuesto por 13 enteros y 3 decimales **Requerido**
+        
+        + TotalAmount (string) - Monto total de la multiplicación de la cantidad por el precio unitario - Número decimal compuesto por 13 enteros y 3 decimales **Requerido**
+        
+        + Discount (string) - Monto de descuentos concedidos - Número decimal compuesto por 13 enteros y 3 decimales
+        
+        + NatureOfDiscount (string) - Descripción del descuento concedido - Máximo 80 caracteres **Requerido si aplica descuento**
+        
+        + SubTotal (string) - Se obtiene de la resta del campo “monto total” menos “monto de descuento concedido" - Número decimal compuesto por 13 enteros y 3 decimales **Requerido**
+         
+        + Tax (object) - Impuestos
+            + Code (enum) - **Código del impuesto**
+                + 01 (string) - Impuesto General sobre las Ventas
+                + 02 (string) - Impuesto Selectivo de Consumo
+                + 03 (string) - Impuesto Único a los combustibles
+                + 04 (string) - Impuesto específico de Bebidas Alcohólicas
+                + 05 (string) - Impuesto Específico sobre las bebidas envasadas sin contenido alcohólico y jabones de tocador
+                + 06 (string) - Impuesto a los Productos de Tabaco
+                + 07 (string) - Servicio
+                + 08 (string) - Otros
+            + Rate (string) - Porcentaje del impuesto - Número decimal compuesto por 4 enteros y 2 decimales **Requerido**
+            + Amount (string) - Monto del impuesto. Se obtiene de la multiplicación del campo subtotal por la tarifa - Número decimal compuesto por 13 enteros y 5 decimales **Requerido**
+            + Exoneration (enum) - **Documentos de exoneracion**
+                + DocumentType (enum) - Tipo de documento de exoneración o de autorización
+                    + 08 (string) - Impuesto General sobre las Ventas Diplomáticos
+                    + 09 (string) - Impuesto General sobre las Ventas Compras Autorizadas
+                    + 10 (string) - Impuesto General sobre las ventas Instituciones Públicas y otros Organismos
+                    + 11 (string) - Impuesto Selectivo de Consumo Compras Autorizadas
+                    + 99 (string) - Otros
+                + DocumentNumber (string) - Número de documento de exoneración o de autorización - Máximo 17 caracteres **Requerido**
+                + InstitutionName (string) - Fecha de emisión del documento de exoneración o de autorización / -MM-DDThh:mi:ss[Z|(+|-)hh:mm]. Ejemplo: 2016-09-26T13:00:00+06:00. **Requerido**
+                + TaxAmount (string) - Monto del impuesto Exonerado o autorizado sin impuesto - Número decimal compuesto por 13 enteros y 5 decimales. **Requerido**
+                + PurchasePercentage (string) - Porcentaje de la compra autorizada o exoneración - Máximo 3 dígitos **Requerido**
+            + TotalLineAmount (string) - Total por línea de detalle. Se obtiene de la suma de los campos “subtotal” mas “monto del impuesto” - Número decimal compuesto por 13 enteros y 3 decimales **Requerido**
+    + Summary (enum) - Resumen en detalle de factura o tiquete
+        + Currency (string) - "USD"
+        + ExchangeRate (string) - 570.31
+        + TotalTaxedService (string) - 478.0
+        + TotalExemptService (string) - 0.0
+        + TotalTaxedGoods (string) - 0.0
+        + TotalExemptGoods (string) - 0.0
+        + TotalTaxed (string) - 478.0
+        + TotalExempt (string) - 0.0
+        + TotalSale (string) - 478.0
+        + TotalDiscounts (string) - 0.0
+        + TotalNetSale (string) - 478.0
+        + TotalTaxes (string) - 62.14
+        + TotalVoucher (string) - 540.14
+    
+    
+    + Reference (enum) - 
+        + DocumentType (string) - 01
+        + DocumentNumber (string) - 50631071800310166091900100001010000000108152884101
+        + DateOfIssue (string) - 2018-06-13T16:02:28-06:00
+        + Code (string) - 01
+        + Reason (string) - Error en la informacion del cliente
+        + Other (string) - null
+  
+
+
++ Request (application/json)
+
+        {
+            "CompanyAPI": "78dd8617-c4f0-453b-bd5e-1912f124e731", 
+            "Environment": "stag", 
+            "Key": { 
+                "Branch": "01", 
+                "Terminal": "1", 
+                "Type": "04",  
+                "Voucher": "505", 
+                "Country": "506",  
+                "Situation": "1"  
+            }, 
+            "Header": { 
+                "Date": "2018-06-20T16:15:21-06:00",  
+                "TermOfSale": "02",  
+                "CreditTerm": "15", 
+                "PaymentMethod": "03"  
+            }, 
+            "Receiver": {  
+                "Name": "Los patitos S.A",
+                "Identification": {
+                    "Type": "02",  
+                    "Number": "3101234567" 
+                },  
+                "Email": "info@lospatitos.com"  
+            }, 
+            "Detail": [{  
+                "Number": "1",  
+                "Code": {    
+                    "Type": "04", 
+                    "Code": "CONTRL." 
+                },   
+                "Quantity": 1.0, 
+                "UnitOfMeasure": "Sp", 
+                "CommercialUnitOfMeasure": null, 
+                "Detail": "Control de acceso Hikvision Voltaje DC 00V/1a", 
+                "UnitPrice": 213.0,  
+                "TotalAmount": 213.0,  
+                "Discount": 21.3,  
+                "NatureOfDiscount": "Descuento del 10% de ejemplo", 
+                "SubTotal": 191.7, 
+                "Tax": null,  
+                "TotalLineAmount": 191.7 
+                }, {  
+                "Number": "2",  
+                "Code": {   
+                    "Type": "04",
+                    "Code": "ENRVPN."   
+                },   
+                "Quantity": 1.0,
+                "UnitOfMeasure": "Sp",
+                "CommercialUnitOfMeasure": null, 
+                "Detail": "Enrutador Vpn Conmutador de 4 puertos Gige Doble banda Linksys",
+                "UnitPrice": 265.0,   
+                "TotalAmount": 265.0, 
+                "Discount": null, 
+                "NatureOfDiscount": "", 
+                "SubTotal": 265.0,  
+                "Tax": [{   
+                    "Code": "01", 
+                    "Rate": 13.00, 
+                    "Amount": 34.45, 
+                    "Exoneration": {  
+                        "DocumentType": "01", 
+                        "DocumentNumber": "100", 
+                        "InstitutionName": "Ministerio de Hacienda", 
+                        "IssueDate": "2016-09-26T13:00:00+06:00",   
+                        "TaxAmount": 130,    
+                        "PurchasePercentage": 10   
+                    }   
+                }],
+                "TotalLineAmount": 299.45  
+            }],
+            "Summary": {  
+                "Currency": "USD", 
+                "ExchangeRate": 570.31, 
+                "TotalTaxedService": 478.0, 
+                "TotalExemptService": 0.0,  
+                "TotalTaxedGoods": 0.0,  
+                "TotalExemptGoods": 0.0, 
+                "TotalTaxed": 478.0,  
+                "TotalExempt": 0.0,  
+                "TotalSale": 478.0,  
+                "TotalDiscounts": 0.0, 
+                "TotalNetSale": 478.0, 
+                "TotalTaxes": 62.14, 
+                "TotalVoucher": 540.14 
+            },
+            "Reference": [{   
+                "DocumentType": "01",
+                "DocumentNumber": "50631071800310166091900100001010000000108152884101", 
+                "DateOfIssue": "2018-06-13T16:02:28-06:00",  
+                "Code": "01",   
+                "Reason": "Error en la informacion del cliente"  
+            }], 
+            "Other": null
+        }
+      
++ Response 201 (application/json)
+
+    + Headers
+
+            Location: /application/json/
+
+    + Body
+
+            {
+               "HacKey": 50621534562436547576545342324356
+               "Consecutivo": 1002435612452
+            }
